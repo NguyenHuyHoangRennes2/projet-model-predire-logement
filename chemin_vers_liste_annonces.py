@@ -12,7 +12,7 @@ from pprint import pprint
 ## récuperer le lien d'accéder au page selon la trie par groupe des quatiers 
 # exemple pour accéder au page des logements à Rennes Centre Ville (qui appartient aux Quatiers Centre) dont le lien est :"https://www.ouestfrance-immo.com/louer/appartement/?lieux=100005"
 # "Rennes Centre Ville": "100005" # le lien est commence par "https://www.ouestfrance-immo.com/louer/appartement/?lieux=" + paramètre( ici parametre est "100005")
-link_trier_par_localisation ="https://www.ouestfrance-immo.com/louer/appartement/?lieux="
+link_trier_par_localisation ="https://www.ouestfrance-immo.com/louer/appartement/?colocation=0&lieux="
 code_lieux =quartiers = {
     "Quartiers Centre": {
         "Rennes Centre Ville": "100005",

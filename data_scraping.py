@@ -18,7 +18,7 @@ dict_quartier_et_liens_trouvé =dict_quartier_et_liens_trouvé
 # Dictionnaire pour stocker les liens par quartier
 données =[]
 for quartiers , liens in dict_quartier_et_liens_trouvé.items():
-    for lien in liens :#############################################""
+    for lien in liens :
         URL = lien
         driver = webdriver.Chrome()
         driver.maximize_window()
@@ -135,7 +135,8 @@ for quartiers , liens in dict_quartier_et_liens_trouvé.items():
                     #re.search() parcourt toute la chaîne et renvoie le premier endroit où l'expression régulière correspond
                         label = re.search(r".*",label_el.get_text(strip=True)).group()
                         try :
-                            value = int((re.search(r"\d+",value_el.get_text(strip=True))).group())
+                            value = (re.search(r'[\d\s\u00A0]+',value_el.get_text(strip=True))).group()
+                            value = int(value.replace("\u202f", "").replace("\xa0€", ""))
                         except :
                             try:
                                 value = value_el.get_text(strip=True)
@@ -148,6 +149,8 @@ for quartiers , liens in dict_quartier_et_liens_trouvé.items():
                         data["label_eco"] = label_éco
                     except :
                         data["label_eco"] = None
+
+                        
                     for div in soup.select("div.diagnostic-etiquette__col"):
 
                         try :

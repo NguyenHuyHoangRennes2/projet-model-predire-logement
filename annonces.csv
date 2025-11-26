@@ -1,253 +1,291 @@
-Loyer,Surface habitable,Pièce,Salle d'eau,label_eco,kWh/m² .an,kgCO2/m² .an,Quartiers,Dont charges,Pièces,Chambres,Etage,Exposition,Type cuisine,Chauffage,Disponibilité,Chambre,Salle de bain,Type stationnement,Copropriété,Internet,Loyer hors charges,Loyer de référence majoré,Chambre au RDC,Surface terrain,Salles d'eau,Charges prévisionnelles,Chambres au RDC
-555,12.0,1.0,1.0,E,410.0,12.0,Quartiers Centre,,,,,,,,,,,,,,,,,,,,
-952,54.0,,1.0,D,178.0,38.0,Quartiers Centre,52.0,3.0,2.0,2,Sud,Cuisine non équipée,"Individuel
-                    Type gaz",,,,,,,,,,,,,
-504,24.0,1.0,1.0,E,264.0,8.0,Quartiers Centre,20.0,,,2,,Cuisine aménagée et équipée,Type electrique,,,,,,,,,,,,,
-755,46.0,,,D,203.0,6.0,Quartiers Centre,70.0,2.0,,6,Nord,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",1.0,1.0,1.0,Couvert,,,,,,,,,
-430,19.0,1.0,1.0,E,321.0,14.0,Quartiers Centre,20.0,,,,,Kitchenette,"Individuel
-                    Type electrique",30.0,,,Parking,,,,,,,,,
-605,30.0,,1.0,NC,,,Quartiers Centre,55.0,2.0,,4,,,,,,,,,,,,,,,,
-580,21.0,1.0,1.0,E,318.0,9.0,Quartiers Centre,80.0,,,1,,Kitchenette,"Individuel
-                    Type electrique",,,,,,,,,,,,,
-459,24.0,,1.0,C,89.0,18.0,Quartiers Centre,140.0,2.0,,5,EST,Kitchenette,"Collectif
-                    Type gaz",8.0,,,,,,,,,,,,
-750,32.0,1.0,1.0,C,107.0,19.0,Quartiers Centre,30.0,,,1,,,,,,,,,,,,,,,,
-730,29.0,,1.0,E,286.0,56.0,Quartiers Centre,30.0,2.0,,,,Kitchenette,"Individuel
-                    Type gaz",,1.0,,,,,,,,,,,
-997,60.0,,1.0,D,179.0,38.0,Quartiers Centre,45.0,3.0,2.0,2,Sud,Cuisine aménagée et équipée,"Individuel
-                    Type gaz",1.0,,,Garage,90.0,,,,,,,,
-525,23.0,1.0,1.0,D,284.0,8.0,Quartiers Centre,40.0,,,3,SUD,Cuisine équipée,"Individuel
-                    Type electrique",,,,,,,,,,,,,
-610,34.0,1.0,1.0,C,171.0,5.0,Quartiers Centre,10.0,,,1,,Cuisine équipée,"Individuel
-                    Type electrique",,,,,,,,,,,,,
-640,44.0,,1.0,B,44.0,10.0,Quartiers Centre,35.0,2.0,,3,,Cuisine équipée,"Individuel
-                    Type gaz",,1.0,,Parking,,,,,,,,,
-720,35.0,1.0,1.0,C,158.0,4.0,Quartiers Centre,20.0,,,1,,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",,,,"Garage, Garage fermé",,,,,,,,,
-872,83.0,,1.0,C,137.0,14.0,Quartiers Centre,244.0,4.0,3.0,2,,Cuisine séparée,Collectif,,,1.0,,,,,,,,,,
-436,16.0,1.0,1.0,C,166.0,28.0,Quartiers Centre,35.0,,,4,,,,,,,,,,,,,,,,
-390,12.0,1.0,,NC,,,Quartiers Centre,10.0,,,,,,,,1.0,,,,,,,,,,,
-820,63.0,,1.0,D,144.0,30.0,Quartiers Centre,30.0,2.0,,5,SUD,,Individuel,10.0,1.0,,,,,,,,,,,
-400,11.0,1.0,1.0,D,187.0,36.0,Quartiers Centre,100.0,,,2,,,,,1.0,,,,,,,,,,,
-630,46.0,,1.0,C,78.0,16.0,Quartiers Centre,45.0,2.0,,3,,Kitchenette,"Individuel
-                    Type gaz",,1.0,,,,,,,,,,,
-795,30.0,,,C,178.0,5.0,Quartiers Centre,15.0,3.0,2.0,,,,Type electrique,,,,,,Fibre,,,,,,,
-787,36.0,,1.0,D,196.0,6.0,Quartiers Centre,,2.0,,3,,Cuisine américaine,"Individuel
-                    Type electrique",,1.0,,,,,,,,,,,
-415,11.0,1.0,1.0,E,252.0,7.0,Quartiers Centre,5.0,,,4,,Cuisine aménagée,,,,,,,,,,,,,,
-500,16.0,1.0,1.0,D,221.0,41.0,Quartiers Centre,97.0,,,2,,Kitchenette,,30.0,,,,,,,,,,,,
-717,29.0,1.0,1.0,E,304.0,9.0,Quartiers Centre,20.0,,,,,Cuisine américaine,"Individuel
-                    Type electrique",1.0,,,,,,,,,,,,
-655,39.0,,1.0,F,369.0,80.0,Quartiers Centre,25.0,2.0,,4,Ouest,,Individuel,2.0,1.0,,,,,,,,,,,
-780,65.0,,,NC,,,Quartiers Centre,80.0,3.0,,,Sud,,Type gaz,,1.0,1.0,,,Fibre,,,,,,,
-599,31.0,1.0,1.0,E,261.0,55.0,Quartiers Centre,35.0,,,3,,Cuisine aménagée et équipée,"Individuel
-                    Type gaz",16.0,,,Parking,,,,,,,,,
-565,,1.0,1.0,NC,,,Quartiers Centre,100.0,,,,,,,,1.0,,,,,,,,,,,
-817,47.0,,,D,,9.0,Quartiers Centre,60.0,3.0,2.0,4,,,,,,1.0,Parking,,,,,,,,,
-650,23.0,1.0,1.0,C,211.0,6.0,Quartiers Centre,20.0,,,3,NORD EST,,"Individuel
-                    Type electrique",1.0,1.0,,,,,,,,,,,
-563,20.0,1.0,1.0,D,284.0,8.0,Quartiers Centre,35.0,,,1,Nord-Ouest,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",8.0,1.0,,,,,,,,,,,
-555,18.0,1.0,1.0,E,295.0,9.0,Quartiers Centre,15.0,,,1,,,,15.0,,,Parking,,,,,,,,,
-477,14.0,1.0,,F,517.0,16.0,Quartiers Centre,,,,,,,"Individuel
-                    Type electrique",10.0,,1.0,,,,,,,,,,
-651,27.0,1.0,,D,228.0,8.0,Quartiers Centre,40.0,,,1,,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",19.0,1.0,1.0,,,Fibre,,,,,,,
-699,27.0,1.0,,E,256.0,50.0,Quartiers Centre,50.0,,,1,Est,Cuisine équipée,"Individuel
-                    Type gaz",,,1.0,Parking,,,649.0,648.0,,,,,
-828,39.0,,1.0,C,180.0,20.0,Quartiers Centre,58.0,2.0,,2,Ouest,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",,1.0,,,,,,,,,,,
-717,29.0,1.0,1.0,E,304.0,9.0,Quartiers Centre,20.0,,,,,Cuisine américaine,"Individuel
-                    Type electrique",1.0,,,,,,,,,,,,
-735,29.0,1.0,,D,247.0,7.0,Quartiers Centre,84.0,,,,,,,,1.0,,,,,,,,,,,
-850,42.0,,,E,248.0,50.0,Quartiers Centre,150.0,2.0,,2,,Cuisine équipée,Collectif,,1.0,1.0,Sous-sol,,,,,,,,,
-485,16.0,1.0,1.0,E,281.0,8.0,Quartiers Centre,40.0,,,1,,Kitchenette,"Individuel
-                    Type electrique",6.0,,,,,,,,,,,,
-716,50.0,,,D,243.0,7.0,Quartiers Centre,55.0,2.0,,RDCèmeétage,,Cuisine aménagée,"Individuel
-                    Type electrique",4.0,1.0,1.0,Stationnement en sous-sol,,,,,1.0,,,,
-650,17.0,1.0,1.0,C,184.0,5.0,Quartiers Centre,30.0,,,3,Sud,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",,,,,,,,,,,,,
-752,39.0,,1.0,E,304.0,53.0,Quartiers Centre,25.0,2.0,,3,,Cuisine équipée,"Individuel
-                    Type gaz",28.0,1.0,,,,,,,,,,,
-527,84.0,,1.0,E,260.0,60.0,Quartiers Centre,117.0,3.0,2.0,2,Nord-Ouest,,Type gaz,,,,,,Fibre,,,,,,,
-800,34.0,,,D,214.0,42.0,Quartiers Centre,,2.0,,,,,,,1.0,1.0,Garage,,,,,,,,,
-566,30.0,1.0,1.0,E,269.0,8.0,Quartiers Centre,60.0,,,5,OUEST,Cuisine séparée,"Individuel
-                    Type electrique",16.0,,,,,,,,,,,,
-730,31.0,,1.0,D,250.0,50.0,Quartiers Centre,130.0,2.0,,3,Ouest,Cuisine aménagée et équipée,Collectif,,,,Parking,,,,,,,,,
-616,31.0,,,D,262.0,8.0,Quartiers Centre,10.0,2.0,,2,Sud,Kitchenette,"Individuel
-                    Type electrique",,1.0,1.0,Parking,,,,,,,,,
-485,16.0,1.0,1.0,E,281.0,8.0,Quartiers Centre,40.0,,,1,,Kitchenette,"Individuel
-                    Type electrique",6.0,,,,,,,,,,,,
-527,84.0,,1.0,E,260.0,60.0,Quartiers Centre,117.0,3.0,2.0,2,Nord-Ouest,,Type gaz,,,1.0,,,Fibre,,,,,,,
-725,29.0,,1.0,C,122.0,20.0,Quartiers Ouest,75.0,2.0,,1,Sud,Kitchenette,,,1.0,,,,,,,,,,,
-880,39.0,,,NC,,,Quartiers Ouest,200.0,2.0,,2,Sud-Ouest,,Type gaz,,1.0,1.0,Parking,,Fibre,,,,,,,
-450,15.0,,,D,274.0,13.0,Quartiers Ouest,10.0,6.0,5.0,1,Sud,Cuisine aménagée et équipée,"Individuel
-                    Type gaz",1.0,,,,,Fibre,,,1.0,500.0,2.0,,
-950,56.0,,,NC,,,Quartiers Ouest,40.0,2.0,,,,,,,1.0,,,,,,,,,,,
-455,22.0,1.0,1.0,E,340.0,10.0,Quartiers Ouest,55.0,,,1,,,Type electrique,,,,Parking,,,,,,,,,
-436,17.0,1.0,1.0,E,339.0,10.0,Quartiers Ouest,30.0,,,1,,Kitchenette,"Individuel
-                    Type electrique",,,,,,,,,,,,,
-801,46.0,,,D,181.0,35.0,Quartiers Ouest,160.0,2.0,,3,,Cuisine séparée,Collectif,3.0,1.0,1.0,,,,,,,,,,
-854,59.0,,,E,310.0,67.0,Quartiers Ouest,36.0,2.0,,2,Nord-Est,Cuisine aménagée,"Individuel
-                    Type gaz",28.0,1.0,1.0,,,,,,,,,,
-500,28.0,1.0,1.0,F,342.0,11.0,Quartiers Ouest,20.0,,,,,,,30.0,,,,,,,,,,,,
-650,29.0,1.0,1.0,C,83.0,17.0,Quartiers Ouest,44.0,,,,,Kitchenette,"Collectif
-                    Type gaz",14.0,,,,,ADSL,,,,,,,
-725,29.0,,1.0,C,122.0,20.0,Quartiers Ouest,75.0,2.0,,1,Sud,Kitchenette,,,1.0,,,,,,,,,,,
-528,23.0,1.0,1.0,NC,,,Quartiers Ouest,50.0,,,1,,,"Individuel
-                    Type electrique",7.0,,,Parking,,,,,,,,,
-583,28.0,1.0,1.0,E,329.0,10.0,Quartiers Ouest,40.0,,,1,,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",,,,Parking,,,,,,,,,
-899,57.0,,,D,183.0,36.0,Quartiers Ouest,35.0,3.0,2.0,,,Cuisine aménagée et équipée,"Individuel
-                    Type gaz",,,1.0,"Garage, Sous-sol",,,,,,,,,
-650,35.0,,1.0,D,188.0,5.0,Quartiers Ouest,,2.0,,1,,Cuisine américaine,"Individuel
-                    Type electrique",,1.0,,Parking,,,,,,,,,
-450,66.0,,1.0,D,229.0,48.0,Quartiers Ouest,100.0,4.0,3.0,2,,,,,,,,,,,,,,,,
-450,94.0,,1.0,E,260.0,56.0,Quartiers Ouest,70.0,6.0,5.0,3,,Cuisine aménagée et équipée,"Collectif
-                    Type gaz",,,,,,,,,,,,,
-805,66.0,,,D,186.0,40.0,Quartiers Ouest,35.0,3.0,2.0,2,,Cuisine aménagée,"Individuel
-                    Type gaz",2.0,,1.0,,,,,,,,,,
-650,35.0,,1.0,D,188.0,5.0,Quartiers Ouest,,2.0,,1,,Cuisine américaine,"Individuel
-                    Type electrique",,1.0,,Parking,,,,,,,,,
-900,57.0,,,D,158.0,37.0,Quartiers Ouest,150.0,3.0,2.0,3,,Cuisine équipée,Collectif,,,1.0,Parking,,,,,,,,,
-911,67.0,,1.0,D,220.0,47.0,Quartiers Ouest,25.0,3.0,2.0,1,,Cuisine aménagée et équipée,"Individuel
-                    Type gaz",,,,Garage,,,,,,,,30.0,
-925,53.0,,1.0,D,170.0,36.0,Quartiers Ouest,50.0,3.0,2.0,,Sud-Ouest,Cuisine aménagée et équipée,Individuel,15.0,,,,,,,,,,,,
-496,57.0,,1.0,E,264.0,57.0,Quartiers Ouest,96.0,4.0,3.0,,,Cuisine aménagée et équipée,Individuel,,,,Parking,,,,,,,,,
-726,43.0,,,D,247.0,49.0,Quartiers Ouest,110.0,2.0,,13,,,"Collectif
-                    Type gaz",3.0,1.0,1.0,Parking,,,,,,,,,
-425,16.0,1.0,1.0,E,311.0,16.0,Quartiers Ouest,50.0,,,2,,,,18.0,,,Parking,,,,,,,,,
-899,41.0,,1.0,D,184.0,26.0,Quartiers Ouest,113.0,2.0,,20,,Cuisine aménagée et équipée,"Collectif
-                    Type gaz",6.0,1.0,,Garage fermé,,,,,,,,,
-648,47.0,,,C,82.0,14.0,Quartiers Ouest,,2.0,,,,,,,1.0,1.0,,,,,,,,,,
-527,17.0,1.0,1.0,C,150.0,6.0,Quartiers Ouest,35.0,,,2,,Kitchenette,Type electrique,19.0,,,Parking,,,,,,,,,
-504,29.0,1.0,1.0,E,242.0,10.0,Quartiers Ouest,32.0,,,2,EST,,"Individuel
-                    Type electrique",1.0,,,,,,,,,,,,
-580,12.0,1.0,1.0,D,196.0,15.0,Quartiers Ouest,50.0,,,2,,,Collectif,6.0,,,,,,,,,,,,
-580,12.0,1.0,1.0,D,196.0,15.0,Quartiers Ouest,50.0,,,2,,,Collectif,6.0,,,,,,,,,,,,
-506,21.0,1.0,1.0,F,383.0,21.0,Quartiers Ouest,30.0,,,3,,,,28.0,,,Parking,,,,,,,,,
-985,73.0,,,C,58.0,12.0,Quartiers Ouest,80.0,3.0,2.0,,,,Type gaz,,,,Stationnement en sous-sol,,,,,,,,,
-954,43.0,,,C,114.0,22.0,Quartiers Ouest,110.0,2.0,,6,,,Individuel,17.0,1.0,1.0,Parking,,,,,,,,,
-413,11.0,1.0,1.0,E,269.0,58.0,Quartiers Ouest,93.0,,,,,,Collectif,11.0,1.0,,,,,,,,,,,
-541,18.0,1.0,1.0,D,232.0,7.0,Quartiers Ouest,75.0,,,2,,Kitchenette,Collectif,4.0,,,,,,,,,,,,
-570,23.0,1.0,1.0,D,257.0,7.0,Quartiers Ouest,50.0,,,0,,Cuisine aménagée et équipée,,26.0,,,,,Fibre,,,,,,,
-687,34.0,1.0,,D,159.0,32.0,Quartiers Ouest,90.0,,,1,Sud,Cuisine équipée,,,,1.0,Sous-sol,,,,,,,,,
-807,15.0,1.0,1.0,C,77.0,15.0,Quartiers Ouest,120.0,,,1,,Cuisine américaine,,,1.0,,,,,,,,,,,
-726,43.0,,,D,247.0,49.0,Quartiers Ouest,110.0,2.0,,13,,,"Collectif
-                    Type gaz",3.0,1.0,1.0,Parking,,,,,,,,,
-428,22.0,1.0,,NC,,,Quartiers Ouest,55.0,,,,,,,,,,,,,,,,75.0,,,
-850,,,1.0,NC,,,Quartiers Ouest,30.0,2.0,,,,,,,1.0,,Parking,,,,,,,,,
-616,33.0,,,E,317.0,10.0,Quartiers Ouest,40.0,2.0,,,Ouest,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",1.0,1.0,1.0,Couvert,,,,,,15.0,,,
-680,20.0,1.0,,NC,,,Quartiers Ouest,70.0,,,,,,,,,,,,,,,,,,,
-965,95.0,,,C,134.0,4.0,Quartiers Nord-Est,65.0,5.0,2.0,,,Cuisine aménagée et équipée,,,,1.0,Parking,,,,,,,,,
-535,19.0,1.0,,D,253.0,52.0,Quartiers Nord-Est,75.0,,,2,,,Collectif,27.0,,1.0,,,,,,,,,,
-720,42.0,,1.0,D,229.0,7.0,Quartiers Nord-Est,70.0,2.0,,1,,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",9.0,1.0,,Aérien,,,,,,,,,
-566,30.0,1.0,,E,281.0,60.0,Quartiers Nord-Est,75.0,,,1,,,Collectif,13.0,,1.0,Parking,,,,,,,,,
-278,19.0,1.0,,D,247.0,49.0,Quartiers Nord-Est,,,,3,,,"Collectif
-                    Type gaz",5.0,,1.0,Parking,,,,,,,,,
-372,19.0,1.0,,E,320.0,10.0,Quartiers Nord-Est,,,,2,,,,,,1.0,,,,,,,,,,
-560,21.0,1.0,1.0,E,257.0,49.0,Quartiers Nord-Est,60.0,,,1,Ouest,Cuisine aménagée et équipée,Collectif,2.0,,,Sous-sol,,,,,,,,,
-278,19.0,1.0,,D,247.0,49.0,Quartiers Nord-Est,,,,3,,,"Collectif
-                    Type gaz",5.0,,1.0,Parking,,,,,,,,,
-575,24.0,1.0,,C,165.0,32.0,Quartiers Nord-Est,55.0,,,1,,,,,1.0,1.0,Parking,,,,,,,,,
-435,14.0,1.0,1.0,E,363.0,11.0,Quartiers Nord-Est,35.0,,,,,,,,,,Parking,,,,,,,,,
-543,31.0,,1.0,E,323.0,10.0,Quartiers Nord-Est,45.0,2.0,,,,Cuisine aménagée,"Individuel
-                    Type electrique",,1.0,,Sous-sol,,,,,,,,,
-510,17.0,1.0,,D,224.0,46.0,Quartiers Nord-Est,60.0,,,1,,,Collectif,,1.0,1.0,Parking,,,,,,,,,
-570,24.0,1.0,,B,73.0,11.0,Quartiers Nord-Est,70.0,,,1,,Cuisine aménagée et équipée,,23.0,,1.0,Parking,,,,,,,,,
-407,19.0,1.0,1.0,E,303.0,9.0,Quartiers Nord-Est,,,,,,Cuisine américaine,"Individuel
-                    Type electrique",,,,,,,,,,,,,
-530,23.0,1.0,,C,151.0,28.0,Quartiers Nord-Est,70.0,,,1,Est,Cuisine équipée,Collectif,26.0,,1.0,Parking,,,,,,,,,
-670,21.0,,1.0,C,102.0,20.0,Quartiers Nord-Est,,2.0,,1,Nord-Ouest,,Type gaz,,1.0,,Parking,,Fibre,,,,300.0,,,
-450,18.0,1.0,,E,270.0,58.0,Quartiers Nord-Est,70.0,,,2,Ouest,,Collectif,,,1.0,Parking,,,,,,,,,
-903,33.0,,1.0,B,106.0,3.0,Quartiers Nord-Est,100.0,2.0,,,,Cuisine aménagée et équipée,Collectif,1.0,1.0,,,,,,,,,,,
-508,17.0,1.0,1.0,D,292.0,8.0,Quartiers Nord-Est,53.0,,,1,OUEST,,"Individuel
-                    Type electrique",22.0,,,Parking,,,,,,,,,
-748,39.0,,1.0,C,128.0,24.0,Quartiers Nord-Est,45.0,2.0,,5,Ouest,Cuisine aménagée et équipée,"Individuel
-                    Type gaz",,1.0,,,,,,,,,,,
-903,33.0,,1.0,B,106.0,3.0,Quartiers Nord-Est,100.0,2.0,,,,Cuisine aménagée et équipée,Collectif,1.0,1.0,,,,,,,,,,,
-600,23.0,,1.0,E,307.0,9.0,Quartiers Nord-Est,13.0,2.0,,,,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",,1.0,,,,,,,,,,,
-511,27.0,1.0,1.0,E,311.0,10.0,Quartiers Nord-Est,25.0,,,3,,Kitchenette,"Individuel
-                    Type electrique",,,,,,,,,,,,,
-343,17.0,1.0,1.0,E,322.0,9.0,Quartiers Nord-Est,15.0,,,1,,Kitchenette,"Individuel
-                    Type electrique",8.0,,,,,,,,,,,,
-958,91.0,,,NC,,,Quartiers Nord-Est,117.0,4.0,3.0,2,Sud-Ouest,Cuisine non équipée,"Individuel
-                    Type gaz",16.0,,1.0,Stationnement en sous-sol,,,,,,,,,
-685,52.0,,1.0,F,356.0,,Quartiers Nord-Est,45.0,2.0,,3,,Cuisine aménagée et équipée,"Individuel
-                    Type gaz",,1.0,,Garage,,,,,,,,,
-535,12.0,1.0,1.0,E,326.0,10.0,Quartiers Nord-Est,45.0,,,1,Sud,Kitchenette,"Individuel
-                    Type electrique",,1.0,,,,,,,,,,,
-950,87.0,,,D,168.0,33.0,Quartiers Nord-Est,70.0,4.0,3.0,1,Sud-Ouest,Cuisine aménagée et équipée,Individuel,,,1.0,"Garage, Garage fermé",,,,,,,,,
-951,76.0,,1.0,C,102.0,18.0,Quartiers Nord-Est,55.0,4.0,2.0,1,,,,13.0,,,Garage,,,,,,,,,
-985,51.0,,,D,194.0,37.0,Quartiers Nord-Est,,2.0,,,,,Type gaz,,1.0,1.0,Garage,,,,,,37.0,,,
-555,23.0,1.0,,D,228.0,16.0,Quartiers Nord-Est,35.0,,,1,,Kitchenette,"Individuel
-                    Type gaz",,,1.0,Sous-sol,,,,,,,,,
-597,25.0,1.0,,D,237.0,46.0,Quartiers Nord-Est,70.0,,,3,,,Collectif,1.0,,1.0,,,,,,,,,,
-510,16.0,1.0,,NC,,,Quartiers Nord-Est,55.0,,,,,,,,1.0,,,,,,,,,,,
-469,16.0,1.0,1.0,D,246.0,47.0,Quartiers Nord-Est,70.0,,,,EST,,Collectif,26.0,,,,,,,,,,,,
-950,87.0,,,D,168.0,33.0,Quartiers Nord-Est,70.0,4.0,3.0,1,Sud-Ouest,Cuisine aménagée et équipée,Individuel,,,1.0,"Garage, Garage fermé",,,,,,,,,
-819,64.0,,,C,53.0,20.0,Quartiers Nord-Ouest,84.0,3.0,2.0,3,,,"Collectif
-                    Type gaz",,,1.0,Garage,,,,,,,,,
-890,65.0,,,C,112.0,4.0,Quartiers Nord-Ouest,150.0,3.0,2.0,2,Sud,,,17.0,,1.0,Garage,48.0,,,,,,,2.0,
-403,9.0,1.0,1.0,D,243.0,9.0,Quartiers Nord-Ouest,70.0,,,,,,,12.0,,,,,,,,,,,,
-400,11.0,1.0,1.0,D,243.0,9.0,Quartiers Nord-Ouest,70.0,,,,,,,11.0,,,,,,,,,,,,
-819,64.0,,,C,53.0,20.0,Quartiers Nord-Ouest,84.0,3.0,2.0,3,,,"Collectif
-                    Type gaz",,,1.0,Garage,,,,,,,,,
-350,76.0,1.0,1.0,D,248.0,40.0,Quartiers Nord-Ouest,10.0,,,4,,,,5.0,1.0,,,,,,,,,,,
-925,74.0,,,C,125.0,17.0,Quartiers Nord-Ouest,170.0,4.0,3.0,3,,Cuisine aménagée et équipée,Collectif,10.0,,1.0,"Garage, Garage fermé",,,,,,,,,
-825,52.0,,1.0,C,162.0,23.0,Quartiers Nord-Ouest,75.0,2.0,,,Est,Cuisine aménagée et équipée,,,1.0,,Couvert,,,,,1.0,,,,
-980,77.0,,,B,81.0,10.0,Quartiers Nord-Ouest,120.0,4.0,3.0,7,,,Collectif,2.0,,,Parking,,,,,,,2.0,,
-720,54.0,,,C,117.0,15.0,Quartiers Nord-Ouest,100.0,3.0,2.0,,,Cuisine aménagée,"Collectif
-                    Type gaz",10092025.0,,1.0,Garage,,,,,,,,,
-450,109.0,,1.0,D,198.0,32.0,Quartiers Nord-Ouest,80.0,6.0,5.0,2,,Cuisine aménagée et équipée,Collectif,,,1.0,,,,,,,,,,
-920,56.0,,,D,212.0,6.0,Quartiers Nord-Ouest,150.0,3.0,2.0,1,Ouest,Cuisine américaine,Collectif,,,1.0,"Garage, Garage fermé",,,,,,,,,
-799,70.0,,1.0,E,297.0,48.0,Quartiers Nord-Ouest,87.0,4.0,3.0,4,,Cuisine aménagée,Collectif,,,,,,,,,,,,,
-680,41.0,,1.0,B,95.0,7.0,Quartiers Nord-Ouest,80.0,2.0,,2,,,,,1.0,,Sous-sol,,,,,1.0,,,,
-850,65.0,,,B,86.0,11.0,Quartiers Nord-Ouest,,3.0,2.0,1,Sud,,,,,1.0,Stationnement en sous-sol,,Fibre,,,,,,,
-865,71.0,,,F,375.0,61.0,Quartiers Nord-Ouest,,4.0,3.0,4,Sud,Cuisine aménagée,Collectif,,,1.0,,,,,,,,,,
-520,30.0,1.0,1.0,C,186.0,5.0,Quartiers Nord-Ouest,60.0,,,9,,Cuisine équipée,"Individuel
-                    Type electrique",8.0,,,,,,,,,,,,
-415,93.0,,,F,363.0,82.0,Quartiers Nord-Ouest,65.0,5.0,4.0,3,,,"Collectif
-                    Type gaz",,,,,,,,,,,2.0,,
-453,11.0,1.0,,D,,,Quartiers Nord-Ouest,60.0,,,6,,Cuisine aménagée et équipée,"Collectif
-                    Type gaz",,1.0,1.0,,,,,,,,,,
-420,16.0,1.0,1.0,NS,,,Quartiers Nord-Ouest,100.0,,,,,,,7.0,1.0,,,,,,,,,,,
-520,74.0,,1.0,D,209.0,6.0,Quartiers Nord-Ouest,90.0,4.0,,5,,,,,1.0,,,,,,,,,,,
-410,12.0,,1.0,D,198.0,10.0,Quartiers Nord-Ouest,60.0,2.0,2.0,1,,,,,,,,,,,,,,,,
-400,80.0,,,D,203.0,29.0,Quartiers Nord-Ouest,70.0,5.0,5.0,5,,,"Collectif
-                    Type gaz",,,,Parking,,,,,,,2.0,,
-610,34.0,1.0,,D,196.0,10.0,Quartiers Nord-Ouest,80.0,,,,,,,15.0,,1.0,,,,,,,,,,
-430,11.0,1.0,1.0,D,187.0,15.0,Quartiers Nord-Ouest,60.0,,,2,,Cuisine aménagée et équipée,Collectif,20.0,,,,,,,,,,,,
-444,10.0,1.0,1.0,D,210.0,6.0,Quartiers Nord-Ouest,70.0,,,1,,,,9.0,,,,,,,,,,,,
-430,64.0,,1.0,D,214.0,34.0,Quartiers Nord-Ouest,55.0,3.0,3.0,4,,Cuisine aménagée et équipée,Collectif,,,,,,,,,,,,,
-435,74.0,,1.0,D,187.0,41.0,Quartiers Nord-Ouest,95.0,4.0,3.0,7,,,"Collectif
-                    Type gaz",,,,,,,,,,,,,
-470,14.0,1.0,1.0,D,,,Quartiers Nord-Ouest,50.0,,,4,,,,,1.0,,,,,,,,,,,
-430,14.0,,,D,191.0,7.0,Quartiers Nord-Ouest,70.0,3.0,3.0,,,Cuisine aménagée et équipée,Collectif,,,1.0,,,,,,,,,,
-380,75.0,1.0,,D,249.0,24.0,Quartiers Nord-Ouest,20.0,,,3,Sud,Cuisine aménagée et équipée,"Collectif
-                    Type gaz",,,1.0,,,,,,,,,,
-420,10.0,,,D,211.0,8.0,Quartiers Nord-Ouest,40.0,4.0,4.0,1,,,,,,1.0,,,,,,,,,,
-909,92.0,,,NC,,,Quartiers Nord-Ouest,,5.0,3.0,2,,,Collectif,1.0,,1.0,,,,,,,,,,
-826,83.0,,,C,130.0,19.0,Quartiers Nord-Ouest,,4.0,2.0,8,,,Collectif,1.0,,1.0,,,,,,,,,,
-375,74.0,1.0,,F,407.0,66.0,Quartiers Nord-Ouest,70.0,,4.0,9,,Cuisine aménagée et équipée,Collectif,,,1.0,,,,,,,,,,
-437,73.0,,,D,173.0,40.0,Quartiers Nord-Ouest,65.0,4.0,3.0,,,,Collectif,,,1.0,,,,,,1.0,,,,
-545,25.0,1.0,1.0,D,267.0,8.0,Quartiers Nord-Ouest,50.0,,,,EST,,"Individuel
-                    Type electrique",3.0,,1.0,Couvert,,,,,,,,,
-535,10.0,,1.0,NC,,,Quartiers Nord-Ouest,55.0,5.0,4.0,,Sud,Cuisine aménagée et équipée,"Collectif
-                    Type gaz",,,,,,,,,,,,,
-865,71.0,,,F,375.0,61.0,Quartiers Nord-Ouest,,4.0,3.0,4,Sud,Cuisine aménagée,Collectif,,,1.0,,,,,,,,,,
-965,75.0,,,C,169.0,14.0,Quartiers Nord-Ouest,,4.0,3.0,1,,Cuisine américaine,Collectif,,,1.0,,40.0,,,,,,,,
-660,20.0,1.0,1.0,C,112.0,20.0,Quartiers Nord-Ouest,60.0,,,4,,Cuisine équipée,Collectif,9.0,,,Parking,,,,,,,,,
-830,33.0,,,NC,,,Quartiers Nord-Ouest,30.0,2.0,,,,,,,1.0,,,,,,,,,,,
-660,20.0,1.0,1.0,C,112.0,20.0,Quartiers Nord-Ouest,60.0,,,4,,Cuisine équipée,Collectif,9.0,,,Parking,,,,,,,,,
-489,10.0,1.0,1.0,D,243.0,36.0,Quartiers Nord-Ouest,85.0,,,4,,Cuisine aménagée et équipée,"Collectif
-                    Type gaz",13.0,,,,,,,,,,,,
-650,25.0,1.0,,B,116.0,3.0,Quartiers Nord-Ouest,150.0,,11.0,2,Sud-Est,Cuisine aménagée et équipée,"Individuel
-                    Type electrique",4.0,,,,,Fibre,,,,275.0,11.0,,4.0
-790,46.0,,1.0,E,256.0,52.0,Quartiers Nord-Ouest,60.0,3.0,2.0,2,,Cuisine non équipée,"Individuel
-                    Type gaz",,,,,,,,,,,,,
-610,21.0,1.0,1.0,C,109.0,19.0,Quartiers Nord-Ouest,50.0,,,4,Sud,Kitchenette,,,,,,,,,,,,,,
+Loyer,Dont charges,Surface habitable,Pièces,Salle d'eau,Étage,Type stationnement,label_eco,kWh/m² .an,kgCO2/m² .an,Quartiers,Salle de bain,Disponibilité,Pièce,Type cuisine,Chauffage,Chambre,Exposition,Chambres,Salles d'eau,Internet,Loyer hors charges,Loyer de référence majoré,Chambre au RDC,Copropriété,Chambres au RDC,Surface terrain,Charges prévisionnelles
+278,,19.0,,,3,Parking,D,247.0,49.0,Quartiers Nord-Est,1.0,5.0,1.0,,"Collectif
+                    Type gaz",,,,,,,,,,,,
+343,15.0,17.0,,1.0,1,,E,322.0,9.0,Quartiers Nord-Est,,8.0,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+345,80.0,9,,,,,C,230.0,7.0,Quartiers Nord-Ouest,,,1.0,,"Individuel
+                    Type electrique",,,,,,,,,,,,
+350,10.0,17.0,,1.0,4,,D,248.0,40.0,Quartiers Nord-Ouest,,5.0,1.0,,,1.0,,,,,,,,,,,
+359,20.0,15.0,,,,Parking,F,367.0,21.0,Quartiers Centre,1.0,5.0,1.0,,,,,,,,,,,,,,
+391,35.0,18.0,,1.0,,Parking,D,313.0,9.0,Quartiers Ouest,,,1.0,,,,,,,,,,,,,,
+395,95.0,20.0,4.0,,,,NC,,,Quartiers Nord-Ouest,,,,,,,,3.0,,,,,,,,,
+403,70.0,9,,1.0,,,D,243.0,9.0,Quartiers Nord-Ouest,,12.0,1.0,,,,,,,,,,,,,,
+403,70.0,9,,1.0,,,D,243.0,9.0,Quartiers Nord-Ouest,,12.0,1.0,,,,,,,,,,,,,,
+407,,19.0,,1.0,,,E,303.0,9.0,Quartiers Nord-Est,,,1.0,Cuisine américaine,"Individuel
+                    Type electrique",,,,,,,,,,,,
+410,,19.0,,,0,Stationnement aérien,NC,,,Quartiers Nord-Ouest,1.0,,1.0,,Type electrique,,Sud-Est,,,4,,,,,,,
+425,50.0,16.0,,1.0,2,Parking,E,311.0,16.0,Quartiers Ouest,,18.0,1.0,,,,,,,,,,,,,,
+426,55.0,25.0,,,,,NC,,,Quartiers Ouest,,,1.0,,,1.0,,,,,,,,,,70.0,
+430,20.0,19.0,,1.0,,Parking,E,321.0,14.0,Quartiers Centre,,30.0,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+435,35.0,14.0,,1.0,,Parking,E,363.0,11.0,Quartiers Nord-Est,,,1.0,,,,,,,,,,,,,,
+436,30.0,17.0,,1.0,1,,E,339.0,10.0,Quartiers Ouest,,,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+438,120.0,9,,,,,NC,,,Quartiers Nord-Ouest,,,1.0,,,,,,,,,,,,,,
+440,46.0,17.0,,,1,Sous-sol,D,303.0,9.0,Quartiers Centre,1.0,,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+448,20.0,18.0,,1.0,1,,E,328.0,10.0,Quartiers Nord-Est,,12.0,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+450,70.0,18.0,,,2,Parking,E,270.0,58.0,Quartiers Nord-Est,1.0,,1.0,,Collectif,,Ouest,,,,,,,,,,
+450,70.0,15.0,3.0,,,,NC,,,Quartiers Nord-Ouest,,,,,,1.0,,,,,,,,,,,
+451,45.0,20.0,,1.0,2,,C,224.0,6.0,Quartiers Nord-Ouest,,18.0,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+455,55.0,22.0,,1.0,1,Parking,E,340.0,10.0,Quartiers Ouest,,,1.0,,Type electrique,,,,,,,,,,,,
+459,50.0,11.0,,,1,,D,178.0,5.0,Quartiers Nord-Ouest,1.0,,1.0,,"Collectif
+                    Type gaz",,Nord,,,,,,,,,,
+460,,16.0,,1.0,4,,F,457.0,14.0,Quartiers Centre,,1.0,1.0,,,,,,,,,,,,,,
+465,55.0,24.0,,,1,Parking,C,145.0,20.0,Quartiers Nord-Est,1.0,,1.0,Cuisine aménagée et équipée,Collectif,,Nord-Ouest,,,,,,,,,,
+469,70.0,16.0,,1.0,,,D,246.0,47.0,Quartiers Nord-Est,,26.0,1.0,,Collectif,,EST,,,,,,,,,,
+472,35.0,28.0,2.0,,,,NC,,,Quartiers Nord-Est,,,,,,,,,,,,,,,,,
+477,,14.0,,,,,F,517.0,16.0,Quartiers Centre,1.0,10.0,1.0,,"Individuel
+                    Type electrique",,,,,,,,,,,,
+479,50.0,22.0,,,3,Parking,D,266.0,8.0,Quartiers Ouest,,,1.0,,,,,,,,,,,,,,
+480,30.0,18.0,,1.0,,Parking,D,282.0,8.0,Quartiers Nord-Est,,2.0,1.0,Cuisine équipée,"Individuel
+                    Type electrique",,,,,,,,,,,,
+480,70.0,17.0,,1.0,2,,E,295.0,59.0,Quartiers Nord-Est,,18.0,1.0,Kitchenette,Collectif,,,,,,,,,,,,
+481,31.0,19.0,,1.0,4,,NC,,,Quartiers Centre,,11.0,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+485,40.0,16.0,,1.0,1,,E,281.0,8.0,Quartiers Centre,,6.0,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+495,65.0,19.0,,1.0,3,,E,286.0,8.0,Quartiers Nord-Est,,10.0,1.0,,"Individuel
+                    Type electrique",,,,,,,,,,,,
+500,20.0,28.0,,1.0,,,F,342.0,11.0,Quartiers Ouest,,30.0,1.0,,,,,,,,,,,,,,
+504,75.0,21.0,,1.0,1,Parking,E,292.0,58.0,Quartiers Ouest,,16.0,1.0,,Collectif,,,,,,,,,,,,
+505,70.0,23.0,,,,Parking,D,219.0,43.0,Quartiers Nord-Est,1.0,,1.0,Kitchenette,Collectif,,Est,,,,,,,,,,
+506,30.0,21.0,,1.0,3,Parking,F,383.0,21.0,Quartiers Ouest,,28.0,1.0,,,,,,,,,,,,,,
+508,53.0,17.0,,1.0,1,Parking,D,292.0,8.0,Quartiers Nord-Est,,22.0,1.0,,"Individuel
+                    Type electrique",,OUEST,,,,,,,,,,
+510,60.0,17.0,,,1,Parking,D,224.0,46.0,Quartiers Nord-Est,1.0,,1.0,,Collectif,1.0,,,,,,,,,,,
+510,55.0,16.0,,,,,NC,,,Quartiers Nord-Est,,,1.0,,,1.0,,,,,,,,,,,
+510,90.0,16.0,,1.0,3,,NC,,,Quartiers Centre,,,1.0,,,,,,,,,,,,,,
+520,60.0,30.0,,1.0,9,,C,186.0,5.0,Quartiers Nord-Ouest,,8.0,1.0,Cuisine équipée,"Individuel
+                    Type electrique",,,,,,,,,,,,
+525,25.0,24.0,,1.0,3,Garage,E,298.0,9.0,Quartiers Centre,,12.0,1.0,,"Individuel
+                    Type electrique",,SUD OUEST,,,,,,,,,,
+525,25.0,24.0,,1.0,3,Garage,E,298.0,9.0,Quartiers Centre,,12.0,1.0,,"Individuel
+                    Type electrique",,SUD OUEST,,,,,,,,,,
+527,35.0,17.0,,1.0,2,Parking,C,150.0,6.0,Quartiers Ouest,,19.0,1.0,Kitchenette,Type electrique,,,,,,,,,,,,
+528,50.0,23.0,,1.0,1,Parking,NC,,,Quartiers Ouest,,7.0,1.0,,"Individuel
+                    Type electrique",,,,,,,,,,,,
+530,70.0,23.0,,,1,Parking,C,151.0,28.0,Quartiers Nord-Est,1.0,26.0,1.0,Cuisine équipée,Collectif,,Est,,,,,,,,,,
+535,75.0,19.0,,,2,,D,253.0,52.0,Quartiers Nord-Est,1.0,27.0,1.0,,Collectif,,,,,,,,,,,,
+535,35.0,18.0,,1.0,1,Parking,E,355.0,11.0,Quartiers Nord-Est,,,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+535,35.0,18.0,,1.0,1,Parking,E,355.0,11.0,Quartiers Nord-Est,,,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+535,45.0,12.0,,1.0,1,,E,326.0,10.0,Quartiers Nord-Est,,,1.0,Kitchenette,"Individuel
+                    Type electrique",1.0,Sud,,,,,,,,,,
+543,45.0,31.0,2.0,1.0,,Sous-sol,E,323.0,10.0,Quartiers Nord-Est,,,,Cuisine aménagée,"Individuel
+                    Type electrique",1.0,,,,,,,,,,,
+545,50.0,25.0,,1.0,,Couvert,D,267.0,8.0,Quartiers Nord-Ouest,1.0,3.0,1.0,,"Individuel
+                    Type electrique",,EST,,,,,,,,,,
+550,35.0,33.0,,1.0,3,Parking,C,159.0,29.0,Quartiers Ouest,,23.0,1.0,,Individuel,,OUEST,,,,,,,,,,
+554,110.0,22.0,,,1,Parking,D,,,Quartiers Nord-Ouest,1.0,31.0,1.0,,,,,,,,,,,,,,
+555,35.0,23.0,,,1,Sous-sol,D,228.0,16.0,Quartiers Nord-Est,1.0,,1.0,Kitchenette,"Individuel
+                    Type gaz",,,,,,,,,,,,
+555,15.0,18.0,,1.0,1,Parking,E,295.0,9.0,Quartiers Centre,,15.0,1.0,,,,,,,,,,,,,,
+560,60.0,21.0,,1.0,1,Sous-sol,E,257.0,49.0,Quartiers Nord-Est,,2.0,1.0,Cuisine aménagée et équipée,Collectif,,Ouest,,,,,,,,,,
+564,35.0,38.0,2.0,,,Parking,D,219.0,46.0,Quartiers Nord-Est,1.0,,,Cuisine aménagée et équipée,Type gaz,1.0,EST,,,,,,,,,,
+565,100.0,,,1.0,,,NC,,,Quartiers Centre,,,1.0,,,1.0,,,,,,,,,,,
+566,71.0,31.0,,1.0,9,Parking,C,170.0,5.0,Quartiers Nord-Ouest,,,1.0,,"Individuel
+                    Type electrique",1.0,,,,,,,,,,,
+566,60.0,30.0,,1.0,5,,E,269.0,8.0,Quartiers Centre,,16.0,1.0,Cuisine séparée,"Individuel
+                    Type electrique",,OUEST,,,,,,,,,,
+566,75.0,30.0,,,1,Parking,E,281.0,60.0,Quartiers Nord-Est,1.0,13.0,1.0,,Collectif,,,,,,,,,,,,
+570,70.0,24.0,,,,,E,,,Quartiers Nord-Est,1.0,10.0,1.0,,Collectif,,,,,,,,,,,,
+570,70.0,24.0,,,1,Parking,B,73.0,11.0,Quartiers Nord-Est,1.0,23.0,1.0,Cuisine aménagée et équipée,,,,,,,,,,,,,
+570,50.0,23.0,,1.0,0,,D,257.0,7.0,Quartiers Ouest,,26.0,1.0,Cuisine aménagée et équipée,,,,,,Fibre,,,,,,,
+575,55.0,24.0,,,1,Parking,C,165.0,32.0,Quartiers Nord-Est,1.0,,1.0,,,1.0,,,,,,,,,,,
+575,55.0,13.0,,,2,Parking,D,316.0,9.0,Quartiers Ouest,1.0,1.0,1.0,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",1.0,Est,,,,,,,,,,
+578,35.0,26.0,2.0,1.0,1,Parking,D,237.0,7.0,Quartiers Centre,,,,,,,,,,,,,,,,,
+580,50.0,21.0,,1.0,4,,C,109.0,19.0,Quartiers Nord-Ouest,,,1.0,Kitchenette,,,Sud,,,,,,,,,,
+580,80.0,21.0,,1.0,1,,E,318.0,9.0,Quartiers Centre,,,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+580,50.0,12.0,,1.0,2,,D,196.0,15.0,Quartiers Ouest,,6.0,1.0,,Collectif,,,,,,,,,,,,
+583,40.0,28.0,,1.0,1,Parking,E,329.0,10.0,Quartiers Ouest,,,1.0,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",,,,,,,,,,,,
+585,40.0,32.0,,1.0,2,,C,139.0,4.0,Quartiers Nord-Ouest,,15.0,1.0,,"Individuel
+                    Type electrique",,,,,,,,,,,,
+597,70.0,25.0,,,3,,D,237.0,46.0,Quartiers Nord-Est,1.0,1.0,1.0,,Collectif,,,,,,,,,,,,
+599,35.0,31.0,,1.0,3,Parking,E,261.0,55.0,Quartiers Centre,,16.0,1.0,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,,,,,,,,,,,
+600,13.0,23.0,2.0,1.0,,,E,307.0,9.0,Quartiers Nord-Est,,,,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",1.0,,,,,,,,,,,
+604,55.0,38.0,2.0,,3,Parking,D,166.0,31.0,Quartiers Ouest,1.0,18.0,,,Individuel,1.0,,,,,,,,,,,
+604,55.0,38.0,2.0,,3,Parking,D,166.0,31.0,Quartiers Ouest,1.0,18.0,,,Individuel,1.0,,,,,,,,,,,
+610,80.0,34.0,,,,,D,196.0,10.0,Quartiers Nord-Ouest,1.0,15.0,1.0,,,,,,,,,,,,,,
+620,30.0,17.0,,1.0,3,,C,184.0,5.0,Quartiers Centre,,,1.0,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",,Sud,,,,,,,,,,
+630,80.0,26.0,,1.0,1,,D,270.0,8.0,Quartiers Centre,,,1.0,Kitchenette,"Individuel
+                    Type electrique",,,,,,,,,,,,
+633,120.0,34.0,2.0,1.0,1,Parking,E,282.0,57.0,Quartiers Ouest,,18.0,,,,1.0,,,,,,,,,,,
+633,120.0,34.0,2.0,1.0,1,Parking,E,282.0,57.0,Quartiers Ouest,,18.0,,,,1.0,,,,,,,,,,,
+638,80.0,25.0,,1.0,3,Stationnement en sous-sol,C,96.0,19.0,Quartiers Nord-Ouest,,,1.0,Kitchenette,Collectif,,SUD,,,,,,,,,,
+650,,35.0,2.0,1.0,1,Parking,D,188.0,5.0,Quartiers Ouest,,,,Cuisine américaine,"Individuel
+                    Type electrique",1.0,,,,,,,,,,,
+650,44.0,29.0,,1.0,,,C,83.0,17.0,Quartiers Ouest,,14.0,1.0,Kitchenette,"Collectif
+                    Type gaz",,,,,ADSL,,,,,,,
+650,30.0,26.0,2.0,,,,NC,,,Quartiers Nord-Ouest,,,,,,1.0,,,,,,,,,,,
+650,150.0,25.0,,,2,,B,116.0,3.0,Quartiers Nord-Ouest,,4.0,1.0,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",,Sud-Est,11.0,11.0,Fibre,,,,,4.0,275.0,
+651,40.0,27.0,,,1,,D,228.0,8.0,Quartiers Centre,1.0,19.0,1.0,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",1.0,,,,Fibre,,,,,,,
+660,60.0,20.0,,1.0,4,Parking,C,112.0,20.0,Quartiers Nord-Ouest,,9.0,1.0,Cuisine équipée,Collectif,,,,,,,,,,,,
+665,45.0,31.0,2.0,,,,E,278.0,8.0,Quartiers Ouest,1.0,,,Kitchenette,"Individuel
+                    Type electrique",1.0,,,,,620.0,,1.0,,,,
+670,170.0,49.0,,1.0,,,F,332.0,72.0,Quartiers Ouest,,14.0,1.0,,Collectif,,,,,,,,,,,,
+676,50.0,26.0,,1.0,1,,C,82.0,16.0,Quartiers Nord-Ouest,,23.0,1.0,Cuisine équipée,"Individuel
+                    Type gaz",,,,,,,,,,,,
+680,80.0,41.0,2.0,1.0,2,Sous-sol,B,95.0,7.0,Quartiers Nord-Ouest,,,,,,1.0,,,,,,,1.0,,,,
+680,70.0,20.0,,,,,NC,,,Quartiers Ouest,,,1.0,,,,,,,,,,,,,,
+683,135.0,60.0,2.0,,1,,D,155.0,36.0,Quartiers Centre,,22.0,,,,1.0,,,,,,,,,,,
+685,45.0,52.0,2.0,1.0,3,Garage,F,356.0,,Quartiers Nord-Est,,,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",1.0,,,,,,,,,,,
+687,90.0,34.0,,,1,Sous-sol,D,159.0,32.0,Quartiers Ouest,1.0,,1.0,Cuisine équipée,,,Sud,,,,,,,,,,
+699,50.0,27.0,,,1,Parking,E,256.0,50.0,Quartiers Centre,1.0,,1.0,Cuisine équipée,"Individuel
+                    Type gaz",,Est,,,,649.0,648.0,,,,,
+700,41.0,27.0,,1.0,2,,C,83.0,17.0,Quartiers Nord-Ouest,,23.0,1.0,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,Nord,,,,,,,,,,
+710,,37.0,2.0,,1,Parking,D,176.0,33.0,Quartiers Centre,1.0,,,Cuisine américaine,"Collectif
+                    Type gaz",1.0,Nord-Est,,,,,,,,,,
+714,35.0,32.0,2.0,1.0,1,,F,397.0,12.0,Quartiers Centre,,22.0,,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",1.0,,,,,,,,,,,
+716,55.0,50.0,2.0,,RDCèmeétage,Stationnement en sous-sol,D,243.0,7.0,Quartiers Centre,1.0,4.0,,Cuisine aménagée,"Individuel
+                    Type electrique",1.0,,,,,,,1.0,,,,
+720,100.0,54.0,3.0,,,Garage,C,117.0,15.0,Quartiers Nord-Ouest,1.0,10092025.0,,Cuisine aménagée,"Collectif
+                    Type gaz",,,2.0,,,,,,,,,
+720,78.0,45.0,2.0,1.0,,Parking,A,46.0,,Quartiers Nord-Ouest,,1.0,,Kitchenette,Collectif,1.0,Sud-Ouest,,,,,,1.0,35.0,,,
+720,70.0,42.0,2.0,1.0,1,Aérien,D,229.0,7.0,Quartiers Nord-Est,,9.0,,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",1.0,,,,,,,,,,,
+720,45.0,33.0,2.0,,1,Parking,E,258.0,8.0,Quartiers Centre,1.0,30.0,,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",1.0,Est,,,,,,,,,,
+722,87.0,54.0,3.0,,2,,NC,,,Quartiers Centre,1.0,,,,,,,,,,,,,,,,
+725,75.0,29.0,2.0,1.0,1,,C,122.0,20.0,Quartiers Ouest,,,,Kitchenette,,1.0,Sud,,,,,,,,,,
+735,84.0,29.0,,,,,D,247.0,7.0,Quartiers Centre,,,1.0,,,1.0,,,,,,,,,,,
+742,,41.0,2.0,1.0,1,,D,238.0,47.0,Quartiers Centre,,,,Cuisine américaine,"Individuel
+                    Type gaz",,,,,,,,,,,,
+750,20.0,37.0,2.0,1.0,1,,E,332.0,10.0,Quartiers Ouest,,,,Kitchenette,"Individuel
+                    Type electrique",1.0,,,,,,,,,,,
+759,43.0,54.0,3.0,1.0,3,,F,371.0,81.0,Quartiers Centre,,,,,,,,,,,,,,,,,
+766,,61.0,3.0,1.0,1,Parking,E,248.0,53.0,Quartiers Centre,,,,Cuisine américaine,"Individuel
+                    Type gaz",,Sud-Ouest,2.0,,,,,,,,,
+766,46.0,43.0,2.0,1.0,7,Garage,D,184.0,35.0,Quartiers Nord-Est,,,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",1.0,Ouest,,,,,,,,,,
+780,80.0,65.0,3.0,,,,NC,,,Quartiers Centre,1.0,,,,Type gaz,1.0,Sud,,,Fibre,,,,,,,
+795,15.0,30.0,3.0,,,,C,178.0,5.0,Quartiers Centre,,,,,Type electrique,,,2.0,,Fibre,,,,,,,
+800,,34.0,2.0,,,Garage,D,214.0,42.0,Quartiers Centre,1.0,,,,,1.0,,,,,,,,,,,
+801,160.0,46.0,2.0,,3,,D,181.0,35.0,Quartiers Ouest,1.0,3.0,,Cuisine séparée,Collectif,1.0,,,,,,,,,,,
+807,120.0,15.0,,1.0,1,,C,77.0,15.0,Quartiers Ouest,,,1.0,Cuisine américaine,,1.0,,,,,,,,,,,
+810,30.0,45.0,2.0,1.0,1,,D,212.0,44.0,Quartiers Centre,,9.0,,,"Individuel
+                    Type gaz",1.0,,,,,,,,,,,
+817,60.0,47.0,3.0,,4,Parking,D,,9.0,Quartiers Centre,1.0,,,,,,,2.0,,,,,,,,,
+819,84.0,64.0,3.0,,3,Garage,C,53.0,20.0,Quartiers Nord-Ouest,1.0,,,,"Collectif
+                    Type gaz",,,2.0,,,,,,,,,
+826,,83.0,4.0,,8,,C,130.0,19.0,Quartiers Nord-Ouest,1.0,1.0,,,Collectif,,,2.0,,,,,,,,,
+826,,83.0,4.0,,8,,C,130.0,19.0,Quartiers Nord-Ouest,1.0,1.0,,,Collectif,,,2.0,,,,,,,,,
+830,30.0,33.0,2.0,,,,NC,,,Quartiers Nord-Ouest,,,,,,1.0,,,,,,,,,,,
+850,,76.0,4.0,,2,,D,235.0,35.0,Quartiers Nord-Ouest,1.0,,,Cuisine américaine,Collectif,,,2.0,,,,,,,,,
+850,30.0,,2.0,1.0,,Parking,NC,,,Quartiers Ouest,,,,,,1.0,,,,,,,,,,,
+862,25.0,40.0,2.0,1.0,2,,D,228.0,48.0,Quartiers Centre,,22.0,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",1.0,Sud,,,,,,,,,,
+865,,71.0,4.0,,4,,F,375.0,61.0,Quartiers Nord-Ouest,1.0,,,Cuisine aménagée,Collectif,,Sud,3.0,,,,,,,,,
+870,35.0,35.0,,1.0,7,Garage fermé,F,222.0,96.0,Quartiers Centre,,,1.0,,Type electrique,1.0,Sud,,,Fibre,,,,,,,
+880,200.0,39.0,2.0,,2,Parking,NC,,,Quartiers Ouest,1.0,,,,Type gaz,1.0,Sud-Ouest,,,Fibre,,,,,,,
+890,150.0,65.0,3.0,,2,Garage,C,112.0,4.0,Quartiers Nord-Ouest,1.0,17.0,,,,,Sud,2.0,,,,,,48.0,,,2044.0
+899,35.0,57.0,3.0,,,"Garage, Sous-sol",D,183.0,36.0,Quartiers Ouest,1.0,,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,,2.0,,,,,,,,,
+899,113.0,41.0,2.0,1.0,20,Garage fermé,D,184.0,26.0,Quartiers Ouest,,6.0,,Cuisine aménagée et équipée,"Collectif
+                    Type gaz",1.0,,,,,,,,,,,
+900,,59.0,2.0,1.0,1,,D,208.0,44.0,Quartiers Centre,,,,Cuisine américaine,"Individuel
+                    Type gaz",1.0,,,,,,,,,,,
+900,,53.0,2.0,1.0,18,Garage,D,208.0,32.0,Quartiers Ouest,,,,Cuisine américaine,"Collectif
+                    Type gaz",1.0,,,,,,,,,,,
+900,,53.0,2.0,1.0,18,Garage,D,208.0,32.0,Quartiers Ouest,,,,Cuisine américaine,"Collectif
+                    Type gaz",1.0,,,,,,,,,,,
+907,,76.0,4.0,,2,,D,221.0,11.0,Quartiers Nord-Ouest,1.0,2.0,,,Collectif,,,3.0,,,,,,,,,
+909,,92.0,5.0,,2,,NC,,,Quartiers Nord-Ouest,1.0,1.0,,,Collectif,,,3.0,,,,,,,,,
+911,25.0,67.0,3.0,1.0,1,Garage,D,220.0,47.0,Quartiers Ouest,,,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,,2.0,,,,,,,,,30.0
+925,50.0,53.0,3.0,1.0,,,D,170.0,36.0,Quartiers Ouest,,15.0,,Cuisine aménagée et équipée,Individuel,,Sud-Ouest,2.0,,,,,,,,,
+930,60.0,55.0,2.0,,3,,C,171.0,5.0,Quartiers Centre,1.0,,,,Type electrique,1.0,Sud-Est,,,Fibre,,,,,,,
+950,70.0,87.0,4.0,,1,"Garage, Garage fermé",D,168.0,33.0,Quartiers Nord-Est,1.0,,,Cuisine aménagée et équipée,Individuel,,Sud-Ouest,3.0,,,,,,,,,
+950,40.0,56.0,2.0,,,,NC,,,Quartiers Ouest,,,,,,1.0,,,,,,,,,,,
+954,110.0,43.0,2.0,,6,Parking,C,114.0,22.0,Quartiers Ouest,1.0,17.0,,,Individuel,1.0,,,,,,,,,,,
+958,117.0,91.0,4.0,,2,Stationnement en sous-sol,NC,,,Quartiers Nord-Est,1.0,16.0,,Cuisine non équipée,"Individuel
+                    Type gaz",,Sud-Ouest,3.0,,,,,,,,,
+981,50.0,65.0,3.0,1.0,4,,G,739.0,24.0,Quartiers Centre,1.0,,,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",,,2.0,,,,,,,,,
+985,,51.0,2.0,,,Garage,D,194.0,37.0,Quartiers Nord-Est,1.0,,,,Type gaz,1.0,,,,,,,,,,37.0,
+985,,51.0,2.0,,,Garage,D,194.0,37.0,Quartiers Nord-Est,1.0,,,,Type gaz,1.0,,,,,,,,,,37.0,
+1000,110.0,65.0,3.0,,1,Parking,C,123.0,18.0,Quartiers Nord-Ouest,1.0,18.0,,Cuisine équipée,Type gaz,,,2.0,,,,,,,,,
+1000,100.0,47.0,2.0,,3,"Garage, Garage fermé",C,125.0,22.0,Quartiers Centre,1.0,23.0,,Cuisine aménagée et équipée,,1.0,Ouest,,,,,,,,,,
+1010,90.0,70.0,4.0,1.0,1,Parking,D,43.0,43.0,Quartiers Ouest,,,,,Type gaz,,Ouest,3.0,,,,,,,,,
+1030,80.0,54.0,3.0,1.0,3,"Garage, Garage fermé",C,106.0,18.0,Quartiers Nord-Ouest,,28.0,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,Ouest,2.0,,,950.0,,,,,,
+1040,70.0,61.0,4.0,1.0,4,,D,230.0,38.0,Quartiers Centre,,,,Cuisine aménagée,Type gaz,,Sud,3.0,,,,,,,,,
+1050,,71.0,4.0,1.0,4,,F,343.0,10.0,Quartiers Nord-Ouest,,,,Cuisine américaine,Collectif,,Sud,3.0,,,,,,,,,
+1050,200.0,61.0,3.0,,,,NC,,,Quartiers Centre,,,,,,,,2.0,,,,,,,,,
+1095,115.0,84.0,4.0,,1,"Garage, Garage fermé",D,175.0,34.0,Quartiers Ouest,,,,,,,,3.0,,,,,,,,,
+1095,100.0,47.0,2.0,1.0,2,,E,284.0,58.0,Quartiers Centre,,,,,Type gaz,1.0,Nord,,,Fibre,,,,,,,
+1100,80.0,74.0,4.0,1.0,2,,C,156.0,22.0,Quartiers Centre,,,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,,2.0,,,,,,,,,
+1100,300.0,68.0,3.0,,2,,C,159.0,5.0,Quartiers Nord-Ouest,1.0,,,,"Individuel
+                    Type electrique",,Est,2.0,,,,,,,,,
+1106,45.0,68.0,3.0,,2,,B,51.0,8.0,Quartiers Centre,1.0,,,Cuisine aménagée et équipée,Individuel,,,2.0,,,,,,,,,
+1111,61.0,77.0,3.0,1.0,7,Sous-sol,C,129.0,4.0,Quartiers Centre,,,,Cuisine aménagée et équipée,"Individuel
+                    Type electrique",,,2.0,,,1050.0,,,,,,
+1120,120.0,70.0,4.0,,1,Garage,D,163.0,31.0,Quartiers Ouest,1.0,6.0,,,Individuel,,OUEST,2.0,,,,,,,,,
+1120,120.0,70.0,4.0,1.0,4,,F,337.0,54.0,Quartiers Nord-Ouest,,,,,Collectif,,Sud,3.0,,,,,,,,,
+1140,180.0,84.0,5.0,,5,,C,87.0,15.0,Quartiers Centre,1.0,,,Cuisine aménagée et équipée,"Collectif
+                    Type gaz",,Sud,3.0,,,,,,,,,
+1155,55.0,67.0,3.0,1.0,2,Parking,NC,,,Quartiers Ouest,1.0,,,,Type gaz,,Sud-Est,2.0,,Fibre,,,,,,,
+1163,33.0,90.0,4.0,,3,Garage,E,244.0,53.0,Quartiers Centre,1.0,,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,Nord-Est,3.0,,,,,,,,,
+1195,120.0,75.0,4.0,,4,Parking,C,177.0,27.0,Quartiers Nord-Ouest,1.0,21.0,,Cuisine séparée,Collectif,,,3.0,,,,,,,,,
+1195,100.0,73.0,3.0,1.0,4,Stationnement en sous-sol,D,217.0,47.0,Quartiers Ouest,1.0,,,,Type gaz,,Sud-Est,2.0,,Fibre,,,,,,,
+1200,140.0,85.0,5.0,,4,,D,176.0,41.0,Quartiers Ouest,1.0,,,Cuisine aménagée et équipée,"Collectif
+                    Type gaz",,Ouest,4.0,,,,,,,,,
+1200,100.0,53.0,3.0,,,,D,143.0,33.0,Quartiers Ouest,,,,,,,,2.0,,,,,,,,,
+1215,115.0,76.0,4.0,1.0,8,,D,188.0,9.0,Quartiers Nord-Ouest,,,,Cuisine aménagée et équipée,"Collectif
+                    Type gaz",,,3.0,,,,,,,,,
+1250,70.0,79.0,3.0,1.0,2,"Garage, Garage fermé",C,123.0,23.0,Quartiers Ouest,,,,Cuisine aménagée et équipée,Individuel,,,2.0,,,,,,,2.0,,
+1260,,92.0,5.0,,3,,E,272.0,8.0,Quartiers Nord-Ouest,1.0,,,Cuisine américaine,Collectif,,,4.0,,,,,,,,,
+1264,,79.0,4.0,1.0,3,,C,139.0,11.0,Quartiers Nord-Ouest,,,,Cuisine américaine,Collectif,,Ouest,4.0,,,,,,,,,
+1270,80.0,60.0,4.0,1.0,4,,F,385.0,51.0,Quartiers Centre,,,,,"Individuel
+                    Type electrique",,,3.0,,,,,,,,,
+1276,45.0,96.0,5.0,,2,,D,183.0,36.0,Quartiers Centre,1.0,10.0,,,,,,2.0,,,,,,,,,
+1280,130.0,82.0,4.0,,6,Garage,C,120.0,,Quartiers Nord-Ouest,1.0,,,Cuisine aménagée et équipée,Collectif,,Sud,3.0,,,,,,,,,
+1280,130.0,82.0,4.0,,6,"Garage, Sous-sol",C,120.0,,Quartiers Nord-Ouest,1.0,,,Cuisine aménagée et équipée,"Collectif
+                    Type gaz",,,3.0,,,,,,,,,
+1290,60.0,83.0,4.0,1.0,4,,E,257.0,55.0,Quartiers Centre,,17.0,,Cuisine séparée,Individuel,,,,,,,,,,,,
+1290,140.0,72.0,3.0,,1,,A,37.0,1.0,Quartiers Nord-Ouest,1.0,,,,Type gaz,,Sud-Ouest,2.0,,,,,,,,,
+1300,100.0,70.0,3.0,,7,Parking,B,47.0,9.0,Quartiers Nord-Est,1.0,1.0,,,Collectif,,SUD OUEST,2.0,,,,,,,,,
+1300,100.0,70.0,3.0,,7,Parking,B,47.0,9.0,Quartiers Nord-Est,1.0,1.0,,,Collectif,,SUD OUEST,2.0,,,,,,,,,
+1300,80.0,68.0,3.0,,4,Parking,C,55.0,11.0,Quartiers Nord-Est,1.0,3.0,,Cuisine séparée,Individuel,,,2.0,,,,,,,,,
+1300,70.0,100.0,4.0,,4,,D,200.0,30.0,Quartiers Centre,1.0,,,,Type gaz,,Ouest,3.0,,Fibre,,,,,,,
+1305,105.0,85.0,4.0,,1,Garage,D,178.0,38.0,Quartiers Ouest,1.0,,,Cuisine équipée,"Individuel
+                    Type gaz",,SUD,3.0,,,,,,,,,
+1310,110.0,75.0,4.0,1.0,2,Parking,D,169.0,33.0,Quartiers Nord-Est,,4.0,,Cuisine séparée,Individuel,,,3.0,,,,,,,,,
+1350,100.0,68.0,3.0,,,,NC,,,Quartiers Ouest,,,,,,,,2.0,,,,,,,,,
+1490,50.0,102.0,5.0,,1,Garage fermé,D,202.0,33.0,Quartiers Centre,1.0,10.0,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,Sud,3.0,,Fibre,,,,,,,
+1530,80.0,93.0,4.0,,2,,D,158.0,33.0,Quartiers Centre,1.0,,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,,3.0,,,,,,7.0,,,
+1550,300.0,117.0,5.0,1.0,1,Garage,E,306.0,67.0,Quartiers Nord-Ouest,1.0,1.0,,,Collectif,,,3.0,,,,,,,,,
+1550,300.0,117.0,5.0,1.0,1,Garage,E,306.0,67.0,Quartiers Nord-Ouest,1.0,1.0,,,Collectif,,,3.0,,,,,,,,,
+1612,112.0,99.0,5.0,1.0,3,,D,165.0,34.0,Quartiers Centre,,,,Cuisine aménagée et équipée,"Individuel
+                    Type gaz",,,3.0,,,,,,,,,
+1614,,109.0,5.0,1.0,2,Garage,D,128.0,30.0,Quartiers Centre,1.0,13.0,,Cuisine américaine,"Collectif
+                    Type gaz",,Sud-Est,3.0,,,,,,,,,
+1674,80.0,92.0,5.0,1.0,2,Garage,D,190.0,41.0,Quartiers Centre,,,,,"Individuel
+                    Type gaz",,,3.0,,,,,,,,,
+1700,,135.0,5.0,1.0,3,Parking,D,177.0,37.0,Quartiers Centre,1.0,,,Cuisine américaine,"Collectif
+                    Type gaz",,,3.0,,,,,,,,,
+1700,,135.0,5.0,1.0,3,Parking,D,177.0,37.0,Quartiers Centre,1.0,,,Cuisine américaine,"Collectif
+                    Type gaz",,,3.0,,,,,,,,,
+1781,260.0,132.0,5.0,1.0,5,Garage,E,276.0,13.0,Quartiers Nord-Est,1.0,,,Cuisine aménagée et équipée,Collectif,,,4.0,,,,,,,,,
+1781,260.0,132.0,5.0,1.0,5,Garage,E,276.0,13.0,Quartiers Nord-Est,1.0,,,Cuisine aménagée et équipée,Collectif,,,4.0,,,,,,,,,
+1960,200.0,129.0,4.0,,4,Garage fermé,E,286.0,63.0,Quartiers Centre,,30.0,,Cuisine aménagée et équipée,"Collectif
+                    Type gaz",,,3.0,2.0,,,,,,,,
+2250,130.0,107.0,4.0,1.0,5,Parking,C,60.0,12.0,Quartiers Ouest,1.0,9.0,,,Individuel,,,3.0,,,,,,,,,
