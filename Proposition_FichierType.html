@@ -2629,6 +2629,75 @@ window.onload = function() {
 </script>
     
     
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+background-color: #ffffff;
+color: #a0a0a0;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0; padding-left: 4px; }
+div.sourceCode
+{ color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } 
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } 
+code span.an { color: #ca60ca; } 
+code span.at { color: #0057ae; } 
+code span.bn { color: #b08000; } 
+code span.bu { color: #644a9b; font-weight: bold; } 
+code span.cf { color: #1f1c1b; font-weight: bold; } 
+code span.ch { color: #924c9d; } 
+code span.cn { color: #aa5500; } 
+code span.co { color: #898887; } 
+code span.cv { color: #0095ff; } 
+code span.do { color: #607880; } 
+code span.dt { color: #0057ae; } 
+code span.dv { color: #b08000; } 
+code span.er { color: #bf0303; text-decoration: underline; } 
+code span.ex { color: #0095ff; font-weight: bold; } 
+code span.fl { color: #b08000; } 
+code span.fu { color: #644a9b; } 
+code span.im { color: #ff5500; } 
+code span.in { color: #b08000; } 
+code span.kw { color: #1f1c1b; font-weight: bold; } 
+code span.op { color: #1f1c1b; } 
+code span.ot { color: #006e28; } 
+code span.pp { color: #006e28; } 
+code span.re { color: #0057ae; background-color: #e0e9f8; } 
+code span.sc { color: #3daee9; } 
+code span.ss { color: #ff5500; } 
+code span.st { color: #bf0303; } 
+code span.va { color: #0057ae; } 
+code span.vs { color: #bf0303; } 
+code span.wa { color: #bf0303; } 
+</style>
     
     
     <!-- tabsets -->
@@ -2975,7 +3044,27 @@ Quartiers Centre</p>
 unique</strong>.<br />
 Les variables collectées décrivent : - les caractéristiques du logement
 (surface, nombre de pièces, charges), - sa performance énergétique
-(classe, consommation, émissions), - sa localisation.</p>
+(classe, consommation, émissions), - sa localisation. ### Importation
+des données</p>
+<pre><code>##  [1] &quot;Loyer&quot;                     &quot;Surface.habitable&quot;        
+##  [3] &quot;Pièce&quot;                     &quot;Salle.d.eau&quot;              
+##  [5] &quot;label_eco&quot;                 &quot;kWh.m...an&quot;               
+##  [7] &quot;kgCO2.m...an&quot;              &quot;Quartiers&quot;                
+##  [9] &quot;Dont.charges&quot;              &quot;Pièces&quot;                   
+## [11] &quot;Chambres&quot;                  &quot;Etage&quot;                    
+## [13] &quot;Exposition&quot;                &quot;Type.cuisine&quot;             
+## [15] &quot;Chauffage&quot;                 &quot;Disponibilité&quot;            
+## [17] &quot;Chambre&quot;                   &quot;Salle.de.bain&quot;            
+## [19] &quot;Type.stationnement&quot;        &quot;Copropriété&quot;              
+## [21] &quot;Internet&quot;                  &quot;Loyer.hors.charges&quot;       
+## [23] &quot;Loyer.de.référence.majoré&quot; &quot;Chambre.au.RDC&quot;           
+## [25] &quot;Surface.terrain&quot;           &quot;Salles.d.eau&quot;             
+## [27] &quot;Charges.prévisionnelles&quot;   &quot;Chambres.au.RDC&quot;</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Loyer_TTC"],"name":[1],"type":["int"],"align":["right"]},{"label":["Surface"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Charges"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pièces"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pièce"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["label_eco"],"name":[6],"type":["chr"],"align":["left"]},{"label":["kWh"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["kgCO2"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Quartiers"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"555","2":"12","3":"NA","4":"NA","5":"1","6":"E","7":"410","8":"12","9":"Quartiers Centre","_rn_":"1"},{"1":"952","2":"54","3":"52","4":"3","5":"NA","6":"D","7":"178","8":"38","9":"Quartiers Centre","_rn_":"2"},{"1":"504","2":"24","3":"20","4":"NA","5":"1","6":"E","7":"264","8":"8","9":"Quartiers Centre","_rn_":"3"},{"1":"755","2":"46","3":"70","4":"2","5":"NA","6":"D","7":"203","8":"6","9":"Quartiers Centre","_rn_":"4"},{"1":"430","2":"19","3":"20","4":"NA","5":"1","6":"E","7":"321","8":"14","9":"Quartiers Centre","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <div id="tableau-1-description-des-variables" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Tableau 1 –
 Description des variables</h3>
@@ -3051,154 +3140,269 @@ Description des variables</h3>
 <div id="prétraitement-et-nettoyage-des-données" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Prétraitement et
 nettoyage des données</h2>
-<p>Avant de procéder à l’analyse statistique et économétrique, un
-travail de préparation des données a été nécessaire. Les données issues
-du web scraping présentent en effet des imperfections typiques : valeurs
-manquantes, formats hétérogènes, doublons ou incohérences. Cette section
-décrit l’ensemble des étapes réalisées pour obtenir un jeu de données
-propre et exploitable.</p>
-<div id="identification-et-traitement-des-valeurs-manquantes" class="section level3" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Identification et
-traitement des valeurs manquantes</h3>
-<p>Plusieurs variables essentielles présentaient des informations
-manquantes.<br />
-Les vérifications initiales ont permis d’identifier trois types de
-situations :</p>
-<ul>
-<li><strong>variables cruciales non renseignées</strong> : surface,
-nombre de pièces, loyer total ;<br />
-</li>
-<li><strong>variables partiellement renseignées</strong> : classe
-énergétique, consommation en kWh, émissions de CO₂ ;<br />
-</li>
-<li><strong>variables informatives mais non critiques</strong> :
-certaines mentions textuelles ou précisions secondaires.</li>
-</ul>
-<p>Les choix retenus sont les suivants :</p>
-<ul>
-<li>Suppression de toutes les annonces dépourvues de <strong>loyer
-total</strong>, car il s’agit de la variable expliquée.<br />
-</li>
-<li>Suppression des annonces dépourvues de <strong>surface</strong> ou
-de <strong>nombre de pièces</strong>, car ces variables constituent des
-déterminants majeurs du modèle.<br />
-</li>
-<li>Conservation des observations sans information énergétique <em>si
-leur proportion reste faible</em>, la classe énergétique étant une
-information non obligatoire dans certaines annonces.<br />
-</li>
-<li>Vérification de la cohérence entre les valeurs manquantes : une
-annonce dont la classe énergétique est manquante mais dont les émissions
-CO₂ sont renseignées a, par exemple, été conservée si les données
-étaient cohérentes.</li>
-</ul>
-<p>Ces traitements permettent d’éviter les biais liés aux observations
-incomplètes tout en conservant une base représentative.</p>
+<p>Avant de procéder aux analyses descriptives et économétriques, il a
+été nécessaire de réaliser un travail approfondi de préparation des
+données issues du web scraping. Comme souvent avec des données
+collectées directement sur un site d’annonces, plusieurs problèmes se
+présentent : valeurs manquantes, incohérences, doublons, hétérogénéité
+dans les formats ou dans les catégories. Cette section présente de
+manière structurée l’ensemble des opérations réalisées pour obtenir un
+jeu de données exploitable.</p>
+<div id="sélection-et-renommage-des-variables" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Sélection et
+renommage des variables</h3>
+<p>Dans un premier temps, seules les variables pertinentes pour l’étude
+ont été conservées.<br />
+Les colonnes correspondant “Loyer”, “Surface.habitable”,
+“Dont.charges”,“Pièces” , “Pièce”, “label_eco”, “kWh.m…an”,“kgCO2.m…an”,
+“Quartiers” ont été extraites.<br />
+Les noms ont également été standardisés pour faciliter leur manipulation
+(par exemple : renommer <em>Surface habitable</em> en <em>Surface</em>,
+<em>Dont charges</em> en <em>Charges</em>, etc.).</p>
 </div>
-<div id="détection-des-doublons-et-vérification-de-la-cohérence-interne" class="section level3" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> Détection des
-doublons et vérification de la cohérence interne</h3>
-<p>Le web scraping peut générer des doublons lorsque plusieurs pages du
-site affichent la même annonce.<br />
-Une vérification systématique a été réalisée à partir de :</p>
+<div id="gestion-des-valeurs-manquantes" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Gestion des valeurs
+manquantes</h3>
+<p>La base contenait un certain nombre d’observations incomplètes.
+Plusieurs traitements ont été appliqués :</p>
 <ul>
-<li>l’identifiant unique de l’annonce (lorsqu’il existe),<br />
-</li>
-<li>la combinaison du titre, de la surface et du loyer.</li>
+<li><p><strong>Correction des pièces manquantes</strong> : Le jeu de
+données contient deux variables liées au nombre de pièces du logement
+:</p></li>
+<li><p><code>Pièces</code> : prend une valeur manquante
+(<code>NA</code>) ou bien un nombre de pièces <strong>strictement
+supérieur à 1</strong> ;</p></li>
+<li><p><code>Piece</code> : variable binaire prenant la valeur
+<code>1</code> ou <code>NA</code>, et renseignée uniquement lorsque
+<code>Pièces</code> est manquante.. Donc , nous avons remplacé tout les
+valeurs manquantes par 1 (1 pièce).</p></li>
 </ul>
-<p>Les doublons identifiés ont été supprimés pour éviter d’introduire un
-poids artificiel dans les statistiques.</p>
-<p>Une vérification supplémentaire a été effectuée afin de repérer
-d’éventuelles incohérences, telles que :</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>annonces <span class="ot">&lt;-</span> annonces <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(Pièces <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(Pièces) , <span class="dv">1</span> ,Pièces))</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>annonces<span class="ot">&lt;-</span> annonces<span class="sc">%&gt;%</span><span class="fu">select</span>(<span class="sc">-</span>Pièce)</span></code></pre></div>
 <ul>
-<li>des surfaces très faibles ou très élevées pour le marché rennais
-(ex. &lt; 8 m² ou &gt; 150 m² pour un loyer &lt; 1000 €) ;<br />
-</li>
-<li>des montants de charges sans rapport avec la surface ;<br />
-</li>
-<li>des consommations énergétiques incohérentes ou impossibles.</li>
+<li><strong>Exclusion des annonces non classées énergétiquement</strong>
+: les logements portant la mention <em>NC</em> (Non Classé) ont été
+retirés.</li>
 </ul>
-<p>Les observations visiblement erronées ont été retirées.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>annonces<span class="sc">$</span>label_eco <span class="ot">&lt;-</span><span class="fu">as.factor</span>(annonces<span class="sc">$</span>label_eco)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>annonces <span class="ot">&lt;-</span>annonces <span class="sc">%&gt;%</span><span class="fu">filter</span>(label_eco <span class="sc">!=</span><span class="st">&quot;NC&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">table</span>(annonces<span class="sc">$</span>label_eco)</span></code></pre></div>
+<pre><code>## 
+##  B  C  D  E  F NC NS 
+##  8 37 67 41  9  0  1</code></pre>
+<ul>
+<li><strong>Regroupement de certaines catégories énergétiques</strong> :
+les labels <em>NS</em>, <em>A</em> , <em>B</em> et <em>C</em> ont été
+regroupés dans une catégorie commune (<em>C+</em>) et les labels
+<em>E</em> et <em>F</em> ont été regroupés dans une catégorie commune
+(<em>E-</em>) pour éviter des classes trop peu représentées.</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">levels</span>(annonces<span class="sc">$</span>label_eco)[<span class="fu">levels</span>(annonces<span class="sc">$</span>label_eco) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;NS&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span> ,<span class="st">&quot;C&quot;</span>)] <span class="ot">&lt;-</span><span class="st">&quot;C+&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">levels</span>(annonces<span class="sc">$</span>label_eco)[<span class="fu">levels</span>(annonces<span class="sc">$</span>label_eco) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;E&quot;</span>,<span class="st">&quot;F&quot;</span>)] <span class="ot">&lt;-</span><span class="st">&quot;E-&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">table</span>(annonces<span class="sc">$</span>label_eco)</span></code></pre></div>
+<pre><code>## 
+## C+  D E- NC 
+## 46 67 50  0</code></pre>
+<ul>
+<li><strong>Imputation énergétique</strong> : les valeurs manquantes
+concernant la consommation en kWh et les émissions de CO₂ ont été
+remplacées par la moyenne calculée au sein de chaque classe
+énergétique.<br />
+Cela permet une imputation cohérente avec le profil énergétique du
+logement.</li>
+</ul>
+<p>Ces opérations permettent d’éviter la perte excessive d’observations
+tout en conservant une cohérence structurelle entre les variables.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>annonces <span class="ot">&lt;-</span> annonces <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">group_by</span>(label_eco) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">kWh   =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(kWh),   <span class="fu">mean</span>(kWh,   <span class="at">na.rm =</span> <span class="cn">TRUE</span>), kWh),</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">kgCO2 =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(kgCO2), <span class="fu">mean</span>(kgCO2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), kgCO2)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 </div>
-<div id="sélection-et-standardisation-des-variables" class="section level3" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> Sélection et
-standardisation des variables</h3>
-<p>L’ensemble des variables collectées n’est pas pertinent pour
-l’analyse.<br />
-Les variables retenues sont celles correspondant aux objectifs du modèle
+<div id="vérification-des-effectifs-et-cohérence-interne" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Vérification des
+effectifs et cohérence interne</h3>
+<p>Les effectifs par label énergétique ont été inspectés pour vérifier
+la répartition des logements après nettoyage.<br />
+Cette étape permet de s’assurer que les regroupements effectués ne
+créent pas de déséquilibres majeurs ou de classes trop petites.</p>
+<p>Le travail consiste également à vérifier la cohérence logique des
+données, comme :</p>
+<ul>
+<li>absence de valeurs énergétiques impossibles,</li>
+<li>absence de surfaces irréalistes,</li>
+<li>cohérence entre loyer et charges.</li>
+</ul>
+<p>Les observations incohérentes ont été retirées ou corrigées selon les
+cas.</p>
+</div>
+<div id="remplacer-des-valeurs-manquantes-dans-les-charges" class="section level3" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Remplacer des
+valeurs manquantes dans les charges</h3>
+<p>Certaines annonces ne précisaient pas le montant des charges.<br />
+Plutôt qu’une suppression pure et simple, les charges manquantes ont été
+estimées en utilisant une méthode par <strong>groupes de loyers</strong>
 :</p>
-<ul>
-<li>loyer mensuel tout compris,<br />
-</li>
-<li>surface,<br />
-</li>
-<li>charges,<br />
-</li>
-<li>nombre de pièces,<br />
-</li>
-<li>classe énergétique,<br />
-</li>
-<li>consommation énergétique annuelle (kWh),<br />
-</li>
-<li>émissions annuelles de CO₂ (kg),<br />
-</li>
-<li>quartier.</li>
-</ul>
-<p>Les traitements appliqués sont :</p>
-<ul>
-<li>Normalisation des codes énergétiques (A, B, C, … → mise en
-majuscules, retrait des espaces).<br />
-</li>
-<li>Standardisation des noms des quartiers afin d’éviter les doublons
-dus aux variations d’écriture (ex. <em>Quartier Nord Est</em>,
-<em>Nord-Est</em>, <em>NE</em>, etc.).<br />
-</li>
-<li>Conversion systématique des nombres (surface, charges, consommation,
-émissions) en format numérique, après retrait d’éventuels caractères
-parasites.</li>
-</ul>
-</div>
-<div id="mise-en-forme-des-variables-pour-lanalyse-économétrique" class="section level3" number="3.2.4">
-<h3><span class="header-section-number">3.2.4</span> Mise en forme des
-variables pour l’analyse économétrique</h3>
-<p>Les modèles économétriques nécessitent un format particulier pour
-certaines variables.<br />
-Les transformations suivantes ont donc été opérées :</p>
-<ul>
-<li>La classe énergétique a été convertie en <strong>facteur
-ordonné</strong>, selon le classement officiel :<br />
-A &lt; B &lt; C &lt; D &lt; E &lt; F &lt; G.</li>
-<li>Le quartier a été converti en <strong>variable factorielle</strong>,
-permettant l’utilisation de variables indicatrices lors de
-l’estimation.</li>
-<li>Les charges, la surface, la consommation énergétique et les
-émissions de CO₂ ont été converties en variables <strong>numériques
-continues</strong>.</li>
-<li>Le loyer total (variable cible) a été vérifié afin d’assurer
-l’absence d’erreurs de format (ex. “850€” → 850).</li>
-</ul>
+<ol style="list-style-type: decimal">
+<li>Le loyer total a été divisé en cinq intervalles (du plus faible au
+plus élevé).</li>
+<li>Chaque logement a été associé à un groupe de loyer.</li>
+<li>Les charges manquantes ont été remplacées par la moyenne observée
+dans leur groupe de loyers respectif.</li>
+</ol>
+<p>Cette méthode permet d’imputer les charges selon un critère
+économique pertinent : les logements ayant des loyers comparables ont
+généralement des niveaux de charges similaires.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>annonces<span class="sc">$</span>Loyer_Groupe <span class="ot">&lt;-</span> <span class="fu">cut_interval</span>(annonces<span class="sc">$</span>Loyer_TTC ,<span class="dv">4</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"># Remplacer les charges manquantes par la moyenne du groupe de loyer (arrondi à 2 décimales)</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>annonces <span class="ot">&lt;-</span> annonces <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Loyer_Groupe) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="at">Charges =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>      <span class="fu">is.na</span>(Charges),</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>      <span class="fu">round</span>(<span class="fu">mean</span>(Charges, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>      Charges</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>    )</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 </div>
 <div id="constitution-du-jeu-de-données-final" class="section level3" number="3.2.5">
 <h3><span class="header-section-number">3.2.5</span> Constitution du jeu
 de données final</h3>
-<p>Après ces différentes opérations, un jeu de données final propre et
-exploitable a été constitué.<br />
-Il présente les caractéristiques suivantes :</p>
+<div id="vérification-labsence-de-valeur-manquante" class="section level4" number="3.2.5.1">
+<h4><span class="header-section-number">3.2.5.1</span> Vérification
+l’absence de valeur manquante</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">anyNA</span>(annonces)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Après l’ensemble de ces traitements, la base obtenue présente les
+caractéristiques suivantes :</p>
 <ul>
-<li>absence de valeurs non renseignées pour les variables essentielles
-;<br />
-</li>
-<li>absence de doublons ;<br />
-</li>
-<li>cohérence des formats numériques et textuels ;<br />
-</li>
-<li>préparation des variables catégorielles pour la régression ;<br />
-</li>
-<li>uniformisation des unités de mesure.</li>
+<li>absence de doublons,</li>
+<li>absence de valeurs cruciales manquantes,</li>
+<li>cohérence des formats (numérique, catégoriel, etc.),</li>
+<li>regroupement homogène des catégories énergétiques,</li>
+<li>estimation raisonnable des charges manquantes,</li>
+<li>structure compatible avec les outils de modélisation et d’analyse
+statistique.</li>
 </ul>
-<p>Le tableau statistique final sert de base à l’analyse descriptive et
-à l’estimation du modèle en section 4.</p>
+<p>Cette base nettoyée constitue le fondement de l’analyse descriptive
+(Section 3.3) et du modèle économétrique présenté dans la Section 4. ##
+Analyse descriptive univariée des données Cette section présente une
+description statistique des variables utilisées dans le modèle, après
+les étapes de nettoyage décrites précédemment.<br />
+L’objectif est de caractériser la distribution de chacune des variables,
+d’identifier les tendances générales et de repérer d’éventuelles valeurs
+atypiques.<br />
+L’analyse s’appuie sur des tableaux de statistiques descriptives ainsi
+que des représentations graphiques adaptées (histogrammes, boxplots,
+diagrammes en barres). ### 3. Résumé statistique</p>
+<p>Les principales variables quantitatives du jeu de données sont :</p>
+<ul>
+<li>le <strong>loyer total</strong> (euros),</li>
+<li>la <strong>surface habitable</strong> (m²),</li>
+<li>les <strong>charges mensuelles</strong> (euros),</li>
+<li>le <strong>nombre de pièces</strong>,</li>
+<li>la <strong>consommation énergétique</strong> (kWh/an),</li>
+<li>les <strong>émissions de CO₂</strong> (kg/an).</li>
+</ul>
+<p>Le tableau suivant présente les statistiques descriptives classiques
+: moyenne, médiane, minimum, maximum et écart-type.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>variables_quanti <span class="ot">&lt;-</span> annonces <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">select</span>(Loyer_TTC, Surface, Charges, Pièces, kWh, kgCO2)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> variables_quanti <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="at">Min      =</span> <span class="fu">sapply</span>(., min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    <span class="at">Q1       =</span> <span class="fu">sapply</span>(., quantile, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    <span class="at">Median   =</span> <span class="fu">sapply</span>(., median, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>    <span class="at">Mean     =</span> <span class="fu">sapply</span>(., mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>    <span class="at">Q3       =</span> <span class="fu">sapply</span>(., quantile, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>    <span class="at">Max      =</span> <span class="fu">sapply</span>(., max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>    <span class="at">SD       =</span> <span class="fu">sapply</span>(., sd, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>  <span class="fu">t</span>()</span></code></pre></div>
+<pre><code>## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+## dplyr 1.1.0.
+## ℹ Please use `reframe()` instead.
+## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(summary_stats, <span class="at">caption =</span> <span class="st">&quot;Tableau 2 : Statistiques descriptives des variables quantitatives&quot;</span>)</span></code></pre></div>
+<table>
+<caption>Tableau 2 : Statistiques descriptives des variables
+quantitatives</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Min</td>
+<td align="right">278.000</td>
+<td align="right">9.00000</td>
+<td align="right">5.00000</td>
+<td align="right">1.000000</td>
+<td align="right">44.00000</td>
+<td align="right">3.00000</td>
+</tr>
+<tr class="even">
+<td align="left">Q1</td>
+<td align="right">485.000</td>
+<td align="right">19.00000</td>
+<td align="right">40.00000</td>
+<td align="right">1.000000</td>
+<td align="right">165.50000</td>
+<td align="right">9.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">Median</td>
+<td align="right">610.000</td>
+<td align="right">30.00000</td>
+<td align="right">60.00000</td>
+<td align="right">2.000000</td>
+<td align="right">216.09375</td>
+<td align="right">16.00000</td>
+</tr>
+<tr class="even">
+<td align="left">Mean</td>
+<td align="right">632.816</td>
+<td align="right">38.22699</td>
+<td align="right">64.99644</td>
+<td align="right">1.975460</td>
+<td align="right">218.23431</td>
+<td align="right">23.99380</td>
+</tr>
+<tr class="odd">
+<td align="left">Q3</td>
+<td align="right">788.500</td>
+<td align="right">54.00000</td>
+<td align="right">82.00000</td>
+<td align="right">3.000000</td>
+<td align="right">269.00000</td>
+<td align="right">37.00000</td>
+</tr>
+<tr class="even">
+<td align="left">Max</td>
+<td align="right">997.000</td>
+<td align="right">109.00000</td>
+<td align="right">244.00000</td>
+<td align="right">6.000000</td>
+<td align="right">517.00000</td>
+<td align="right">82.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">SD</td>
+<td align="right">180.665</td>
+<td align="right">23.44452</td>
+<td align="right">36.44950</td>
+<td align="right">1.227016</td>
+<td align="right">84.66949</td>
+<td align="right">18.77442</td>
+</tr>
+</tbody>
+</table>
 <hr />
+</div>
 </div>
 </div>
 </div>

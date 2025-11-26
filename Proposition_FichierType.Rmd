@@ -198,9 +198,25 @@ Les variables collectées décrivent :
 - sa performance énergétique (classe, consommation, émissions),
 - sa localisation.
 ### Importation des données
-```{r}
+```{r, echo=FALSE}
 library("tidyverse")
 annonces <- read.csv("annonces.csv" , sep=",")
+library("tidyverse")
+annonces <- read.csv("annonces.csv" , sep=",")
+names(annonces)
+annonces <- annonces[, c("Loyer", "Surface.habitable", "Dont.charges",
+                         "Pièces" , "Pièce", "label_eco", "kWh.m...an",
+                         "kgCO2.m...an", "Quartiers")]
+
+annonces <- annonces %>%
+  rename(
+    Loyer_TTC = Loyer,
+    Surface   = `Surface.habitable`,
+    Charges   = `Dont.charges`,
+    kWh       =  kWh.m...an,
+    kgCO2     = `kgCO2.m...an`
+  )
+
 head(annonces,5)
 ```
 
@@ -227,45 +243,22 @@ knitr::kable(
 
 
 ```
-### La résumé statistique
-```{r}
-summary(annonces)
-```
 
 
-
-## 3.2 Prétraitement et nettoyage des données
+##  Prétraitement et nettoyage des données
 
 Avant de procéder aux analyses descriptives et économétriques, il a été nécessaire de réaliser un travail approfondi de préparation des données issues du web scraping. Comme souvent avec des données collectées directement sur un site d’annonces, plusieurs problèmes se présentent : valeurs manquantes, incohérences, doublons, hétérogénéité dans les formats ou dans les catégories. Cette section présente de manière structurée l’ensemble des opérations réalisées pour obtenir un jeu de données exploitable.
 
 
-### 3.2.1 Sélection et renommage des variables
+### Sélection et renommage des variables
 
 Dans un premier temps, seules les variables pertinentes pour l’étude ont été conservées.  
 Les colonnes correspondant "Loyer", "Surface.habitable", "Dont.charges","Pièces" , "Pièce", "label_eco", "kWh.m...an","kgCO2.m...an", "Quartiers" ont été extraites.  
 Les noms ont également été standardisés pour faciliter leur manipulation (par exemple : renommer *Surface habitable* en *Surface*, *Dont charges* en *Charges*, etc.).
-```{r}
-library("tidyverse")
-annonces <- read.csv("annonces.csv" , sep=",")
-names(annonces)
-annonces <- annonces[, c("Loyer", "Surface.habitable", "Dont.charges",
-                         "Pièces" , "Pièce", "label_eco", "kWh.m...an",
-                         "kgCO2.m...an", "Quartiers")]
-
-annonces <- annonces %>%
-  rename(
-    Loyer_TTC = Loyer,
-    Surface   = `Surface.habitable`,
-    Charges   = `Dont.charges`,
-    kWh       =  kWh.m...an,
-    kgCO2     = `kgCO2.m...an`
-  )
-
-head(annonces,5)
-```
 
 
-### 3.2.2 Gestion des valeurs manquantes
+
+### Gestion des valeurs manquantes
 
 La base contenait un certain nombre d’observations incomplètes. Plusieurs traitements ont été appliqués :
 
@@ -310,7 +303,7 @@ annonces <- annonces %>%
 ```
 
 
-### 3.2.3 Vérification des effectifs et cohérence interne
+### Vérification des effectifs et cohérence interne
 
 Les effectifs par label énergétique ont été inspectés pour vérifier la répartition des logements après nettoyage.  
 Cette étape permet de s’assurer que les regroupements effectués ne créent pas de déséquilibres majeurs ou de classes trop petites.
@@ -323,7 +316,7 @@ Le travail consiste également à vérifier la cohérence logique des données, 
 
 Les observations incohérentes ont été retirées ou corrigées selon les cas.
 
-### 3.2.4 Estimation des valeurs manquantes dans les charges
+### Remplacer des valeurs manquantes dans les charges
 
 Certaines annonces ne précisaient pas le montant des charges.  
 Plutôt qu’une suppression pure et simple, les charges manquantes ont été estimées en utilisant une méthode par **groupes de loyers** :
@@ -350,7 +343,7 @@ annonces <- annonces %>%
 ```
 
 
-### 3.2.5 Constitution du jeu de données final
+###  Constitution du jeu de données final
 #### Vérification l'absence de valeur manquante 
 ```{r}
 anyNA(annonces)
@@ -367,6 +360,43 @@ Après l’ensemble de ces traitements, la base obtenue présente les caractéri
 - structure compatible avec les outils de modélisation et d’analyse statistique.
 
 Cette base nettoyée constitue le fondement de l’analyse descriptive (Section 3.3) et du modèle économétrique présenté dans la Section 4.
+## Analyse descriptive univariée des données
+Cette section présente une description statistique des variables utilisées dans le modèle, après les étapes de nettoyage décrites précédemment.  
+L’objectif est de caractériser la distribution de chacune des variables, d’identifier les tendances générales et de repérer d’éventuelles valeurs atypiques.  
+L’analyse s’appuie sur des tableaux de statistiques descriptives ainsi que des représentations graphiques adaptées (histogrammes, boxplots, diagrammes en barres).
+### 3. Résumé statistique 
+
+Les principales variables quantitatives du jeu de données sont :
+
+- le **loyer total** (euros),
+- la **surface habitable** (m²),
+- les **charges mensuelles** (euros),
+- le **nombre de pièces**,
+- la **consommation énergétique** (kWh/an),
+- les **émissions de CO₂** (kg/an).
+
+Le tableau suivant présente les statistiques descriptives classiques : moyenne, médiane, minimum, maximum et écart-type.
+
+```{r}
+
+variables_quanti <- annonces %>%
+  select(Loyer_TTC, Surface, Charges, Pièces, kWh, kgCO2)
+
+summary_stats <- variables_quanti %>%
+  summarise(
+    Min      = sapply(., min, na.rm = TRUE),
+    Q1       = sapply(., quantile, 0.25, na.rm = TRUE),
+    Median   = sapply(., median, na.rm = TRUE),
+    Mean     = sapply(., mean, na.rm = TRUE),
+    Q3       = sapply(., quantile, 0.75, na.rm = TRUE),
+    Max      = sapply(., max, na.rm = TRUE),
+    SD       = sapply(., sd, na.rm = TRUE)
+  ) %>%
+  t()
+
+knitr::kable(summary_stats, caption = "Tableau 2 : Statistiques descriptives des variables quantitatives")
+```
+
 
 ---
 
