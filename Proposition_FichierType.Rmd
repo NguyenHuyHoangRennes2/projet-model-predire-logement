@@ -1,0 +1,376 @@
+---
+title: "Titre du projet"  
+date: "`r Sys.Date()`"
+output:
+  rmdformats::robobook:
+    highlight: kate
+    number_sections: TRUE
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE) #Activer le cache des chunks pour accélérer les recompilations
+options("install.lock"=FALSE) #Désactiver le verrouillage d’installation des packages
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) ## configure le chemin du dossier automatiquement
+```
+
+**NOM - Prénom**
+
+[**Master 1 MAS - Université de Rennes**](https://eco.univ-rennes.fr/master-mathematiques-appliquees-statistique)
+
+**ou**
+
+[**Master 1 MAS - Université Rennes 2**](https://formations.univ-rennes2.fr/fr/formations/master-37/master-mention-mathematiques-appliquees-statistique-parcours-sciences-des-donnees-intelligence-artificielle-JFTJBMKM.html)
+
+[Pensez à numéroter vos tables et graphiques, cela vous permet de faire des rappels dans votre texte. Attention également au titre et à la bonne définition des axes. Chaque graphique est commenté, il est parfois préférable de les regrouper au sein d'une même fenêtre pour que le rapport soit plus agréable à lire. N'hésitez pas à faire des sélections de graphiques intéressants plutôt que de les présenter d'une manière mécanique. Il ne faut pas utiliser le code de vos variables dans vos commentaires mais revenir sur leur signification. ]{style="color:red;"}
+
+---
+title: "Analyse des déterminants du loyer à Rennes"
+author: "Nom Prénom"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Introduction
+
+L’accès au logement constitue aujourd’hui un enjeu socio-économique majeur en France. 
+Dans un contexte de pression croissante sur le marché locatif, notamment dans les villes 
+à forte attractivité universitaire comme Rennes, les ménages sont confrontés à une 
+hausse soutenue des loyers. Comprendre les facteurs qui influencent le prix des logements 
+devient alors essentiel pour analyser les disparités territoriales et éclairer les décisions 
+des acteurs publics.
+
+Dans ce projet, nous cherchons à analyser empiriquement les **déterminants du loyer tout 
+compris** des logements situés à Rennes, en utilisant des données collectées automatiquement 
+par web scraping sur le site *Ouest-France Immo*. L’étude se concentre sur les logements dont 
+le loyer mensuel est inférieur ou égal à **1000 euros**, répartis dans quatre grands secteurs 
+de Rennes : **Centre**, **Ouest**, **Nord-Est** et **Nord-Ouest**.
+
+##  Contexte et problématique
+
+Le marché rennais est particulièrement dynamique en raison de sa croissance démographique, 
+de son attractivité étudiante et d’une offre locative limitée. Dès lors, une question 
+centrale se pose :
+
+> **Quels facteurs structurels expliquent les variations de loyer à Rennes ?**
+
+Cela conduit à examiner l’effet de la surface, du nombre de pièces, des charges, de la 
+performance énergétique et de la localisation géographique.
+
+##  Motivation et intérêt du sujet
+
+Ce travail présente plusieurs intérêts :
+- illustrer une application réelle de la **régression linéaire** à partir de données collectées soi-même ;
+- analyser les **disparités intra-urbaines** du marché locatif rennais ;
+- évaluer l’influence de caractéristiques structurelles ou environnementales du logement ;
+- proposer un exemple complet de démarche allant de la collecte de données au modèle final.
+
+##  Questions de recherche et hypothèses
+
+Les questions principales sont :
+
+1. La surface influence-t-elle fortement le montant du loyer ?
+2. Les charges intégrées modifient-elles significativement le niveau du loyer tout compris ?
+3. La performance énergétique joue-t-elle un rôle dans la détermination du prix ?
+4. Le quartier exerce-t-il un effet propre sur les niveaux de loyer ?
+
+Les hypothèses qui en découlent sont :
+
+- **H1 :** une surface plus élevée entraîne un loyer plus élevé 
+
+- **H2 :** des charges plus importantes augmentent le loyer tout compris
+
+- **H3 :** une meilleure performance énergétique est associée à un loyer supérieur 
+
+- **H4 :** les logements du Centre sont plus chers que ceux des autres quartiers.
+
+
+##  Objectifs du mémoire
+
+Les objectifs du projet sont :
+- modéliser et expliquer le loyer mensuel tout compris ;
+- identifier les déterminants les plus significatifs ;
+- analyser les différences selon les quartiers rennais ;
+- proposer une interprétation économétrique rigoureuse.
+
+## Plan du document
+
+Ce mémoire est structuré comme suit :
+
+- **Section 1 : Introduction**
+- **Section 2 : Cadre méthodologique**
+- **Section 3 : Analyse descriptive des données**
+- **Section 4 : Estimation et interprétation du modèle**
+- **Section 5 : Conclusion**
+
+---
+
+# Cadre méthodologique
+
+Cette section présente le modèle économétrique utilisé et les choix méthodologiques qui 
+guident l’estimation.
+
+## Choix méthodologiques : régression linéaire et MCO
+
+Le modèle retenu est une **régression linéaire multiple**, estimée à l’aide de la 
+méthode des **Moindres Carrés Ordinaires (MCO)**. Cette approche permet d’étudier 
+comment une variable quantitative — ici le loyer tout compris — dépend de plusieurs 
+caractéristiques propres au logement.
+
+La méthode MCO consiste à minimiser la somme des carrés des écarts entre les valeurs 
+observées et celles prédites par le modèle. Cette méthode est privilégiée pour sa 
+simplicité, son interprétabilité et les propriétés de ses estimateurs.
+
+##  Formulation du modèle
+
+La variable expliquée est le **loyer mensuel tout compris** (en euros).
+
+Les variables explicatives sont :
+
+- la **surface** du logement (m²),
+- les **charges comprises** (euros),
+- le **nombre de pièces**,
+- la **classe énergétique** (A, B, C, …),
+- la **consommation énergétique annuelle** (kWh/an),
+- les **émissions de CO₂** (kg/an),
+- le **quartier** (Centre, Ouest, Nord-Est, Nord-Ouest).
+
+Le modèle général s’écrit :
+
+\[
+\text{Loyer}_i = \beta_0 +
+\beta_1 \text{Surface}_i +
+\beta_2 \text{Charges}_i +
+\beta_3 \text{Pièces}_i +
+\beta_4 \text{ClasseÉnergie}_i +
+\beta_5 \text{Consommation}_i +
+\beta_6 \text{ÉmissionsCO2}_i +
+\sum_q \gamma_q \text{Quartier}_{qi} +
+\varepsilon_i
+\]
+
+où :
+- \( \beta_0 \) est la constante
+
+- \( \beta_j \) mesure l’effet marginal de chaque caractéristique
+
+- \( \gamma_q \) capture l’effet des quartiers par rapport à un quartier de référence
+
+- \( \varepsilon_i \) est le terme d’erreur
+
+
+## Justification des choix techniques
+
+Plusieurs éléments motivent ce cadre :
+
+- La régression linéaire est un outil adapté pour analyser les facteurs influençant une variable économique.
+- La méthode MCO fournit des estimateurs robustes et facilement interprétables.
+- L’utilisation de **variables indicatrices** pour les quartiers permet de mettre en évidence les différences géographiques de prix.
+- L’intégration des variables énergétiques répond aux enjeux actuels de performance environnementale.
+- Le modèle permet de mesurer l’effet propre de chaque variable tout en contrôlant les autres.
+
+---
+
+
+# Analyse des données
+
+## Cadre des données
+
+Les données proviennent du site **Ouest-France Immo**, collectées à l’aide d’un script de 
+web scraping. Elles décrivent des logements mis en location dans la **ville de Rennes**, 
+avec un loyer mensuel tout compris inférieur ou égal à **1000 €**.
+
+L’étude porte sur **quatre secteurs géographiques** :
+- Quartiers Centre 
+
+- Quartiers Ouest
+
+- Quartiers Nord-Est 
+
+- Quartiers Nord-Ouest
+
+
+Chaque ligne du jeu de données correspond à **une annonce unique**.  
+Les variables collectées décrivent :
+- les caractéristiques du logement (surface, nombre de pièces, charges),
+- sa performance énergétique (classe, consommation, émissions),
+- sa localisation.
+### Importation des données
+```{r}
+library("tidyverse")
+annonces <- read.csv("annonces.csv" , sep=",")
+head(annonces,5)
+```
+
+### Tableau 1 – Description des variables
+```{r, echo=FALSE}
+knitr::kable(
+  data.frame(
+    `Code de la série` = c("prix_TCC", "Surface", "Charges", "Pieces", 
+                           "label_eco", "kWh", "kgCO2", "Quartiers"),
+    `Définition` = c("Loyer mensuel tout compris",
+                     "Surface habitable du logement",
+                     "Montant des charges mensuelles",
+                     "Nombre de pièces du logement",
+                     "Classe énergétique du logement",
+                     "Consommation énergétique annuelle",
+                     "Émissions annuelles de CO2",
+                     "Secteur géographique du logement"),
+    `Unité` = c("Euros", "m²", "Euros", "Nombre", 
+                "Catégorie (A–G)", "kWh/an", "kg/an", "Nom du quartier"),
+    `Source` = rep("Ouest-France Immo (web scraping)", 8)
+  ),
+  caption = "Tableau 1 : Description des variables"
+)
+
+
+```
+### La résumé statistique
+```{r}
+summary(annonces)
+```
+
+
+
+## 3.2 Prétraitement et nettoyage des données
+
+Avant de procéder aux analyses descriptives et économétriques, il a été nécessaire de réaliser un travail approfondi de préparation des données issues du web scraping. Comme souvent avec des données collectées directement sur un site d’annonces, plusieurs problèmes se présentent : valeurs manquantes, incohérences, doublons, hétérogénéité dans les formats ou dans les catégories. Cette section présente de manière structurée l’ensemble des opérations réalisées pour obtenir un jeu de données exploitable.
+
+
+### 3.2.1 Sélection et renommage des variables
+
+Dans un premier temps, seules les variables pertinentes pour l’étude ont été conservées.  
+Les colonnes correspondant "Loyer", "Surface.habitable", "Dont.charges","Pièces" , "Pièce", "label_eco", "kWh.m...an","kgCO2.m...an", "Quartiers" ont été extraites.  
+Les noms ont également été standardisés pour faciliter leur manipulation (par exemple : renommer *Surface habitable* en *Surface*, *Dont charges* en *Charges*, etc.).
+```{r}
+library("tidyverse")
+annonces <- read.csv("annonces.csv" , sep=",")
+names(annonces)
+annonces <- annonces[, c("Loyer", "Surface.habitable", "Dont.charges",
+                         "Pièces" , "Pièce", "label_eco", "kWh.m...an",
+                         "kgCO2.m...an", "Quartiers")]
+
+annonces <- annonces %>%
+  rename(
+    Loyer_TTC = Loyer,
+    Surface   = `Surface.habitable`,
+    Charges   = `Dont.charges`,
+    kWh       =  kWh.m...an,
+    kgCO2     = `kgCO2.m...an`
+  )
+
+head(annonces,5)
+```
+
+
+### 3.2.2 Gestion des valeurs manquantes
+
+La base contenait un certain nombre d’observations incomplètes. Plusieurs traitements ont été appliqués :
+
+- **Correction des pièces manquantes** : Le jeu de données contient deux variables liées au nombre de pièces du logement :
+
+- `Pièces` : prend une valeur manquante (`NA`) ou bien un nombre de pièces **strictement supérieur à 1** ;
+- `Piece` : variable binaire prenant la valeur `1` ou `NA`, et renseignée uniquement lorsque `Pièces` est manquante.. Donc , nous avons remplacé tout les valeurs manquantes par 1 (1 pièce).
+```{r}
+annonces <- annonces %>% mutate(Pièces = ifelse(is.na(Pièces) , 1 ,Pièces))
+annonces<- annonces%>%select(-Pièce)
+```
+
+- **Exclusion des annonces non classées énergétiquement** : les logements portant la mention *NC* (Non Classé) ont été retirés.
+```{r}
+annonces$label_eco <-as.factor(annonces$label_eco)
+annonces <-annonces %>%filter(label_eco !="NC")
+table(annonces$label_eco)
+```
+
+- **Regroupement de certaines catégories énergétiques** : les labels *NS*, *A* , *B* et *C* ont été regroupés dans une catégorie commune (*C+*) et les labels  *E* et *F* ont été regroupés dans une catégorie commune (*E-*) pour éviter des classes trop peu représentées.
+```{r}
+levels(annonces$label_eco)[levels(annonces$label_eco) %in% c("NS","A","B" ,"C")] <-"C+"
+levels(annonces$label_eco)[levels(annonces$label_eco) %in% c("E","F")] <-"E-"
+
+table(annonces$label_eco)
+
+```
+
+- **Imputation énergétique** : les valeurs manquantes concernant la consommation en kWh et les émissions de CO₂ ont été remplacées par la moyenne calculée au sein de chaque classe énergétique.  
+  Cela permet une imputation cohérente avec le profil énergétique du logement.
+
+Ces opérations permettent d’éviter la perte excessive d’observations tout en conservant une cohérence structurelle entre les variables.
+```{r}
+annonces <- annonces %>%
+  group_by(label_eco) %>%
+  mutate(
+    kWh   = ifelse(is.na(kWh),   mean(kWh,   na.rm = TRUE), kWh),
+    kgCO2 = ifelse(is.na(kgCO2), mean(kgCO2, na.rm = TRUE), kgCO2)
+  ) %>%
+  ungroup()
+
+```
+
+
+### 3.2.3 Vérification des effectifs et cohérence interne
+
+Les effectifs par label énergétique ont été inspectés pour vérifier la répartition des logements après nettoyage.  
+Cette étape permet de s’assurer que les regroupements effectués ne créent pas de déséquilibres majeurs ou de classes trop petites.
+
+Le travail consiste également à vérifier la cohérence logique des données, comme :
+
+- absence de valeurs énergétiques impossibles,
+- absence de surfaces irréalistes,
+- cohérence entre loyer et charges.
+
+Les observations incohérentes ont été retirées ou corrigées selon les cas.
+
+### 3.2.4 Estimation des valeurs manquantes dans les charges
+
+Certaines annonces ne précisaient pas le montant des charges.  
+Plutôt qu’une suppression pure et simple, les charges manquantes ont été estimées en utilisant une méthode par **groupes de loyers** :
+
+1. Le loyer total a été divisé en cinq intervalles (du plus faible au plus élevé).
+2. Chaque logement a été associé à un groupe de loyer.
+3. Les charges manquantes ont été remplacées par la moyenne observée dans leur groupe de loyers respectif.
+
+Cette méthode permet d’imputer les charges selon un critère économique pertinent : les logements ayant des loyers comparables ont généralement des niveaux de charges similaires.
+```{r}
+
+annonces$Loyer_Groupe <- cut_interval(annonces$Loyer_TTC ,4)
+# Remplacer les charges manquantes par la moyenne du groupe de loyer (arrondi à 2 décimales)
+annonces <- annonces %>%
+  group_by(Loyer_Groupe) %>%
+  mutate(
+    Charges = ifelse(
+      is.na(Charges),
+      round(mean(Charges, na.rm = TRUE), 2),
+      Charges
+    )
+  ) %>%
+  ungroup()
+```
+
+
+### 3.2.5 Constitution du jeu de données final
+#### Vérification l'absence de valeur manquante 
+```{r}
+anyNA(annonces)
+```
+
+
+Après l’ensemble de ces traitements, la base obtenue présente les caractéristiques suivantes :
+
+- absence de doublons,
+- absence de valeurs cruciales manquantes,
+- cohérence des formats (numérique, catégoriel, etc.),
+- regroupement homogène des catégories énergétiques,
+- estimation raisonnable des charges manquantes,
+- structure compatible avec les outils de modélisation et d’analyse statistique.
+
+Cette base nettoyée constitue le fondement de l’analyse descriptive (Section 3.3) et du modèle économétrique présenté dans la Section 4.
+
+---
+
+
+
+
+
