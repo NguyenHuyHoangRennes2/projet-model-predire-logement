@@ -219,7 +219,7 @@ annonces <- annonces %>%
     kWh       =  kWh.m...an,
     kgCO2     = `kgCO2.m...an`
   )
-
+annonces$Quartiers <- factor(annonces$Quartiers)
 annonces$label_eco <- factor(annonces$label_eco)
 head(annonces,5)
 ```
@@ -278,17 +278,17 @@ annonces$Loyer_Groupe <- cut(annonces$Loyer_TTC , breaks = seuil , include.lowes
 table(annonces$label_eco)
 ```
 
-- **Regroupement de certaines catégories énergétiques** : les labels *G*, *A* , *B* et *C* ont été regroupés dans une catégorie commune (*C+*) et les labels  *E* et *F* ont été regroupés dans une catégorie commune (*E-*) pour éviter des classes trop peu représentées.
-```{r,,echo=FALSE}
+
+```{r,echo=F}
 annonces <-annonces %>%filter(label_eco !="NC") # levels il reste toujours meme si le nombre d'effective =0
 annonces$label_eco <- droplevels(annonces$label_eco)
+```
+
+- **Regroupement de certaines catégories énergétiques** : les labels *G*, *A* , *B* et *C* ont été regroupés dans une catégorie commune (*C+*) et les labels  *E* et *F* ont été regroupés dans une catégorie commune (*E-*) pour éviter des classes trop peu représentées.
+```{r,,echo=FALSE}
 levels(annonces$label_eco)[levels(annonces$label_eco) %in% c("G","A","B" ,"C")] <-"C+"
 levels(annonces$label_eco)[levels(annonces$label_eco) %in% c("E","F")] <-"E-"
 levels(annonces$label_eco)[] <-levels(annonces$label_eco)[1:3]
-levels(annonces$label_eco)
-idx <- which(annonces$label_eco == "C+")
-annonces$label_eco <- as.numeric(annonces$label_eco)
-annonces$label_eco[idx]
 
 
 ```
@@ -298,29 +298,17 @@ annonces$label_eco[idx]
 ```{r,echo=FALSE}
 table(annonces$label_eco)
 ```
-#### b.2 One Hot Encoding la variables Quartiers
 
+La base contenait un certain nombre d’observations incomplètes. Plusieurs traitements ont été appliqués :
 
-      
-```{r}
-#install.packages("fastDummies")
-library(fastDummies)
-annonces <- annonces%>% mutate(Quartiers = sub("Quartiers " , "" , Quartiers))
-annonces$Quartiers <- factor(annonces$Quartiers)
-annonces <- dummy_cols(annonces, select_columns = "Quartiers")
-
-
-```
-
-#### b.3 Correction des valeurs manquante
+#### b.2 Correction des valeurs manquante
 - **Correction des pièces manquantes** : Le jeu de données contient deux variables liées au nombre de pièces du logement :
 
 - **Pièces** : prend une valeur manquante (`NA`) ou bien un nombre de pièces **strictement supérieur à 1** ;
 - **Piece** : variable binaire prenant la valeur `1` ou `NA`, et renseignée uniquement lorsque `Pièces` est manquante. Finalement, nous avons remplacé toutes les valeurs manquantes par 1 (1 pièce).
 ```{r ,echo=F}
-library(tidyverse)
 annonces <- annonces %>% mutate(Pièces = ifelse(is.na(Pièces) , 1 ,Pièces))
-annonces <- dplyr::select(annonces, -Pièce)
+annonces<- annonces%>%select(-Pièce)
 ```
 
   
@@ -413,8 +401,8 @@ Les principales variables quantitatives du jeu de données sont :
 Le tableau suivant présente les statistiques descriptives classiques : moyenne, médiane, minimum, maximum et écart-type.
 
 ```{r , echo=FALSE}
-#install.packages("tidyverse")
-summary_stats <- annonces %>% select(Loyer_TTC, Surface, Charges, Pièces , label_eco, kWh, kgCO2)
+summary_stats <- annonces %>%
+  select(Loyer_TTC, Surface, Charges, Pièces, kWh, kgCO2)
 
 result <- data.frame(
   Var    = colnames(summary_stats),
@@ -564,36 +552,77 @@ Les quatre tableaux obtenus après les étapes de nettoyage permettent d’appr�
 L’histogramme permet de visualiser la distribution des variables quantitatives.
 Les graphiques suivants représentent :
 
+#### La distribution du Loyer_TTC
 
-
-```{r}
-library(ggplot2)
-library(gridExtra)
-#On peut aussi regarder les boxplots pour chaque variable pour avoir une idée rapide des quartiles.
-
-graphConso.bp <- function(uneVariable){
-  ggplot(data = annonces, aes_string(x = "factor(0)", y = uneVariable)) +
-    geom_boxplot() + xlab("")
-}
-p1.bp <- graphConso.bp("Surface")
-p2.bp <- graphConso.bp("Charges")
-p3.bp <- graphConso.bp("Pièces")
-p4.bp <- graphConso.bp("label_eco")
-p5.bp <- graphConso.bp("kWh")
-p6.bp <- graphConso.bp("kgCO2")
-
-
-
-grid.arrange(p1.bp, p2.bp, p3.bp, p4.bp, p5.bp, p6.bp, ncol = 2)
-
-
+```{r,,echo=F}
+ggplot(annonces, aes(x = Loyer_TTC)) +
+geom_histogram(bins = 25, fill = "lightblue", color = "black") +
+labs(title = "Graphique 1 : Distribution du loyer tout compris",
+x = "Loyer TTC (euros)", y = "Effectif")
 ```
 
+## 3.4 Analyse descriptive bivariée des données 
 
+### a)Corrélations entre le loyer et les variables explicatives quantitatives
+```{r}
+vars_quanti <- annonces %>%
+select(Loyer_TTC, Surface, Charges, Pièces, kWh, kgCO2)
+cor_y <- cor(vars_quanti, use = "complete.obs")
+knitr::kable(cor_y,
+digits = 2,
+caption = "Tableau : Corrélations entre le loyer et les variables explicatives quantitatives")
+```
+**Commentaire : Corrélations entre le loyer et les variables explicatives**
+
+Le tableau met en évidence plusieurs relations importantes entre la variable expliquée (*Loyer_TTC*) et les variables explicatives quantitatives :
+
+1. **Surface (corr = 0.93)**  
+   C’est la corrélation la plus forte observée.  
+   Le loyer augmente très fortement avec la surface du logement.  
+   Cette relation quasi linéaire confirme que la surface est le principal déterminant du prix.
+
+2. **Nombre de pièces (corr = 0.87)**  
+   Le nombre de pièces est également fortement corrélé au loyer.  
+   Cela s’explique naturellement par le fait qu’un logement comportant plus de pièces possède généralement une surface plus importante et un niveau de confort supérieur.
+
+3. **Charges (corr = 0.61)**  
+   Une corrélation positive modérée :  
+   les logements ayant des charges plus élevées ont souvent des loyers plus élevés.  
+   Cependant, la relation est moins forte que pour la surface et les pièces.
+
+4. **Consommation énergétique kWh (corr = –0.30)**  
+   La corrélation est faible et négative.  
+   Cela suggère que les logements très énergivores (kWh élevés) ont tendance à être légèrement moins chers, ce qui est cohérent avec l’idée qu’un mauvais bilan énergétique peut réduire la valeur locative.
+
+5. **Émissions de CO₂ (corr = 0.21)**  
+   Corrélation faible et positive.  
+   Cela signifie qu’il n’existe pas de relation claire entre les émissions de CO₂ et le montant du loyer.  
+   Le CO₂ est probablement un facteur indirect qui reflète davantage la performance énergétique ou la taille du logement.
+
+---
+
+**Conclusion :**  
+Les corrélations élevées entre le loyer, la surface et le nombre de pièces confirment que ces variables sont des déterminants majeurs du prix.  
+En revanche, les variables énergétiques (kWh, kgCO₂) ont une influence beaucoup plus faible.
+
+Cette analyse est cohérente avec les résultats attendus sur un marché locatif urbain comme celui de Rennes.
+
+### b) Nuage de point vis à vis de Y
 
 #### La distribution des surfaces selon le groupe de loyer
 
+```{r,,echo=F}
 
+ggplot(annonces, aes(x = Loyer_Groupe, y = Surface)) +
+  geom_boxplot(fill = c("lightblue","red" , "yellow" , "orange"), color = "black") +
+  labs(
+    title = "Graphique : Distribution des surfaces selon le groupe de loyer",
+    x = "Groupes de loyer (euros)",
+    y = "Surface (m²)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 25, hjust = 1))
+```
 **Commentaire :**  
 On observe que la surface tend globalement à augmenter avec le groupe de loyer.  
 Les logements appartenant au groupe de loyers le plus faible présentent les surfaces les plus réduites, souvent inférieures à 25 m².  
@@ -604,7 +633,16 @@ La présence de valeurs extrêmes dans les groupes intermédiaires suggère que 
 Cette analyse confirme toutefois une tendance générale : **les logements plus grands sont associés à des niveaux de loyer plus élevés**, ce qui est cohérent avec les mécanismes du marché locatif.
 
 #### La distribution des charges 
-
+```{r,echo=F}
+ggplot(annonces, aes(x = Charges, y = Loyer_TTC)) +
+  geom_point(color = "steelblue", alpha = 0.6, size = 2) +
+  labs(
+    title = "Graphique : Nuage de points entre charges et loyer",
+    x = "Charges mensuelles (euros)",
+    y = "Loyer total (euros)"
+  ) +
+  theme_minimal()
+```
 **Commentaire : Analyse du nuage de points Charges – Loyer**
 
  **Relation globalement croissante**  
@@ -632,34 +670,18 @@ Cette analyse confirme toutefois une tendance générale : **les logements plus 
    Cela suggère que d’autres variables jouent un rôle déterminant : la surface, le quartier, la classe énergétique, le nombre de pièces, etc.  
    Ceci justifie la mise en place d’un modèle de régression multiple intégrant plusieurs caractéristiques du logement.
 
-#### La distribution du prix de Loyer selon les facteurs.
+#### La distribution du prix de Loyer selon nombre de Pieces.
 ```{r,,echo=F}
-selon_quartier <-ggplot(annonces, aes(x = Quartiers, y = Loyer_TTC)) +
-  geom_boxplot(fill = "orange", color = "black") +
-  labs(
-    title = "Distribution du prix du loyer selon quartiers",
-    x = "Nom de quartiers ",
-    y = "Loyer TCC (euros)"
-  ) +
-  theme_minimal()
 
-selon_nbpcs <-ggplot(annonces, aes(x = factor(Pièces), y = Loyer_TTC)) +
+
+ggplot(annonces, aes(x = factor(Pièces), y = Loyer_TTC)) +
   geom_boxplot(fill = "lightgreen", color = "black") +
   labs(
-    title = "Distribution du prix du loyer selon le nombre de pièces",
+    title = "Graphique : Distribution du prix du loyer selon le nombre de pièces",
     x = "Nombre de pièces",
-    y = "Loyer TCC (euros)"
+    y = "Loyer tout charge compris (euros)"
   ) +
   theme_minimal()
-selon_label <-ggplot(annonces, aes(x = factor(label_eco), y = Loyer_TTC)) +
-  geom_boxplot(fill = "lightgreen", color = "black") +
-  labs(
-    title = "Distribution du prix du loyer selon le nombre de pièces",
-    x = "Classe d'énergitique",
-    y = "Loyer TCC (euros)"
-  ) +
-  theme_minimal()
-grid.arrange(selon_quartier , selon_label , selon_nbpcs, ncol = 2)
 ```
 **Commentaire : Analyse du loyer selon le nombre de pièces**
 
@@ -690,8 +712,17 @@ grid.arrange(selon_quartier , selon_label , selon_nbpcs, ncol = 2)
    Ce constat justifie l’intégration de cette variable dans la régression linéaire comme variable explicative structurante.
 
 #### La distribution du prix de Loyer selon quartiers
-
-**Analyse du loyer selon les différents quartiers de Rennes**
+```{r,echo=F}
+ggplot(annonces, aes(x = Quartiers, y = Loyer_TTC)) +
+  geom_boxplot(fill = "orange", color = "black") +
+  labs(
+    title = "Graphique : Distribution du prix du loyer selon quartiers",
+    x = "Nom de quartiers ",
+    y = "Loyer tout charge compris (euros)"
+  ) +
+  theme_minimal()
+```
+**Commentaire : Analyse du loyer selon les différents quartiers de Rennes**
 
    **Quartiers Centre : les loyers les plus élevés**  
    Le quartier Centre présente les niveaux de loyer les plus hauts de l’échantillon.  
@@ -709,174 +740,6 @@ grid.arrange(selon_quartier , selon_label , selon_nbpcs, ncol = 2)
   **Quartier Ouest : des loyers modérés mais plus variés**  
    Le quartier Ouest se situe dans une position intermédiaire, avec une médiane plus élevée que celle du Nord-Est mais inférieure à celle du Centre et du Nord-Ouest.  
    Une dispersion notable indique la coexistence de logements modestes et de biens plus spacieux ou récents.
-
-
-## 3.4 Analyse descriptive bivariée des données 
-### Corrélation
-#### 1ère règle: Coefficient de Corrélation
-```{r}
-library(corrplot)
-vars_quanti <- annonces %>% select(-c(Quartiers , Loyer_Groupe))
-corrplot(cor(vars_quanti), method="circle")
-corrplot(cor(vars_quanti), method="number")
-
-```
-**Commentaire : Corrélations entre le loyer et les variables explicatives**
-
-Le tableau met en évidence plusieurs relations importantes entre la variable expliquée (*Loyer_TTC*) et les variables explicatives quantitatives :
-
-1. **Surface (corr = 0.93)**  
-   C’est la corrélation la plus forte observée.  
-   Le loyer augmente très fortement avec la surface du logement.  
-   Cette relation quasi linéaire confirme que la surface est le principal déterminant du prix.
-
-2. **Nombre de pièces (corr = 0.87)**  
-   Le nombre de pièces est également fortement corrélé au loyer.  
-   Cela s’explique naturellement par le fait qu’un logement comportant plus de pièces possède généralement une surface plus importante et un niveau de confort supérieur.
-
-3. **Charges (corr = 0.61)**  
-   Une corrélation positive modérée :  
-   les logements ayant des charges plus élevées ont souvent des loyers plus élevés.  
-   Cependant, la relation est moins forte que pour la surface et les pièces.
-
-4. **Consommation énergétique kWh (corr = –0.30)**  
-   La corrélation est faible et négative.  
-   Cela suggère que les logements très énergivores (kWh élevés) ont tendance à être légèrement moins chers, ce qui est cohérent avec l’idée qu’un mauvais bilan énergétique peut réduire la valeur locative.
-
-5. **Émissions de CO₂ (corr = 0.21)**  
-   Corrélation faible et positive.  
-   Cela signifie qu’il n’existe pas de relation claire entre les émissions de CO₂ et le montant du loyer.  
-   Le CO₂ est probablement un facteur indirect qui reflète davantage la performance énergétique ou la taille du logement.
-
-
-Si la valeur absolue du coefficient de corrélation entre deux variables excède 0.8, on peut soupçonner la colinéarité.
-
-
-
-Selon cette règle, on peut soupçonner un problème de colinéarité entre les variables vol et surface, ainsi que pers et surface.
-
-#### Deuxième règle (règle de Klein)
-```{r}
-reg_simple <- lm(Loyer_TTC ~ Surface + Charges + Pièces + label_eco + kWh + kgCO2 + Centre + Nord_Est + Nord_Ouest + Ouest , data = annonces)
-summary(reg_simple)
-```
-
-
-Si le carré du coefficient de corrélation est supérieur au R^2, on peut soupçonner de la colinéarité.
-
-```{r}
-#cor(vars_quanti)^2 > summary(reg)$r.squared
-```
-Cette règle met en avant un éventuel problème de colinéarité entre les variables vol et surface.
-
-#### Troisième règle : cohérence des signes
-
-Le signe de la correlation brute et celui de la correlation expliquée devraient être les memes.
-```{r}
-#cbind(coef = reg$coef, corr = cor(df)[,"kw"])[-1,]
-```
-
-Il y a manifestement des contre-sens concernant les relations entre le nombre de personne et la consommation, ainsi que le nombre de salles de bain et la consommation.
-
-#### colinéarités : VIF
-
-```{r}
-library(car)
-
-#vif(reg)
-
-#commentaires
-#sqrt(vif(reg))
-```
-
-
-
-
-
-
-### b) Nuage de point vis à vis de Y
-```{r, warning=FALSE, message=FALSE}
-
-graphConso <- function(uneVariable){
-  ggplot(data = annonces, aes_string(x = uneVariable, y = "Loyer_TTC")) + geom_point() + geom_smooth()
-}
-
-p1 <- graphConso("Surface")
-p2 <- graphConso("Charges")
-p3 <- graphConso("Pièces")
-p4 <- graphConso("label_eco")
-p5 <- graphConso("kWh")
-p6 <- graphConso("kgCO2")
-
-p7 <-graphConso("Centre")
-p8 <-graphConso("Nord_Est")
-p9 <-graphConso("Nord_Ouest")
-p10 <-graphConso("Ouest")
-
-grid.arrange(p1, p2, p3, p4, p5, p6 , p7,p8,p9,p10, ncol = 3)
-
-
-
-
-```
-
-## Analyse graphique de la relation entre le loyer et les variables explicatives
-
-L’observation des nuages de points permet d’étudier la nature de la relation entre le loyer toutes charges comprises (**Loyer\_TTC**) et les différentes variables explicatives disponibles dans la base de données.  
-Les courbes de lissage (LOESS) permettent d’identifier si la relation semble linéaire, croissante, décroissante ou non linéaire.
-
-Les conclusions suivantes peuvent être formulées :
-
-### **Surface**
-La relation entre la surface et le loyer apparaît clairement **croissante et linéaire**.  
-On peut donc modéliser cette relation par une forme linéaire simple :
-\[
-Loyer\_{TTC} = \beta_0 + \beta_1 \cdot Surface
-\]
-
-### **Charges**
-La relation entre les charges et le loyer présente une légère **courbure**, suggérant une relation **quadratique** :
-\[
-Loyer\_{TTC} = \beta_0 + \beta_1 \cdot Charges + \beta_2 \cdot Charges^2
-\]
-
-### **Nombre de pièces**
-La relation est **croissante et linéaire**, sans signe de non-linéarité :
-\[
-Loyer\_{TTC} = \beta_0 + \beta_1 \cdot Pièces
-\]
-
-### **Classe énergétique (label_eco)**
-La variable *label_eco* est qualitative : les points se répartissent en bandes verticales.  
-Aucune tendance fonctionnelle continue ne peut être modélisée.  
-Elle doit être introduite dans le modèle sous forme de **variable factorielle** :
-\[
-Loyer\_{TTC} = \beta_0 + \sum_i \beta_i \cdot \mathbf{1}\{label\_eco = i\}
-\]
-
-### **Consommation énergétique (kWh)**
-La courbe montre une légère forme en « U ».  
-La relation peut donc être modélisée par une fonction **quadratique** :
-\[
-Loyer\_{TTC} = \beta_0 + \beta_1 \cdot kWh + \beta_2 \cdot kWh^2
-\]
-
-### **Émissions de CO2 (kgCO2)**
-Même comportement que pour kWh, avec une légère convexité :
-\[
-Loyer\_{TTC} = \beta_0 + \beta_1 \cdot kgCO2 + \beta_2 \cdot kgCO2^2
-\]
-
-### **Variables géographiques (Centre, Nord_Est, Nord_Ouest, Ouest)**
-Ces variables sont binaires (0/1).  
-Elles n’induisent pas de forme fonctionnelle mais représentent un **effet de présence** du quartier correspondant :
-\[
-Loyer\_{TTC} = \beta_0 + \beta_1 \cdot Quartier\_dummy
-\]
-
----
-
-
 
 ### c) Corrélations entre les variables explicatives
 L’analyse de la matrice de corrélation entre les variables explicatives permet de détecter
@@ -954,79 +817,7 @@ Perspectives d’amélioration ou de recherche future
 
 -   <https://statistiques-locales.insee.fr/#c=home>
 
-### model s
 
-
-```{r}
-#install.packages("stargazer")
-annonces_regression <-dplyr::select(annonces, -c(Quartiers , Loyer_Groupe))
-library(stargazer)
-M1 <- lm(Loyer_TTC ~ Surface + Charges , data = annonces_regression)
-M2 <- lm(Loyer_TTC ~ Surface  + Pièces , data = annonces_regression)
-M3 <- lm(Loyer_TTC ~ Surface + Charges + Pièces , data = annonces_regression)
-M4 <- lm(Loyer_TTC ~ Surface + Charges + Charges**2 , data=annonces_regression)
-
-M5 <- lm(log(Loyer_TTC) ~ Surface + Charges,data=annonces)
-M6 <- lm(Loyer_TTC ~ Surface + Charges + kWh ,data=annonces_regression)
-M7 <-lm(Loyer_TTC ~ Surface + Charges + kWh + kWh**2 ,data=annonces_regression)
-M8 <- lm(Loyer_TTC ~ Surface + Charges + kWh + Quartiers_Centre  ,data=annonces_regression)
-M_complet <- lm(Loyer_TTC ~ . , data = annonces_regression)
-stargazer(M1,M2,M3 ,  title="Modèles de régression linéaire",align=TRUE, type="text", digits=3)
-stargazer(M4,M5 ,M6,   title="Modèles de régression linéaire",align=TRUE, type="text", digits=3)
-stargazer(M7,M8,M_complet,   title="Modèles de régression linéaire",align=TRUE, type="text", digits=3)
-```
-
-stepAIC() choisit le meilleur par AIC. En option on peut choisir la direction:
-
-i) “both” (for stepwise regression, both forward and backward selection); 
-ii) “backward” (for backward selection)
-iii) “forward” (for forward selection).
-
-En fonction de la procédure nous pouvons obtenir une sélection de variables différentes
-
-```{r}
-library(MASS)
-
-# estimation du modèle complet 
-full.model <- lm(Loyer_TTC ~., data = annonces_regression)
-
-# Backward regression model
-step.model_backward <- stepAIC(full.model, direction = "backward", 
-                      trace = FALSE)
-summary(step.model_backward)
-
-# forward regression model
-step.model_forward <- stepAIC(full.model, direction = "forward", 
-                      trace = FALSE)
-summary(step.model_forward)
-
-# Stepwise regression model
-step.model_both <- stepAIC(full.model, direction = "both", 
-                      trace = FALSE)
-summary(step.model_both)
-```
-### model complexe selon la graphiqiue
-```{r}
-# estimation du modèle complet 
-full.model <- lm(Loyer_TTC ~  Surface +Charges + Charges**2 + Pièces + label_eco + label_eco**2+
-    kWh +kWh**2 + kgCO2 + kgCO2**2 + Quartiers_Centre + `Quartiers_Nord-Est` + `Quartiers_Nord-Ouest` + 
-    Quartiers_Ouest , data = annonces_regression)
-
-# Backward regression model
-step.model_backward <- stepAIC(full.model, direction = "backward", 
-                      trace = FALSE)
-summary(step.model_backward)
-
-# forward regression model
-step.model_forward <- stepAIC(full.model, direction = "forward", 
-                      trace = FALSE)
-summary(step.model_forward)
-
-# Stepwise regression model
-step.model_both <- stepAIC(full.model, direction = "both", 
-                      trace = FALSE)
-summary(step.model_both)
-```
 
 
 
