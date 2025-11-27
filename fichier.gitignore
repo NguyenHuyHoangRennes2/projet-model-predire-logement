@@ -1,0 +1,16 @@
+
+__pycache__/
+*.pyc
+
+
+Proposition_FichierType_cache/
+Proposition_FichierType_files/
+
+
+*.aux
+*.log
+*.out
+*.toc
+
+# Autres fichiers générés
+*.html
