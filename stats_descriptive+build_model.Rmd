@@ -306,6 +306,7 @@ table(annonces$label_eco)
 #install.packages("fastDummies")
 library(fastDummies)
 annonces <- annonces%>% mutate(Quartiers = sub("Quartiers " , "" , Quartiers))
+annonces <- annonces%>% mutate(Quartiers = sub("-" , "_" , Quartiers))
 annonces$Quartiers <- factor(annonces$Quartiers)
 annonces <- dummy_cols(annonces, select_columns = "Quartiers")
 
@@ -757,9 +758,12 @@ Selon cette règle, on peut soupçonner un problème de colinéarité entre les 
 
 #### Deuxième règle (règle de Klein)
 ```{r}
-reg_simple <- lm(Loyer_TTC ~ Surface + Charges + Pièces + label_eco + kWh + kgCO2 + Centre + Nord_Est + Nord_Ouest + Ouest , data = annonces)
+reg_simple <- lm(Loyer_TTC ~ Surface + Charges + Pièces + label_eco + kWh + kgCO2 + Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest + Quartiers_Ouest , data = annonces)
 summary(reg_simple)
 ```
+Quartiers_Ouest est une combinaison linéaire des autres (colinéarité parfaite) → elle ne peut pas être estimée → d’où NA.
+
+En supprimant la modalité, vous obtenez un modèle propre, cohérent et sans singularités.
 
 
 Si le carré du coefficient de corrélation est supérieur au R^2, on peut soupçonner de la colinéarité.
@@ -808,10 +812,10 @@ p4 <- graphConso("label_eco")
 p5 <- graphConso("kWh")
 p6 <- graphConso("kgCO2")
 
-p7 <-graphConso("Centre")
-p8 <-graphConso("Nord_Est")
-p9 <-graphConso("Nord_Ouest")
-p10 <-graphConso("Ouest")
+p7 <-graphConso("Quartiers_Centre")
+p8 <-graphConso("Quartiers_Nord_Est")
+p9 <-graphConso("Quartiers_Nord_Ouest")
+p10 <-graphConso("Quartiers_Ouest")
 
 grid.arrange(p1, p2, p3, p4, p5, p6 , p7,p8,p9,p10, ncol = 3)
 
@@ -926,56 +930,6 @@ pour être intégrées sans risque dans la régression linéaire.
 
 Présentation et interprétation des résultats obtenus : utiliser un tableau récapitulatif des modèles principaux testés
 
-## 4.2 Robustesse des résultats 
-
-Hypothèses des MCO - nomalités / hétéroscédasticité / ...
-
-## 4.2 Analyses complémentaires  
-
--   Transformation de variables / effets non linéaires
-
--   Changement structurel
-
--   Effets croisés de variables
-
-# **5. Conclusion générale et perspectives**
-
-Rappel de la problématique et de la méthodologie
-
-Synthèse des résultats principaux
-
-Contributions du mémoire, apports scientifiques et/ou applicatifs
-
-Perspectives d’amélioration ou de recherche future
-
-# Bibliographie - Source des données
-
--   <https://ec.europa.eu/eurostat/fr/web/main/data>
-
--   <https://statistiques-locales.insee.fr/#c=home>
-
-### model s
-
-
-```{r}
-#install.packages("stargazer")
-annonces_regression <-dplyr::select(annonces, -c(Quartiers , Loyer_Groupe))
-library(stargazer)
-M1 <- lm(Loyer_TTC ~ Surface + Charges , data = annonces_regression)
-M2 <- lm(Loyer_TTC ~ Surface  + Pièces , data = annonces_regression)
-M3 <- lm(Loyer_TTC ~ Surface + Charges + Pièces , data = annonces_regression)
-M4 <- lm(Loyer_TTC ~ Surface + Charges + Charges**2 , data=annonces_regression)
-
-M5 <- lm(log(Loyer_TTC) ~ Surface + Charges,data=annonces)
-M6 <- lm(Loyer_TTC ~ Surface + Charges + kWh ,data=annonces_regression)
-M7 <-lm(Loyer_TTC ~ Surface + Charges + kWh + kWh**2 ,data=annonces_regression)
-M8 <- lm(Loyer_TTC ~ Surface + Charges + kWh + Quartiers_Centre  ,data=annonces_regression)
-M_complet <- lm(Loyer_TTC ~ . , data = annonces_regression)
-stargazer(M1,M2,M3 ,  title="Modèles de régression linéaire",align=TRUE, type="text", digits=3)
-stargazer(M4,M5 ,M6,   title="Modèles de régression linéaire",align=TRUE, type="text", digits=3)
-stargazer(M7,M8,M_complet,   title="Modèles de régression linéaire",align=TRUE, type="text", digits=3)
-```
-
 stepAIC() choisit le meilleur par AIC. En option on peut choisir la direction:
 
 i) “both” (for stepwise regression, both forward and backward selection); 
@@ -1005,11 +959,12 @@ step.model_both <- stepAIC(full.model, direction = "both",
                       trace = FALSE)
 summary(step.model_both)
 ```
-### model complexe selon la graphiqiue
+
+### model complexe selon la graphiqiue choisie par les méthodes Backward forwardStepwise
 ```{r}
 # estimation du modèle complet 
 full.model <- lm(Loyer_TTC ~  Surface +Charges + Charges**2 + Pièces + label_eco + label_eco**2+
-    kWh +kWh**2 + kgCO2 + kgCO2**2 + Quartiers_Centre + `Quartiers_Nord-Est` + `Quartiers_Nord-Ouest` + 
+    kWh +kWh**2 + kgCO2 + kgCO2**2 + Quartiers_Centre + `Quartiers_Nord_Est` + `Quartiers_Nord_Ouest` + 
     Quartiers_Ouest , data = annonces_regression)
 
 # Backward regression model
@@ -1029,6 +984,88 @@ summary(step.model_both)
 ```
 
 
+
+```{r}
+# Modèle 1: Linéaire simple avec toutes les variables
+modele1 <- lm(Loyer_TTC ~ Surface + Charges + Pièces + 
+                label_eco + kWh + kgCO2 +
+                Quartiers_Centre + Quartiers_Nord_Est + 
+                Quartiers_Nord_Ouest , 
+              data = annonces)
+
+# Modèle 2: Avec transformation logarithmique pour Surface et Loyer
+modele2 <- lm(log(Loyer_TTC) ~ log(Surface) + Charges + Pièces + 
+                label_eco + kWh + kgCO2 +
+                Quartiers_Centre + Quartiers_Nord_Est + 
+                Quartiers_Nord_Ouest , 
+              data = annonces)
+# Modèle 3: Avec termes quadratiques pour Charges, kWh, kgCO2
+modele3 <- lm(Loyer_TTC ~ Surface + Charges + I(Charges^2) + Pièces + 
+                label_eco + kWh + I(kWh^2) + kgCO2 + I(kgCO2^2) +
+                Quartiers_Centre + Quartiers_Nord_Est + 
+                Quartiers_Nord_Ouest, 
+              data = annonces)
+
+# Modèle 4: Sans Surface (pour éviter colinéarité avec Pièces)
+modele4 <- lm(Loyer_TTC ~ Pièces + Charges + 
+                as.factor(label_eco) + kWh + kgCO2 +
+                Quartiers_Centre + Quartiers_Nord_Est + 
+                Quartiers_Nord_Ouest , 
+              data = annonces)
+# Liste des modèles
+models <- list(modele1 = modele1,
+               modele2 = modele2,
+               modele3 = modele3,
+               modele4 = modele4)
+
+# Fonction pour extraire les stats utiles
+extract_stats <- function(m) {
+  s <- summary(m)
+  data.frame(
+    R2        = round(s$r.squared, 4),
+    Adj_R2    = round(s$adj.r.squared, 4),
+    AIC       = round(AIC(m), 1),
+    BIC       = round(BIC(m), 1),
+    Resid_SE  = round(s$sigma, 3)
+  )
+}
+
+# Création du tableau récapitulatif
+result_models <- do.call(rbind, lapply(models, extract_stats))
+result_models
+
+
+
+```
+
+
+## 4.2 Robustesse des résultats 
+
+Hypothèses des MCO - nomalités / hétéroscédasticité / ...
+
+## 4.2 Analyses complémentaires  
+
+-   Transformation de variables / effets non linéaires
+
+-   Changement structurel
+
+-   Effets croisés de variables
+
+# **5. Conclusion générale et perspectives**
+
+Rappel de la problématique et de la méthodologie
+
+Synthèse des résultats principaux
+
+Contributions du mémoire, apports scientifiques et/ou applicatifs
+
+Perspectives d’amélioration ou de recherche future
+
+# Bibliographie - Source des données
+
+
+
+---
 
 ---
 
