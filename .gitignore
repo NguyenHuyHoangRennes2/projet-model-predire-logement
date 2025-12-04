@@ -3,8 +3,8 @@ __pycache__/
 *.pyc
 
 
-Proposition_FichierType_cache/
-Proposition_FichierType_files/
+stats_descriptive+build_model_cache/
+stats_descriptive+build_model_files/
 
 
 *.aux
