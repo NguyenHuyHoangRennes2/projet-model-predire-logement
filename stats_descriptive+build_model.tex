@@ -1,0 +1,1491 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Analyse des déterminants du loyer à Rennes},
+  pdfauthor={Nguyen Huy Hoang et EL GOURAINI Tao Loup},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Analyse des déterminants du loyer à Rennes}
+\author{Nguyen Huy Hoang et EL GOURAINI Tao Loup}
+\date{2025-12-06}
+
+\begin{document}
+\maketitle
+
+\textbf{NOM - Prénom} \textbf{EL GOURAINI Tao Loup}
+\href{https://eco.univ-rennes.fr/master-mathematiques-appliquees-statistique}{\textbf{Master
+1 MAS - Université de Rennes}}
+
+\textbf{Nguyen Huy Hoang}
+\href{https://formations.univ-rennes2.fr/fr/formations/master-37/master-mention-mathematiques-appliquees-statistique-parcours-sciences-des-donnees-intelligence-artificielle-JFTJBMKM.html}{\textbf{Master
+1 MAS - Université Rennes 2}}
+
+\section{1. Introduction}\label{introduction}
+
+L'accès au logement constitue aujourd'hui un enjeu socio-économique
+majeur en France. Dans un contexte de pression croissante sur le marché
+locatif, notamment dans les villes à forte attractivité universitaire
+comme Rennes, les ménages sont confrontés à une hausse soutenue des
+loyers. Comprendre les facteurs qui influencent le prix des logements
+devient alors essentiel pour analyser les disparités territoriales et
+éclairer les décisions des acteurs publics.
+
+Dans ce projet, nous cherchons à analyser empiriquement les
+\textbf{déterminants du loyer tout compris} des logements situés à
+Rennes, en utilisant des données collectées automatiquement par web
+scraping sur le site \emph{Ouest-France Immo}. L'étude se concentre sur
+les logements qui sont répartis dans quatre grands secteurs de Rennes :
+\textbf{Centre}, \textbf{Ouest}, \textbf{Nord-Est} et
+\textbf{Nord-Ouest}.
+
+\subsection{1.1 Contexte et
+problématique}\label{contexte-et-probluxe9matique}
+
+Le marché rennais est particulièrement dynamique en raison de sa
+croissance démographique, de son attractivité étudiante et d'une offre
+locative limitée. Dès lors, une question centrale se pose :
+
+\begin{quote}
+\textbf{Quels facteurs structurels expliquent les variations de loyer à
+Rennes ?}
+\end{quote}
+
+Cela conduit à examiner l'effet de la surface, du nombre de pièces, des
+charges, de la performance énergétique et de la localisation
+géographique.
+
+\subsection{1.2 Motivation et intérêt du
+sujet}\label{motivation-et-intuxe9ruxeat-du-sujet}
+
+Ce travail présente plusieurs intérêts : - illustrer une application
+réelle de la \textbf{régression linéaire} à partir de données collectées
+soi-même ; - analyser les \textbf{disparités intra-urbaines} du marché
+locatif rennais ; - évaluer l'influence de caractéristiques
+structurelles ou environnementales du logement ; - proposer un exemple
+complet de démarche allant de la collecte de données au modèle final.
+
+\subsection{1.3 Questions de recherche et
+hypothèses}\label{questions-de-recherche-et-hypothuxe8ses}
+
+Les questions principales sont :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  La surface influence-t-elle fortement le montant du loyer ?
+\item
+  Les charges intégrées modifient-elles significativement le niveau du
+  loyer tout compris ?
+\item
+  La performance énergétique joue-t-elle un rôle dans la détermination
+  du prix ?
+\item
+  Le quartier exerce-t-il un effet propre sur les niveaux de loyer ?
+\end{enumerate}
+
+Les hypothèses qui en découlent sont :
+
+\begin{itemize}
+\item
+  \textbf{H1 :} une surface plus élevée entraîne un loyer plus élevé
+\item
+  \textbf{H2 :} des charges plus importantes augmentent le loyer tout
+  compris
+\item
+  \textbf{H3 :} une meilleure performance énergétique est associée à un
+  loyer supérieur
+\item
+  \textbf{H4 :} les logements du Centre sont plus chers que ceux des
+  autres quartiers.
+\end{itemize}
+
+\subsection{1.4 Objectifs du mémoire}\label{objectifs-du-muxe9moire}
+
+Les objectifs du projet sont : - modéliser et expliquer le loyer mensuel
+tout compris ; - identifier les déterminants les plus significatifs ; -
+analyser les différences selon les quartiers rennais ; - proposer une
+interprétation économétrique rigoureuse.
+
+\subsection{1.5 Plan du document}\label{plan-du-document}
+
+Ce mémoire est structuré comme suit :
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Section 1 : Introduction}
+\item
+  \textbf{Section 2 : Cadre méthodologique}
+\item
+  \textbf{Section 3 : Analyse descriptive des données}
+\item
+  \textbf{Section 4 : Estimation et interprétation du modèle}
+\item
+  \textbf{Section 5 : Conclusion}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{2. Cadre méthodologique}\label{cadre-muxe9thodologique}
+
+Cette section présente le modèle économétrique utilisé et les choix
+méthodologiques qui guident l'estimation.
+
+\subsection{2.1 Choix méthodologiques : régression linéaire et
+MCO}\label{choix-muxe9thodologiques-ruxe9gression-linuxe9aire-et-mco}
+
+Le modèle retenu est une \textbf{régression linéaire multiple}, estimée
+à l'aide de la méthode des \textbf{Moindres Carrés Ordinaires (MCO)}.
+Cette approche permet d'étudier comment une variable quantitative , ici
+le loyer tout compris dépend de plusieurs caractéristiques propres au
+logement.
+
+La méthode MCO consiste à minimiser la somme des carrés des écarts entre
+les valeurs observées et celles prédites par le modèle. Cette méthode
+est privilégiée pour sa simplicité, son interprétabilité et les
+propriétés de ses estimateurs.
+
+\subsection{2.2 Formulation du modèle}\label{formulation-du-moduxe8le}
+
+La variable expliquée est le \textbf{loyer mensuel tout compris} (en
+euros).
+
+Les variables explicatives sont :
+
+\begin{itemize}
+\tightlist
+\item
+  la \textbf{surface} du logement (m²),
+\item
+  les \textbf{charges comprises} (euros),
+\item
+  le \textbf{nombre de pièces},
+\item
+  la \textbf{classe énergétique} (A, B, C, \ldots),
+\item
+  la \textbf{consommation énergétique annuelle} (kWh/an),
+\item
+  les \textbf{émissions de CO₂} (kg/an),
+\item
+  le \textbf{quartier} (Centre, Ouest, Nord-Est, Nord-Ouest).
+\end{itemize}
+
+Le modèle général s'écrit :
+
+\[
+\text{Loyer}_i = \beta_0 +
+\beta_1 \text{Surface}_i +
+\beta_2 \text{Charges}_i +
+\beta_3 \text{Pièces}_i +
+\beta_4 \text{ClasseÉnergie}_i +
+\beta_5 \text{Consommation}_i +
+\beta_6 \text{ÉmissionsCO2}_i +
+\sum_q \gamma_q \text{Quartier}_{qi} +
+\varepsilon_i
+\]
+
+où : - \(\beta_0\) est la constante
+
+\begin{itemize}
+\item
+  \(\beta_j\) mesure l'effet marginal de chaque caractéristique
+\item
+  \(\gamma_q\) capture l'effet des quartiers par rapport à un quartier
+  de référence
+\item
+  \(\varepsilon_i\) est le terme d'erreur
+\end{itemize}
+
+\subsection{2.3 Justification des choix
+techniques}\label{justification-des-choix-techniques}
+
+Plusieurs éléments motivent ce cadre :
+
+\begin{itemize}
+\tightlist
+\item
+  La régression linéaire est un outil adapté pour analyser les facteurs
+  influençant une variable économique.
+\item
+  La méthode MCO fournit des estimateurs robustes et facilement
+  interprétables.
+\item
+  L'utilisation de \textbf{variables indicatrices} pour les quartiers
+  permet de mettre en évidence les différences géographiques de prix.
+\item
+  L'intégration des variables énergétiques répond aux enjeux actuels de
+  performance environnementale.
+\item
+  Le modèle permet de mesurer l'effet propre de chaque variable tout en
+  contrôlant les autres.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{3. Analyse des données}\label{analyse-des-donnuxe9es}
+
+\subsection{3.1 Cadre des données}\label{cadre-des-donnuxe9es}
+
+Les données proviennent du site \textbf{Ouest-France Immo}, collectées à
+l'aide d'un script de web scraping. Elles décrivent des logements mis en
+location dans la \textbf{ville de Rennes}, .
+
+L'étude porte sur \textbf{quatre secteurs géographiques} :
+
+\begin{itemize}
+\item
+  Quartiers Centre
+\item
+  Quartiers Ouest
+\item
+  Quartiers Nord-Est
+\item
+  Quartiers Nord-Ouest
+\end{itemize}
+
+Chaque ligne du jeu de données correspond à \textbf{une annonce
+unique}.\\
+Les variables collectées décrivent :
+
+\begin{itemize}
+\item
+  Les caractéristiques du logement (surface, nombre de pièces, charges)
+\item
+  Sa performance énergétique (classe, consommation, émissions)
+\item
+  Sa localisation.
+\end{itemize}
+
+\subsubsection{a) Importation des
+données}\label{a-importation-des-donnuxe9es}
+
+\begin{verbatim}
+##   Loyer_TCC Surface Charges Pièces Pièce label_eco kWh kgCO2
+## 1       278      19      NA     NA     1         D 247    49
+## 2       343      17      15     NA     1         E 322     9
+## 3       345       9      80     NA     1         C 230     7
+## 4       350      17      10     NA     1         D 248    40
+## 5       359      15      20     NA     1         F 367    21
+##              Quartiers
+## 1   Quartiers Nord-Est
+## 2   Quartiers Nord-Est
+## 3 Quartiers Nord-Ouest
+## 4 Quartiers Nord-Ouest
+## 5     Quartiers Centre
+\end{verbatim}
+
+\subsubsection{b) Description des
+variables}\label{b-description-des-variables}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1700}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3400}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1600}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3300}}@{}}
+\caption{Tableau 1 : Description des variables}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Code.de.la.série
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Définition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Unité
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Code.de.la.série
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Définition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Unité
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Source
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Loyer\_TCC & Loyer mensuel tout compris & Euros & Ouest-France Immo (web
+scraping) \\
+Surface & Surface habitable du logement & m² & Ouest-France Immo (web
+scraping) \\
+Charges & Montant des charges mensuelles & Euros & Ouest-France Immo
+(web scraping) \\
+Pieces & Nombre de pièces du logement & Nombre & Ouest-France Immo (web
+scraping) \\
+label\_eco & Classe énergétique du logement & Catégorie (A--G) &
+Ouest-France Immo (web scraping) \\
+kWh & Consommation énergétique annuelle & kWh/an & Ouest-France Immo
+(web scraping) \\
+kgCO2 & Émissions annuelles de CO2 & kg/an & Ouest-France Immo (web
+scraping) \\
+Quartiers & Secteur géographique du logement & Nom du quartier &
+Ouest-France Immo (web scraping) \\
+\end{longtable}
+
+\subsection{3.2 Prétraitement et nettoyage des
+données}\label{pruxe9traitement-et-nettoyage-des-donnuxe9es}
+
+Avant de procéder aux analyses descriptives et économétriques, il a été
+nécessaire de réaliser un travail approfondi de préparation des données
+issues du web scraping. Comme souvent avec des données collectées
+directement sur un site d'annonces, plusieurs problèmes se présentent :
+valeurs manquantes, incohérences, doublons, hétérogénéité dans les
+formats ou dans les catégories. Cette section présente de manière
+structurée l'ensemble des opérations réalisées pour obtenir un jeu de
+données exploitable.
+
+\subsubsection{a)Sélection et renommage des
+variables}\label{asuxe9lection-et-renommage-des-variables}
+
+Dans un premier temps, seules les variables pertinentes pour l'étude ont
+été conservées.\\
+Les colonnes correspondant ``Loyer'', ``Surface.habitable'',
+``Dont.charges'',``Pièces'' , ``Pièce'', ``label\_eco'',
+``kWh.m\ldots an'',``kgCO2.m\ldots an'', ``Quartiers'' ont été
+extraites.\\
+Les noms ont également été standardisés pour faciliter leur manipulation
+(par exemple : renommer \emph{Surface habitable} en \emph{Surface},
+\emph{Dont charges} en \emph{Charges}, etc.).
+
+\subsubsection{b) Corriger les valeurs manquantes et modéliser les
+niveaux}\label{b-corriger-les-valeurs-manquantes-et-moduxe9liser-les-niveaux}
+
+\paragraph{b.1 Modéliser les
+niveaux}\label{b.1-moduxe9liser-les-niveaux}
+
+\textbf{Découper le Loyer TCC en 4 facteurs }
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{seuil }\OtherTok{\textless{}{-}}  \FunctionTok{quantile}\NormalTok{(annonces}\SpecialCharTok{$}\NormalTok{Loyer\_TCC ,}\AttributeTok{probs =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.25}\NormalTok{))}
+\NormalTok{annonces}\SpecialCharTok{$}\NormalTok{Loyer\_Groupe }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(annonces}\SpecialCharTok{$}\NormalTok{Loyer\_TCC , }\AttributeTok{breaks =}\NormalTok{ seuil , }\AttributeTok{include.lowest =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{levels}\NormalTok{(annonces}\SpecialCharTok{$}\NormalTok{Loyer\_Groupe)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "[278,535]"        "(535,700]"        "(700,1e+03]"      "(1e+03,2.25e+03]"
+\end{verbatim}
+
+\textbf{Exclusion des annonces non classées énergétiquement} Les
+logements portant la mention \emph{NC} (Non Classé) ont été retirés.
+
+\textbf{Regroupement de certaines catégories énergétiques} : les labels
+\emph{G}, \emph{A} , \emph{B} et \emph{C} ont été regroupés dans une
+catégorie commune (\emph{C+}) et les labels \emph{E} et \emph{F} ont été
+regroupés dans une catégorie commune (\emph{E-}) pour éviter des classes
+trop peu représentées.
+
+\begin{verbatim}
+## [1] "C+" "D"  "E-"
+\end{verbatim}
+
+\begin{verbatim}
+##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+## [39] 1 1 1 1 1 1 1 1 1 1 1 1
+\end{verbatim}
+
+\textbf{Apres traitement}
+
+\begin{verbatim}
+## 
+##  1  2  3 
+## 50 73 58
+\end{verbatim}
+
+\paragraph{b.2 One Hot Encoding la variables
+Quartiers}\label{b.2-one-hot-encoding-la-variables-quartiers}
+
+\paragraph{b.3 Correction des valeurs
+manquante}\label{b.3-correction-des-valeurs-manquante}
+
+\begin{itemize}
+\item
+  \textbf{Correction des pièces manquantes} : Le jeu de données contient
+  deux variables liées au nombre de pièces du logement :
+\item
+  \textbf{Pièces} : prend une valeur manquante (\texttt{NA}) ou bien un
+  nombre de pièces \textbf{strictement supérieur à 1} ;
+\item
+  \textbf{Piece} : variable binaire prenant la valeur \texttt{1} ou
+  \texttt{NA}, et renseignée uniquement lorsque \texttt{Pièces} est
+  manquante. Finalement, nous avons remplacé toutes les valeurs
+  manquantes par 1 (1 pièce).
+\item
+  \textbf{Imputation énergétique} : les valeurs manquantes concernant la
+  consommation en kWh et les émissions de CO₂ ont été remplacées par la
+  moyenne calculée au sein de chaque classe énergétique.\\
+  Cela permet une imputation cohérente avec le profil énergétique du
+  logement.
+\end{itemize}
+
+Ces opérations permettent d'éviter la perte excessive d'observations
+tout en conservant une cohérence structurelle entre les variables.
+
+\textbf{Remplacer des valeurs manquantes dans les charges}
+
+Certaines annonces ne précisaient pas le montant des charges.\\
+Plutôt qu'une suppression pure et simple, les charges manquantes ont été
+estimées en utilisant une méthode par \textbf{groupes de loyers} :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Le loyer total a été divisé en cinq intervalles (du plus faible au
+  plus élevé).
+\item
+  Chaque logement a été associé à un groupe de loyer.
+\item
+  Les charges manquantes ont été remplacées par la moyenne observée dans
+  leur groupe de loyers respectif.
+\end{enumerate}
+
+Cette méthode permet d'imputer les charges selon un critère économique
+pertinent : les logements ayant
+
+\subsubsection{c) Vérification des effectifs et cohérence
+interne}\label{c-vuxe9rification-des-effectifs-et-cohuxe9rence-interne}
+
+Les effectifs par label énergétique ont été inspectés pour vérifier la
+répartition des logements après nettoyage.\\
+Cette étape permet de s'assurer que les regroupements effectués ne
+créent pas de déséquilibres majeurs ou de classes trop petites.
+
+Le travail consiste également à vérifier la cohérence logique des
+données, comme :
+
+\begin{itemize}
+\tightlist
+\item
+  absence de valeurs énergétiques impossibles,
+\item
+  absence de surfaces irréalistes,
+\item
+  cohérence entre loyer et charges.
+\end{itemize}
+
+Les observations incohérentes ont été retirées ou corrigées selon les
+cas.
+
+\textbf{Vérification l'absence de valeur manquante }
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anyNA}\NormalTok{(annonces)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\subsubsection{d) Constitution du jeu de données
+final}\label{d-constitution-du-jeu-de-donnuxe9es-final}
+
+Après l'ensemble de ces traitements, la base obtenue présente les
+caractéristiques suivantes :
+
+\begin{itemize}
+\tightlist
+\item
+  absence de doublons,
+\item
+  absence de valeurs cruciales manquantes,
+\item
+  cohérence des formats (numérique, catégoriel, etc.),
+\item
+  regroupement homogène des catégories énergétiques,
+\item
+  estimation raisonnable des charges manquantes,
+\item
+  structure compatible avec les outils de modélisation et d'analyse
+  statistique.
+\end{itemize}
+
+Cette base nettoyée constitue le fondement de l'analyse descriptive
+(Section 3.3) et du modèle économétrique présenté dans la Section 4.
+
+\subsection{3.3 Analyse descriptive univariée des
+données}\label{analyse-descriptive-univariuxe9e-des-donnuxe9es}
+
+Cette section présente une description statistique des variables
+utilisées dans le modèle, après les étapes de nettoyage décrites
+précédemment.\\
+L'objectif est de caractériser la distribution de chacune des variables,
+d'identifier les tendances générales et de repérer d'éventuelles valeurs
+atypiques.\\
+L'analyse s'appuie sur des tableaux de statistiques descriptives ainsi
+que des représentations graphiques adaptées (histogrammes, boxplots,
+diagrammes en barres).
+
+\subsubsection{a) Résumé statistique}\label{a-ruxe9sumuxe9-statistique}
+
+Les principales variables quantitatives du jeu de données sont :
+
+\begin{itemize}
+\tightlist
+\item
+  le \textbf{loyer total} (euros),
+\item
+  la \textbf{surface habitable} (m²),
+\item
+  les \textbf{charges mensuelles} (euros),
+\item
+  le \textbf{nombre de pièces},
+\item
+  la \textbf{consommation énergétique} (kWh/an),
+\item
+  les \textbf{émissions de CO₂} (kg/an).
+\end{itemize}
+
+Le tableau suivant présente les statistiques descriptives classiques :
+moyenne, médiane, minimum, maximum et écart-type.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1471}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1471}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0588}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0588}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1029}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1618}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0735}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0735}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1765}}@{}}
+\caption{Tableau 2 : Statistiques descriptives des variables
+quantitatives}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Var
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Min
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Q1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Median
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Mean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Q3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Max
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+SD
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Var
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Min
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Q1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Median
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Mean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Q3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Max
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+SD
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Loyer\_TCC & Loyer\_TCC & 278 & 550 & 710.00 & 818.348066 & 1030 & 2250
+& 365.6034059 \\
+Surface & Surface & 9 & 22 & 35.00 & 46.530387 & 68 & 135 &
+30.0541255 \\
+Charges & Charges & 10 & 45 & 68.43 & 75.611216 & 90 & 300 &
+49.9080296 \\
+Pièces & Pièces & 1 & 1 & 2.00 & 2.215470 & 3 & 5 & 1.3511244 \\
+label\_eco & label\_eco & 1 & 1 & 2.00 & 2.044199 & 3 & 3 & 0.7733276 \\
+kWh & kWh & 37 & 159 & 219.00 & 221.735878 & 282 & 739 & 97.0364703 \\
+kgCO2 & kgCO2 & 1 & 9 & 19.00 & 25.051732 & 37 & 96 & 18.7276770 \\
+\end{longtable}
+
+\subsubsection{b) Statistiques descriptives des variables
+catégorielles}\label{b-statistiques-descriptives-des-variables-catuxe9gorielles}
+
+Les variables qualitatives retenues dans l'analyse sont :
+
+\begin{itemize}
+\item
+  Le quartier du logement,
+\item
+  La classe énergétique.
+\item
+  Le tableau suivant présente la distribution des effectifs pour ces
+  variables.
+\item
+  Le group de loyer apres la modélisation
+\end{itemize}
+
+\textbf{Interprétation } :
+
+Les quatre tableaux obtenus après les étapes de nettoyage permettent
+d'apprécier la structure du jeu de données final. De manière générale,
+ils montrent que la base est désormais cohérente, équilibrée et prête
+pour l'analyse statistique.
+
+\begin{itemize}
+\item
+  \textbf{Répartition géographique}\\
+  La distribution des logements entre les quatre secteurs de Rennes
+  (Centre, Nord-Est, Nord-Ouest et Ouest) est relativement homogène.\\
+  Aucun quartier n'est surreprésenté, ce qui garantit une analyse
+  territoriale équilibrée et évite un biais lié à la localisation.
+\item
+  \textbf{Performance énergétique}\\
+  Après la suppression des logements non classés (NC) et le regroupement
+  des classes rares, les performances énergétiques se répartissent de
+  manière équilibrée entre trois catégories principales (C+, D et E−).\\
+  Cette restructuration permet d'obtenir des effectifs suffisants dans
+  chaque classe pour une analyse économétrique fiable.
+\item
+  \textbf{Nombre de pièces}\\
+  La majorité des annonces concernent des logements d'une pièce, ce qui
+  est cohérent avec la forte présence étudiante à Rennes.\\
+  Toutefois, les logements de deux à cinq pièces restent suffisamment
+  représentés pour évaluer leur impact sur les variations de loyer.
+\item
+  \textbf{Groupes de loyers}\\
+  La découpe des loyers en intervalles fournit des groupes de taille
+  comparable, reflétant un marché locatif diversifié allant des petits
+  logements économiques aux biens plus spacieux et onéreux.\\
+  Cette structuration facilite les comparaisons et sert également de
+  base à certaines imputations, notamment pour le montant des charges.
+  \#\#\# c) Graphique des principales variables
+\end{itemize}
+
+L'histogramme permet de visualiser la distribution des variables
+quantitatives. Les graphiques suivants représentent :
+
+\includegraphics{stats_descriptive+build_model_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\paragraph{La distribution des surfaces selon le groupe de
+loyer}\label{la-distribution-des-surfaces-selon-le-groupe-de-loyer}
+
+\textbf{Commentaire :}\\
+On observe que la surface tend globalement à augmenter avec le groupe de
+loyer.\\
+Les logements appartenant au groupe de loyers le plus faible présentent
+les surfaces les plus réduites, souvent inférieures à 25 m².\\
+À l'inverse, les groupes de loyers les plus élevés se caractérisent par
+des surfaces plus importantes, bien que la variabilité demeure élevée.
+
+La présence de valeurs extrêmes dans les groupes intermédiaires suggère
+que le loyer n'est pas seulement déterminé par la surface mais également
+par d'autres facteurs tels que la localisation, la qualité du logement
+ou la performance énergétique.
+
+Cette analyse confirme toutefois une tendance générale : \textbf{les
+logements plus grands sont associés à des niveaux de loyer plus élevés},
+ce qui est cohérent avec les mécanismes du marché locatif.
+
+\paragraph{La distribution des
+charges}\label{la-distribution-des-charges}
+
+\textbf{Commentaire : Analyse du nuage de points Charges -- Loyer}
+
+\textbf{Relation globalement croissante}\\
+On observe une tendance générale à la hausse : lorsque les charges
+augmentent, le loyer total tend également à augmenter.\\
+Cela est cohérent avec le fonctionnement du marché locatif :\\
+- les logements plus grands ou mieux équipés ont généralement des
+charges plus élevées (eau, chauffage collectif, ascenseur,
+copropriété),\\
+- et un loyer total plus important.
+
+\textbf{Dispersion importante pour les faibles charges}\\
+Pour des charges comprises entre 0 et 80 euros, les loyers apparaissent
+très dispersés (de 350 € à plus de 1500 €).\\
+Cela s'explique par le fait que deux logements ayant de faibles charges
+peuvent différer fortement en surface, en localisation ou en standing.\\
+Ainsi, les charges ne suffisent pas à elles seules pour expliquer le
+montant du loyer.
+
+\textbf{Présence de quelques valeurs extrêmes}\\
+Quelques observations présentent des charges très élevées (200 à 300 €),
+associées à des loyers supérieurs à 1500 €.\\
+Ces cas correspondent probablement à :\\
+- des appartements de grande taille,\\
+- des résidences récentes ou disposant de services inclus,\\
+- ou des logements haut de gamme.\\
+Ces valeurs extrêmes restent peu nombreuses mais économiquement
+cohérentes.
+
+\textbf{Relation non linéaire et corrélation modérée}\\
+La dispersion du nuage montre que les charges ne permettent pas à elles
+seules de prédire précisément le loyer.\\
+La relation est positive mais relativement faible.\\
+Cela suggère que d'autres variables jouent un rôle déterminant : la
+surface, le quartier, la classe énergétique, le nombre de pièces, etc.\\
+Ceci justifie la mise en place d'un modèle de régression multiple
+intégrant plusieurs caractéristiques du logement.
+
+\paragraph{La distribution du prix de Loyer selon les
+facteurs.}\label{la-distribution-du-prix-de-loyer-selon-les-facteurs.}
+
+\includegraphics{stats_descriptive+build_model_files/figure-latex/unnamed-chunk-14-1.pdf}
+\textbf{Commentaire : Analyse du loyer selon le nombre de pièces}
+
+\textbf{Hausse nette du loyer avec le nombre de pièces}\\
+Le boxplot montre une relation clairement croissante :\\
+plus le logement comporte de pièces, plus le loyer tout compris
+augmente.\\
+Cette tendance est attendue, car les appartements plus spacieux
+nécessitent un loyer plus élevé.
+
+\textbf{Progression marquée entre chaque catégorie}\\
+À chaque passage d'une catégorie de pièces à la suivante (1 → 2, 2 → 3,
+etc.),\\
+la médiane du loyer augmente significativement.\\
+Cela confirme que le nombre de pièces constitue un déterminant majeur du
+niveau de loyer.
+
+\textbf{Dispersion croissante pour les grands logements}\\
+Les logements de 3 pièces et plus présentent une plus grande variabilité
+de prix :\\
+- les biens peuvent varier fortement en surface,\\
+- en standing,\\
+- ou en localisation.\\
+Cette diversité se traduit par des écarts-types plus élevés et quelques
+valeurs extrêmes, notamment pour les 4 pièces.
+
+\textbf{Présence d'outliers chez les petits et grands logements}\\
+- Quelques studios (1 pièce) affichent des loyers anormalement élevés,
+probablement liés à une localisation très centrale ou à des logements
+meublés haut de gamme.\\
+- À l'inverse, certains logements de 4 pièces présentent des loyers
+exceptionnellement hauts (plus de 2000 €), cohérents avec des biens très
+spacieux ou haut standing.
+
+\textbf{Conclusion générale}\\
+Le graphique confirme que \textbf{le nombre de pièces est un facteur
+explicatif déterminant du loyer}.\\
+Il influence à la fois le niveau central du loyer (médiane) et sa
+dispersion.\\
+Ce constat justifie l'intégration de cette variable dans la régression
+linéaire comme variable explicative structurante.
+
+\paragraph{La distribution du prix de Loyer selon
+quartiers}\label{la-distribution-du-prix-de-loyer-selon-quartiers}
+
+\textbf{Analyse du loyer selon les différents quartiers de Rennes}
+
+\textbf{Quartiers Centre : les loyers les plus élevés}\\
+Le quartier Centre présente les niveaux de loyer les plus hauts de
+l'échantillon.\\
+La médiane y dépasse nettement celle des autres secteurs, et la
+dispersion est importante.\\
+Cette variabilité reflète la diversité de l'offre dans l'hypercentre
+(studios chers, logements rénovés, petites surfaces premium).
+
+\textbf{Quartier Nord-Est : le secteur le plus abordable}\\
+Le Nord-Est affiche les loyers les plus faibles, avec une médiane
+sensiblement inférieure à celles des autres quartiers.\\
+Ce secteur regroupe majoritairement des logements plus petits et plus
+accessibles, ce qui explique son positionnement plus bas dans la
+distribution.
+
+\textbf{Quartier Nord-Ouest : un niveau intermédiaire mais dispersé}\\
+Le Nord-Ouest présente une médiane de loyer proche de celle du Centre,
+tout en restant légèrement inférieure.\\
+La dispersion est cependant importante, signe d'une grande hétérogénéité
+du parc locatif (logements étudiants, maisons familiales, rénovations
+récentes).
+
+\textbf{Quartier Ouest : des loyers modérés mais plus variés}\\
+Le quartier Ouest se situe dans une position intermédiaire, avec une
+médiane plus élevée que celle du Nord-Est mais inférieure à celle du
+Centre et du Nord-Ouest.\\
+Une dispersion notable indique la coexistence de logements modestes et
+de biens plus spacieux ou récents.
+
+\subsection{3.4 Analyse descriptive bivariée des
+données}\label{analyse-descriptive-bivariuxe9e-des-donnuxe9es}
+
+\subsubsection{Corrélation}\label{corruxe9lation}
+
+\paragraph{1ère règle: Coefficient de
+Corrélation}\label{uxe8re-ruxe8gle-coefficient-de-corruxe9lation}
+
+\includegraphics{stats_descriptive+build_model_files/figure-latex/unnamed-chunk-15-1.pdf}
+\includegraphics{stats_descriptive+build_model_files/figure-latex/unnamed-chunk-15-2.pdf}
+\textbf{Commentaire : Corrélations entre le loyer et les variables
+explicatives}
+
+Le tableau met en évidence plusieurs relations importantes entre la
+variable expliquée (\emph{Loyer\_TCC}) et les variables explicatives
+quantitatives :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Surface (corr = 0.93)}\\
+  C'est la corrélation la plus forte observée.\\
+  Le loyer augmente très fortement avec la surface du logement.\\
+  Cette relation quasi linéaire confirme que la surface est le principal
+  déterminant du prix.
+\item
+  \textbf{Nombre de pièces (corr = 0.87)}\\
+  Le nombre de pièces est également fortement corrélé au loyer.\\
+  Cela s'explique naturellement par le fait qu'un logement comportant
+  plus de pièces possède généralement une surface plus importante et un
+  niveau de confort supérieur.
+\item
+  \textbf{Charges (corr = 0.61)}\\
+  Une corrélation positive modérée :\\
+  les logements ayant des charges plus élevées ont souvent des loyers
+  plus élevés.\\
+  Cependant, la relation est moins forte que pour la surface et les
+  pièces.
+\item
+  \textbf{Consommation énergétique kWh (corr = --0.30)}\\
+  La corrélation est faible et négative.\\
+  Cela suggère que les logements très énergivores (kWh élevés) ont
+  tendance à être légèrement moins chers, ce qui est cohérent avec
+  l'idée qu'un mauvais bilan énergétique peut réduire la valeur
+  locative.
+\item
+  \textbf{Émissions de CO₂ (corr = 0.21)}\\
+  Corrélation faible et positive.\\
+  Cela signifie qu'il n'existe pas de relation claire entre les
+  émissions de CO₂ et le montant du loyer.\\
+  Le CO₂ est probablement un facteur indirect qui reflète davantage la
+  performance énergétique ou la taille du logement.
+\end{enumerate}
+
+Si la valeur absolue du coefficient de corrélation entre deux variables
+excède 0.8, on peut soupçonner la colinéarité.
+
+Selon cette règle, on peut soupçonner un problème de colinéarité entre
+les variables vol et surface, ainsi que pers et surface.
+
+\paragraph{Deuxième règle (règle de
+Klein)}\label{deuxiuxe8me-ruxe8gle-ruxe8gle-de-klein}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Loyer_TCC ~ Surface + Charges + Pièces + label_eco + 
+##     kWh + kgCO2 + Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest + 
+##     Quartiers_Ouest, data = annonces)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -375.88  -73.58    1.08   73.79  696.48 
+## 
+## Coefficients: (1 not defined because of singularities)
+##                       Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)           395.6343    38.9189  10.166  < 2e-16 ***
+## Surface                 9.1852     1.0178   9.025 3.64e-16 ***
+## Charges                 0.9140     0.2629   3.477 0.000643 ***
+## Pièces                 23.6423    20.6380   1.146 0.253573    
+## label_eco             -13.0154    19.8054  -0.657 0.511959    
+## kWh                    -0.3097     0.1512  -2.048 0.042103 *  
+## kgCO2                  -0.5603     0.5713  -0.981 0.328123    
+## Quartiers_Centre       35.6670    27.2153   1.311 0.191766    
+## Quartiers_Nord_Est    -15.2679    27.9475  -0.546 0.585568    
+## Quartiers_Nord_Ouest -104.4316    29.5652  -3.532 0.000530 ***
+## Quartiers_Ouest             NA         NA      NA       NA    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 126.9 on 171 degrees of freedom
+## Multiple R-squared:  0.8856, Adjusted R-squared:  0.8795 
+## F-statistic:   147 on 9 and 171 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Quartiers\_Ouest est une combinaison linéaire des autres (colinéarité
+parfaite) → elle ne peut pas être estimée → d'où NA.
+
+En supprimant la modalité, vous obtenez un modèle propre, cohérent et
+sans singularités.
+
+Si le carré du coefficient de corrélation est supérieur au R\^{}2, on
+peut soupçonner de la colinéarité.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#cor(vars\_quanti)\^{}2 \textgreater{} summary(reg)$r.squared}
+\end{Highlighting}
+\end{Shaded}
+
+Cette règle met en avant un éventuel problème de colinéarité entre les
+variables vol et surface.
+
+\paragraph{Troisième règle : cohérence des
+signes}\label{troisiuxe8me-ruxe8gle-cohuxe9rence-des-signes}
+
+Le signe de la correlation brute et celui de la correlation expliquée
+devraient être les memes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#cbind(coef = reg$coef, corr = cor(df)[,"kw"])[{-}1,]}
+\end{Highlighting}
+\end{Shaded}
+
+Il y a manifestement des contre-sens concernant les relations entre le
+nombre de personne et la consommation, ainsi que le nombre de salles de
+bain et la consommation.
+
+\paragraph{colinéarités : VIF}\label{colinuxe9arituxe9s-vif}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(car)}
+
+\CommentTok{\#vif(reg)}
+
+\CommentTok{\#commentaires}
+\CommentTok{\#sqrt(vif(reg))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{b) Nuage de point vis à vis de
+Y}\label{b-nuage-de-point-vis-uxe0-vis-de-y}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graphConso }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(uneVariable)\{}
+  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ annonces, }\FunctionTok{aes\_string}\NormalTok{(}\AttributeTok{x =}\NormalTok{ uneVariable, }\AttributeTok{y =} \StringTok{"Loyer\_TCC"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{()}
+\NormalTok{\}}
+
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{graphConso}\NormalTok{(}\StringTok{"Surface"}\NormalTok{)}
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{graphConso}\NormalTok{(}\StringTok{"Charges"}\NormalTok{)}
+\NormalTok{p3 }\OtherTok{\textless{}{-}} \FunctionTok{graphConso}\NormalTok{(}\StringTok{"Pièces"}\NormalTok{)}
+\NormalTok{p4 }\OtherTok{\textless{}{-}} \FunctionTok{graphConso}\NormalTok{(}\StringTok{"label\_eco"}\NormalTok{)}
+\NormalTok{p5 }\OtherTok{\textless{}{-}} \FunctionTok{graphConso}\NormalTok{(}\StringTok{"kWh"}\NormalTok{)}
+\NormalTok{p6 }\OtherTok{\textless{}{-}} \FunctionTok{graphConso}\NormalTok{(}\StringTok{"kgCO2"}\NormalTok{)}
+
+\NormalTok{p7 }\OtherTok{\textless{}{-}}\FunctionTok{graphConso}\NormalTok{(}\StringTok{"Quartiers\_Centre"}\NormalTok{)}
+\NormalTok{p8 }\OtherTok{\textless{}{-}}\FunctionTok{graphConso}\NormalTok{(}\StringTok{"Quartiers\_Nord\_Est"}\NormalTok{)}
+\NormalTok{p9 }\OtherTok{\textless{}{-}}\FunctionTok{graphConso}\NormalTok{(}\StringTok{"Quartiers\_Nord\_Ouest"}\NormalTok{)}
+\NormalTok{p10 }\OtherTok{\textless{}{-}}\FunctionTok{graphConso}\NormalTok{(}\StringTok{"Quartiers\_Ouest"}\NormalTok{)}
+
+\FunctionTok{grid.arrange}\NormalTok{(p1, p2, p3, p4, p5, p6 , p7,p8,p9,p10, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{stats_descriptive+build_model_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\subsection{Analyse graphique de la relation entre le loyer et les
+variables
+explicatives}\label{analyse-graphique-de-la-relation-entre-le-loyer-et-les-variables-explicatives}
+
+L'observation des nuages de points permet d'étudier la nature de la
+relation entre le loyer toutes charges comprises (\textbf{Loyer\_TCC})
+et les différentes variables explicatives disponibles dans la base de
+données.\\
+Les courbes de lissage (LOESS) permettent d'identifier si la relation
+semble linéaire, croissante, décroissante ou non linéaire.
+
+Les conclusions suivantes peuvent être formulées :
+
+\subsubsection{\texorpdfstring{\textbf{Surface}}{Surface}}\label{surface}
+
+La relation entre la surface et le loyer apparaît clairement
+\textbf{croissante et linéaire}.\\
+On peut donc modéliser cette relation par une forme linéaire simple : \[
+Loyer\_{TCC} = \beta_0 + \beta_1 \cdot Surface
+\]
+
+\subsubsection{\texorpdfstring{\textbf{Charges}}{Charges}}\label{charges}
+
+La relation entre les charges et le loyer présente une légère
+\textbf{courbure}, suggérant une relation \textbf{quadratique} : \[
+Loyer\_{TCC} = \beta_0 + \beta_1 \cdot Charges + \beta_2 \cdot Charges^2
+\]
+
+\subsubsection{\texorpdfstring{\textbf{Nombre de
+pièces}}{Nombre de pièces}}\label{nombre-de-piuxe8ces}
+
+La relation est \textbf{croissante et linéaire}, sans signe de
+non-linéarité : \[
+Loyer\_{TCC} = \beta_0 + \beta_1 \cdot Pièces
+\]
+
+\subsubsection{\texorpdfstring{\textbf{Classe énergétique
+(label\_eco)}}{Classe énergétique (label\_eco)}}\label{classe-uxe9nerguxe9tique-label_eco}
+
+La variable \emph{label\_eco} est qualitative : les points se
+répartissent en bandes verticales.\\
+Aucune tendance fonctionnelle continue ne peut être modélisée.\\
+Elle doit être introduite dans le modèle sous forme de \textbf{variable
+factorielle} : \[
+Loyer\_{TCC} = \beta_0 + \sum_i \beta_i \cdot \mathbf{1}\{label\_eco = i\}
+\]
+
+\subsubsection{\texorpdfstring{\textbf{Consommation énergétique
+(kWh)}}{Consommation énergétique (kWh)}}\label{consommation-uxe9nerguxe9tique-kwh}
+
+La courbe montre une légère forme en « U ».\\
+La relation peut donc être modélisée par une fonction
+\textbf{quadratique} : \[
+Loyer\_{TCC} = \beta_0 + \beta_1 \cdot kWh + \beta_2 \cdot kWh^2
+\]
+
+\subsubsection{\texorpdfstring{\textbf{Émissions de CO2
+(kgCO2)}}{Émissions de CO2 (kgCO2)}}\label{uxe9missions-de-co2-kgco2}
+
+Même comportement que pour kWh, avec une légère convexité : \[
+Loyer\_{TCC} = \beta_0 + \beta_1 \cdot kgCO2 + \beta_2 \cdot kgCO2^2
+\]
+
+\subsubsection{\texorpdfstring{\textbf{Variables géographiques (Centre,
+Nord\_Est, Nord\_Ouest,
+Ouest)}}{Variables géographiques (Centre, Nord\_Est, Nord\_Ouest, Ouest)}}\label{variables-guxe9ographiques-centre-nord_est-nord_ouest-ouest}
+
+Ces variables sont binaires (0/1).\\
+Elles n'induisent pas de forme fonctionnelle mais représentent un
+\textbf{effet de présence} du quartier correspondant : \[
+Loyer\_{TCC} = \beta_0 + \beta_1 \cdot Quartier\_dummy
+\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{c) Corrélations entre les variables
+explicatives}\label{c-corruxe9lations-entre-les-variables-explicatives}
+
+L'analyse de la matrice de corrélation entre les variables explicatives
+permet de détecter d'éventuels problèmes de multicolinéarité dans le
+futur modèle de régression.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Surface et nombre de pièces (corr = 0.94)}\\
+  Il s'agit de la corrélation la plus élevée entre les variables
+  explicatives.\\
+  Cela s'explique par le fait que les logements comportant davantage de
+  pièces sont presque toujours plus grands.\\
+  Cette corrélation très forte peut poser un risque de multicolinéarité
+  dans la régression. Le modèle devra en tenir compte, par exemple en
+  n'interprétant pas séparément ces deux variables ou en examinant les
+  VIF.
+\item
+  \textbf{Surface et Charges (corr = 0.61)}\\
+  Les logements plus grands ont en général des charges plus élevées
+  (chauffage collectif, copropriété, entretien).\\
+  La corrélation est modérée mais non problématique.
+\item
+  \textbf{Pièces et Charges (corr = 0.54)}\\
+  Les appartements ayant plus de pièces entraînent généralement plus de
+  charges.\\
+  Cette corrélation reste raisonnable et ne conduit pas à une
+  multicolinéarité forte.
+\item
+  \textbf{Variables énergétiques (kWh, CO₂)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    kWh présente de faibles corrélations avec les autres variables
+    (entre −0.30 et −0.20).\\
+  \item
+    kgCO₂ montre également des corrélations faibles (entre 0.18 et
+    0.25).
+  \end{itemize}
+
+  Ces valeurs indiquent que la performance énergétique évolue de manière
+  relativement indépendante des autres caractéristiques du logement. Il
+  n'existe donc pas de risque de multicolinéarité majeure provenant des
+  variables énergétiques.
+\item
+  \textbf{Absence de corrélations problématiques en dehors de
+  Surface--Pièces}\\
+  Globalement, toutes les corrélations sont faibles ou modérées, à
+  l'exception du couple Surface--Pièces, qui présente une colinéarité
+  naturellement élevée mais interprétable.
+\end{enumerate}
+
+\textbf{Conclusion :}\\
+La seule multicolinéarité forte concerne \emph{Surface} et
+\emph{Pièces}.\\
+Cela devra être vérifié lors de l'estimation du modèle (par les VIF),
+mais les autres variables explicatives sont suffisamment indépendantes
+pour être intégrées sans risque dans la régression linéaire.
+
+\section{\texorpdfstring{\textbf{4. Analyse et discussion des
+résultats}}{4. Analyse et discussion des résultats}}\label{analyse-et-discussion-des-ruxe9sultats}
+
+\subsection{4.1 Modélisation
+principale}\label{moduxe9lisation-principale}
+
+Présentation et interprétation des résultats obtenus : utiliser un
+tableau récapitulatif des modèles principaux testés
+
+stepAIC() choisit le meilleur par AIC. En option on peut choisir la
+direction:
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi})}
+\tightlist
+\item
+  ``both'' (for stepwise regression, both forward and backward
+  selection);
+\item
+  ``backward'' (for backward selection)
+\item
+  ``forward'' (for forward selection).
+\end{enumerate}
+
+En fonction de la procédure nous pouvons obtenir une sélection de
+variables différentes
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Centre + 
+##     Quartiers_Nord_Ouest, data = annonces)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -397.23  -73.93   -4.26   73.10  704.06 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)          377.8952    33.7860  11.185  < 2e-16 ***
+## Surface               10.1402     0.4325  23.444  < 2e-16 ***
+## Charges                0.8222     0.2571   3.199 0.001640 ** 
+## kWh                   -0.3973     0.1053  -3.775 0.000219 ***
+## Quartiers_Centre      44.5086    23.5151   1.893 0.060040 .  
+## Quartiers_Nord_Ouest -81.7458    25.0523  -3.263 0.001326 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 126.8 on 175 degrees of freedom
+## Multiple R-squared:  0.8831, Adjusted R-squared:  0.8797 
+## F-statistic: 264.4 on 5 and 175 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Loyer_TCC ~ Surface + Charges + Pièces + label_eco + 
+##     kWh + kgCO2 + Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest, 
+##     data = annonces)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -375.88  -73.58    1.08   73.79  696.48 
+## 
+## Coefficients:
+##                       Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)           395.6343    38.9189  10.166  < 2e-16 ***
+## Surface                 9.1852     1.0178   9.025 3.64e-16 ***
+## Charges                 0.9140     0.2629   3.477 0.000643 ***
+## Pièces                 23.6423    20.6380   1.146 0.253573    
+## label_eco             -13.0154    19.8054  -0.657 0.511959    
+## kWh                    -0.3097     0.1512  -2.048 0.042103 *  
+## kgCO2                  -0.5603     0.5713  -0.981 0.328123    
+## Quartiers_Centre       35.6670    27.2153   1.311 0.191766    
+## Quartiers_Nord_Est    -15.2679    27.9475  -0.546 0.585568    
+## Quartiers_Nord_Ouest -104.4316    29.5652  -3.532 0.000530 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 126.9 on 171 degrees of freedom
+## Multiple R-squared:  0.8856, Adjusted R-squared:  0.8795 
+## F-statistic:   147 on 9 and 171 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Centre + 
+##     Quartiers_Nord_Ouest, data = annonces)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -397.23  -73.93   -4.26   73.10  704.06 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)          377.8952    33.7860  11.185  < 2e-16 ***
+## Surface               10.1402     0.4325  23.444  < 2e-16 ***
+## Charges                0.8222     0.2571   3.199 0.001640 ** 
+## kWh                   -0.3973     0.1053  -3.775 0.000219 ***
+## Quartiers_Centre      44.5086    23.5151   1.893 0.060040 .  
+## Quartiers_Nord_Ouest -81.7458    25.0523  -3.263 0.001326 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 126.8 on 175 degrees of freedom
+## Multiple R-squared:  0.8831, Adjusted R-squared:  0.8797 
+## F-statistic: 264.4 on 5 and 175 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\subsubsection{model complexe selon la graphiqiue choisie par les
+méthodes Backward
+forwardStepwise}\label{model-complexe-selon-la-graphiqiue-choisie-par-les-muxe9thodes-backward-forwardstepwise}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Centre + 
+##     Quartiers_Nord_Ouest, data = annonces)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -397.23  -73.93   -4.26   73.10  704.06 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)          377.8952    33.7860  11.185  < 2e-16 ***
+## Surface               10.1402     0.4325  23.444  < 2e-16 ***
+## Charges                0.8222     0.2571   3.199 0.001640 ** 
+## kWh                   -0.3973     0.1053  -3.775 0.000219 ***
+## Quartiers_Centre      44.5086    23.5151   1.893 0.060040 .  
+## Quartiers_Nord_Ouest -81.7458    25.0523  -3.263 0.001326 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 126.8 on 175 degrees of freedom
+## Multiple R-squared:  0.8831, Adjusted R-squared:  0.8797 
+## F-statistic: 264.4 on 5 and 175 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Loyer_TCC ~ Surface + Charges + Charges^2 + Pièces + 
+##     label_eco + label_eco^2 + kWh + kWh^2 + kgCO2 + kgCO2^2 + 
+##     Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest + 
+##     Quartiers_Ouest, data = annonces)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -375.88  -73.58    1.08   73.79  696.48 
+## 
+## Coefficients: (1 not defined because of singularities)
+##                       Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)           395.6343    38.9189  10.166  < 2e-16 ***
+## Surface                 9.1852     1.0178   9.025 3.64e-16 ***
+## Charges                 0.9140     0.2629   3.477 0.000643 ***
+## Pièces                 23.6423    20.6380   1.146 0.253573    
+## label_eco             -13.0154    19.8054  -0.657 0.511959    
+## kWh                    -0.3097     0.1512  -2.048 0.042103 *  
+## kgCO2                  -0.5603     0.5713  -0.981 0.328123    
+## Quartiers_Centre       35.6670    27.2153   1.311 0.191766    
+## Quartiers_Nord_Est    -15.2679    27.9475  -0.546 0.585568    
+## Quartiers_Nord_Ouest -104.4316    29.5652  -3.532 0.000530 ***
+## Quartiers_Ouest             NA         NA      NA       NA    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 126.9 on 171 degrees of freedom
+## Multiple R-squared:  0.8856, Adjusted R-squared:  0.8795 
+## F-statistic:   147 on 9 and 171 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Centre + 
+##     Quartiers_Nord_Ouest, data = annonces)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -397.23  -73.93   -4.26   73.10  704.06 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)          377.8952    33.7860  11.185  < 2e-16 ***
+## Surface               10.1402     0.4325  23.444  < 2e-16 ***
+## Charges                0.8222     0.2571   3.199 0.001640 ** 
+## kWh                   -0.3973     0.1053  -3.775 0.000219 ***
+## Quartiers_Centre      44.5086    23.5151   1.893 0.060040 .  
+## Quartiers_Nord_Ouest -81.7458    25.0523  -3.263 0.001326 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 126.8 on 175 degrees of freedom
+## Multiple R-squared:  0.8831, Adjusted R-squared:  0.8797 
+## F-statistic: 264.4 on 5 and 175 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+##             R2 Adj_R2    AIC    BIC Resid_SE
+## modele1 0.8856 0.8795 2278.7 2313.8  126.895
+## modele2 0.8816 0.8753 -168.8 -133.6    0.147
+## modele3 0.8915 0.8837 2275.0 2319.8  124.665
+## modele4 0.8334 0.8246 2346.7 2381.9  153.125
+\end{verbatim}
+
+\subsection{4.2 Robustesse des
+résultats}\label{robustesse-des-ruxe9sultats}
+
+Hypothèses des MCO - nomalités / hétéroscédasticité / \ldots{}
+
+\subsection{4.2 Analyses
+complémentaires}\label{analyses-compluxe9mentaires}
+
+\begin{itemize}
+\item
+  Transformation de variables / effets non linéaires
+\item
+  Changement structurel
+\item
+  Effets croisés de variables
+\end{itemize}
+
+\section{\texorpdfstring{\textbf{5. Conclusion générale et
+perspectives}}{5. Conclusion générale et perspectives}}\label{conclusion-guxe9nuxe9rale-et-perspectives}
+
+Rappel de la problématique et de la méthodologie
+
+Synthèse des résultats principaux
+
+Contributions du mémoire, apports scientifiques et/ou applicatifs
+
+Perspectives d'amélioration ou de recherche future
+
+\section{Bibliographie - Source des
+données}\label{bibliographie---source-des-donnuxe9es}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\end{document}
