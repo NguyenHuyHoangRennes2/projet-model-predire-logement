@@ -1147,11 +1147,13 @@ Dans l’ensemble, les résultats montrent que le **modèle basé sur l’interp
 
 ## 4.2 Analyse de la robustesse des résultats
 
-Le modèle final retenu est une spécification non linéaire permettant de capturer les relations observées graphiquement entre le loyer et ses principales variables explicatives.
+Le modèle final retenu est une spécification non linéaire permettant de
+capturer les relations observées graphiquement entre le loyer et ses
+principales variables explicatives.
 
-\[
+$$
 \begin{aligned}
-\text{Loyer\_TCC}_i &= 
+\text{Loyer_TCC}_i &= 
 \beta_0 
 + \beta_1\,\text{Surface}_i
 + \beta_2\,\text{Charges}_i
@@ -1160,20 +1162,23 @@ Le modèle final retenu est une spécification non linéaire permettant de captu
 \beta_4\,\text{kWh}_i
 + \beta_5\,\text{kWh}_i^2 \\
 &\quad +
-\beta_6\,\text{Quartiers\_Centre}_i
-+ \beta_7\,\text{Quartiers\_Nord\_Est}_i
-+ \beta_8\,\text{Quartiers\_Nord\_Ouest}_i
+\beta_6\,\text{Quartiers_Centre}_i
++ \beta_7\,\text{Quartiers_Nord_Est}_i
++ \beta_8\,\text{Quartiers_Nord_Ouest}_i
 + \varepsilon_i
 \end{aligned}
-\]
+$$
 
-Pour évaluer la validité des hypothèses du modèle linéaire (normalité, homoscédasticité, absence de points influents), nous réalisons une analyse détaillée des résidus.
+Pour évaluer la validité des hypothèses du modèle linéaire (normalité,
+homoscédasticité, absence de points influents), nous réalisons une
+analyse détaillée des résidus.
 
----
+------------------------------------------------------------------------
 
 ### Analyse des résidus
 
 **QQ-plot des résidus**
+
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 library(olsrr)
 reg <- lm(Loyer_TCC ~ Surface +
@@ -1184,116 +1189,146 @@ reg <- lm(Loyer_TCC ~ Surface +
 ols_plot_resid_qq(reg)        # QQ-plot des résidus
 ```
 
-Afin de vérifier l’hypothèse de normalité des erreurs du modèle MCO, deux représentations graphiques sont examinées :
+Afin de vérifier l’hypothèse de normalité des erreurs du modèle MCO,
+deux représentations graphiques sont examinées :
 
-- le **QQ-plot des résidus**,  
-- l’**histogramme des résidus avec courbe normale superposée**.
+-   le **QQ-plot des résidus**,\
+-   l’**histogramme des résidus avec courbe normale superposée**.
 
-Ces deux graphiques permettent de détecter des écarts à la normalité tels que des queues épaisses, une asymétrie ou la présence d'observations extrêmes.
+Ces deux graphiques permettent de détecter des écarts à la normalité
+tels que des queues épaisses, une asymétrie ou la présence
+d'observations extrêmes.
 
----
+------------------------------------------------------------------------
 
 **QQ-plot des résidus**
 
-Le QQ-plot compare les quantiles théoriques d'une loi normale avec les quantiles observés des résidus du modèle.
+Le QQ-plot compare les quantiles théoriques d'une loi normale avec les
+quantiles observés des résidus du modèle.
 
 **Interprétation :**
 
-- Les points suivent **grossièrement la ligne rouge**, ce qui indique une tendance générale à la normalité.
-- Toutefois, **des écarts importants apparaissent dans les queues**, en particulier :
-  - en bas à gauche (résidus très négatifs),
-  - en haut à droite (résidus très positifs).
-- Ces déviations signifient :
-  - une **absence de normalité parfaite**,  
-  - la présence probable de **valeurs extrêmes (outliers)** ayant un impact sur la distribution des erreurs.
+-   Les points suivent **grossièrement la ligne rouge**, ce qui indique
+    une tendance générale à la normalité.
+-   Toutefois, **des écarts importants apparaissent dans les queues**,
+    en particulier :
+    -   en bas à gauche (résidus très négatifs),
+    -   en haut à droite (résidus très positifs).
+-   Ces déviations signifient :
+    -   une **absence de normalité parfaite**.
+    -   la présence probable de **valeurs extrêmes (outliers)** ayant un
+        impact sur la distribution des erreurs.
 
 **Conclusion :**
 
-La normalité des résidus est **approximative mais non totalement respectée**.  
-L’usage de méthodes robustes (erreurs standards robustes, bootstrap) est recommandé.
+La normalité des résidus est **approximative mais non totalement
+respectée**.\
+L’usage de méthodes robustes (erreurs standards robustes, bootstrap) est
+recommandé.
 
----
+------------------------------------------------------------------------
 
 **Histogramme des résidus**
 
-L’histogramme visualise la distribution empirique des résidus, avec en superposition une densité normale.
+L’histogramme visualise la distribution empirique des résidus, avec en
+superposition une densité normale.
 
 **Interprétation :**
 
-- La distribution semble **centrée autour de 0**, ce qui confirme que le modèle ne présente pas de biais systématique.
-- Elle est cependant **plus aplatie et plus étalée** qu’une distribution normale :
-  - présence de queues épaisses (kurtosis),
-  - quelques valeurs extrêmes éloignées du centre.
-- La courbe bleue (densité normale théorique) ne s’ajuste pas parfaitement à l’histogramme, notamment dans les queues.
+-   La distribution semble **centrée autour de 0**, ce qui confirme que
+    le modèle ne présente pas de biais systématique.
+-   Elle est cependant **plus aplatie et plus étalée** qu’une
+    distribution normale :
+    -   présence de queues épaisses (kurtosis),
+    -   quelques valeurs extrêmes éloignées du centre.
+-   La courbe bleue (densité normale théorique) ne s’ajuste pas
+    parfaitement à l’histogramme, notamment dans les queues.
 
 **Conclusion :**
 
-L’histogramme confirme que les résidus **ne suivent pas exactement une loi normale**.  
-L’utilisation d’estimateurs robustes ou de transformations (par ex. log-loyer) peut améliorer cet aspect.
+L’histogramme confirme que les résidus **ne suivent pas exactement une
+loi normale**.\
+L’utilisation d’estimateurs robustes ou de transformations (par ex.
+log-loyer) peut améliorer cet aspect.
 
----
+------------------------------------------------------------------------
 
 **Synthèse générale**
 
 Les deux graphiques indiquent :
 
-- une **bonne centralisation** des résidus autour de zéro,
-- mais une **absence de normalité stricte**, avec :
-  - valeurs extrêmes,
-  - asymétrie légère,
-  - queues plus épaisses que prévu.
+-   une **bonne centralisation** des résidus autour de zéro,
+-   mais une **absence de normalité stricte** avec :
+    -   valeurs extrêmes.
+    -   asymétrie légère.
+    -   queues plus épaisses que prévu.
 
-Cela ne remet pas en cause la validité du modèle en termes d'estimation, mais :
+Cela ne remet pas en cause la validité du modèle en termes d'estimation,
+mais :
 
-- les tests statistiques classiques peuvent être moins fiables,
-- il peut être souhaitable d’utiliser :
-  - des **erreurs standards robustes (White / HC1)**,
-  - ou une **méthode bootstrap** pour obtenir des intervalles de confiance plus fiables.
-
-
-
-
-
-
+-   les tests statistiques classiques peuvent être moins fiables,
+-   il peut être souhaitable d’utiliser :
+    -   des **erreurs standards robustes (White / HC1)**,
+    -   ou une **méthode bootstrap** pour obtenir des intervalles de
+        confiance plus fiables.
 
 ### Identifier les points influences
+
 **Distance de Cook**
+
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 ## Distance de Cook: mesure l'influence d'une observation, les valeurs supérieures à 1 ou parfois à 0,5 indique un point influent
 plot(reg, which = 4)
 ```
-Le graphique de la distance de Cook permet d’identifier les observations ayant une influence excessive sur les coefficients du modèle.
+
+Le graphique de la distance de Cook permet d’identifier les observations
+ayant une influence excessive sur les coefficients du modèle.
 
 Dans notre cas :
 
-- la majorité des observations ont une influence faible ;
-- **trois observations ressortent nettement** : les points **86**, **130** et **181** ;
-- l’observation **130** dépasse presque le seuil critique de 1, ce qui indique une influence importante.
- 
-**Vérification manuelle** 
+-   la majorité des observations ont une influence faible ;
+-   **trois observations ressortent nettement** : les points **86**,
+    **130** et **181** ;
+-   l’observation **130** dépasse presque le seuil critique de 1, ce qui
+    indique une influence importante.
+
+**Vérification manuelle**
+
 ```{r,echo=FALSE}
 annonces[c(86,130,181) , ]
 ```
 
-L’analyse du graphique de la **distance de Cook** met en évidence **trois observations fortement influentes**.  
-En examinant le tableau des données correspondant à ces points, on obtient :
+L’analyse du graphique de la **distance de Cook** met en évidence
+**trois observations fortement influentes**.\
+En examinant le tableau des données correspondant à ces points, on
+obtient :
 
-- **Observation 86** : logement situé en **centre-ville**, d’une surface d’environ **60 m²**, avec un **loyer nettement inférieur** à celui observé pour des biens comparables.  
-- **Observation 130** : même constat que pour l’observation 86 : logement **au centre** avec une surface proche de **60 m²**, mais un **niveau de loyer anormalement bas** par rapport au marché.  
-- **Observation 181** : bien de grande surface et loyer élevé ; les valeurs restent **cohérentes avec la logique du marché** (grand logement, loyer élevé).
+-   **Observation 86** : logement situé en **centre-ville**, d’une
+    surface d’environ **60 m²**, avec un **loyer nettement inférieur** à
+    celui observé pour des biens comparables.\
+-   **Observation 130** : même constat que pour l’observation 86 :
+    logement **au centre** avec une surface proche de **60 m²**, mais un
+    **niveau de loyer anormalement bas** par rapport au marché.\
+-   **Observation 181** : bien de grande surface et loyer élevé ; les
+    valeurs restent **cohérentes avec la logique du marché** (grand
+    logement, loyer élevé).
 
-Les observations **86** et **130** apparaissent donc **incohérentes** avec le reste de l’échantillon : elles ressemblent à des **erreurs de saisie** ou à des logements très atypiques (forte décote) et exercent une influence disproportionnée sur l’estimation.  
-À l’inverse, la dernière observation identifiée semble **réaliste** et correspond plutôt à un **cas extrême mais plausible** du marché (grand logement cher). Finalement , nous retirons l'observation 86 et 130.
+Les observations **86** et **130** apparaissent donc **incohérentes**
+avec le reste de l’échantillon : elles ressemblent à des **erreurs de
+saisie** ou à des logements très atypiques (forte décote) et exercent
+une influence disproportionnée sur l’estimation.\
+À l’inverse, la dernière observation identifiée semble **réaliste** et
+correspond plutôt à un **cas extrême mais plausible** du marché (grand
+logement cher). Finalement , nous retirons l'observation 86 et 130.
 
 ```{r,echo=F}
 annonces <- annonces[-c(86,130) , ]
 
 ```
 
- 
-  
-  
-**Le graphique des résidus standardisés selon leur levier (“Residual vs Leverage”**
+**Le graphique des résidus standardisés selon leur levier (“Residual vs
+Leverage”**
+
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 ## Un autre graphique très utile pour le diagnostic d’un éventuel point influent sur la droite de régression est le graphique des résidus standardisés selon leur levier (“Residual vs Leverage”) sur lequel on superpose les limites pour la distance de Cook. Leverage = éléments diagonaux de H = X(X'X)-1X'  Si un point sur ce graphique se situe en dehors de l’intervalle définit par les lignes en pointillées, il s’agit d’une observation influente. 
 
@@ -1302,20 +1337,27 @@ plot(reg, which = 5)
 
 Ce graphique sert à détecter des points combinant :
 
-- un levier élevé (observations atypiques dans les variables explicatives),
-- un résidu élevé (observations mal expliquées par le modèle),
-- et un risque d’influence excessive.
+-   un levier élevé (observations atypiques dans les variables
+    explicatives),
+-   un résidu élevé (observations mal expliquées par le modèle),
+-   et un risque d’influence excessive.
 
 Interprétation :
 
-- la plupart des points se situent dans la zone centrale, ce qui est normal ;
-- les observations **130** et **181** apparaissent clairement comme influentes (elles se trouvent proches ou au-delà des lignes de Cook) ;
-- cela confirme ce qui avait été détecté par la distance de Cook.
+-   la plupart des points se situent dans la zone centrale, ce qui est
+    normal ;
+-   les observations **130** et **181** apparaissent clairement comme
+    influentes (elles se trouvent proches ou au-delà des lignes de Cook)
+    ;
+-   cela confirme ce qui avait été détecté par la distance de Cook.
 
-Conclusion :  
-Le modèle contient **quelques points influents** qui peuvent impacter l’ajustement. Il peut être utile de comparer les estimations **avec et sans ces points**.
+Conclusion :\
+Le modèle contient **quelques points influents** qui peuvent impacter
+l’ajustement. Il peut être utile de comparer les estimations **avec et
+sans ces points**.
 
 ### Tests de moyenne nulle et de normalité sur les résidus
+
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 reg <- lm(Loyer_TCC ~ Surface +
                 Charges + I(Charges^2) +
@@ -1331,36 +1373,48 @@ t.test(reg$residuals)
 shapiro.test(reg$residuals)
 
 ```
+
 **Test t de Student – Moyenne des résidus**
 
-Le test t appliqué aux résidus donne une **p-value = 1**, ce qui est extrêmement élevée.  
-Cela signifie que l’on **ne rejette pas** l’hypothèse nulle selon laquelle :
+Le test t appliqué aux résidus donne une **p-value = 1**, ce qui est
+extrêmement élevée.\
+Cela signifie que l’on **ne rejette pas** l’hypothèse nulle selon
+laquelle :
 
-\[
+$$
 \mathbb{E}[\varepsilon] = 0
-\]
+$$
 
-L’intervalle de confiance à 95 % contient clairement la valeur **0** ([-17.93 ; 17.93]), et la moyenne observée des résidus est pratiquement nulle (**–4.5 × 10⁻¹⁵**), ce qui confirme la conformité à l’hypothèse des MCO selon laquelle les erreurs doivent avoir une moyenne nulle.
+L’intervalle de confiance à 95 % contient clairement la valeur **0**
+([-17.93 ; 17.93]), et la moyenne observée des résidus est pratiquement
+nulle (**–4.5 × 10⁻¹⁵**), ce qui confirme la conformité à l’hypothèse
+des MCO selon laquelle les erreurs doivent avoir une moyenne nulle.
 
-**Conclusion : l’hypothèse “moyenne des résidus = 0” est parfaitement respectée.**
+**Conclusion : l’hypothèse “moyenne des résidus = 0” est parfaitement
+respectée.**
 
 **Le test de Shapiro–Wilk** donne un résultat :
 
-- **W = 0.94847**  
-- **p-value = 0.4373 × 10⁻⁶**
+-   **W = 0.94847**\
+-   **p-value = 0.4373 × 10⁻⁶**
 
-La p-value étant **très largement inférieure à 5 %**, on **rejette** l’hypothèse nulle de normalité des résidus.
+La p-value étant **très largement inférieure à 5 %**, on **rejette**
+donc l’hypothèse nulle de normalité des résidus.
 
 Cela signifie que :
 
-- Les résidus **ne suivent pas une distribution normale**,  
-- Ce qui est cohérent avec l’analyse graphique (QQ-plot non linéaire) et il peut affecter la validité des **tests statistiques** (t-test, F-test) en petit échantillon.
+-   Les résidus **ne suivent pas une distribution normale**,\
+-   Ce qui est cohérent avec l’analyse graphique (QQ-plot non linéaire)
+    et il peut affecter la validité des **tests statistiques** (t-test,
+    F-test) en petit échantillon.
 
- **Conclusion : l’hypothèse de normalité des résidus n’est pas vérifiée.**
+**Conclusion : l’hypothèse de normalité des résidus n’est pas
+vérifiée.**
 
 ### Hypothèse d'homoscedasticité
 
 **Détection graphique – Scale–Location Plot**
+
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 ###############################################################
 # 1. Détection graphique – Scale–Location Plot
@@ -1391,38 +1445,49 @@ plot(residM ~ Yhat,
      ylab = "Résidus")
 ```
 
-Le graphique présente les résidus (erreurs du modèle) en fonction des valeurs ajustées par la régression.
+Le graphique présente les résidus (erreurs du modèle) en fonction des
+valeurs ajustées par la régression.
 
-Cette représentation permet de tester **l’hypothèse fondamentale des MCO** : l’homoscédasticité (variance constante des résidus).
+Cette représentation permet de tester **l’hypothèse fondamentale des
+MCO** : l’homoscédasticité (variance constante des résidus).
 
 Ce que l’on observe :
 
-**Les résidus** ne semblent pas répartis de manière uniforme autour de zéro lorsque les valeurs ajustées augmentent.
+**Les résidus** ne semblent pas répartis de manière uniforme autour de
+zéro lorsque les valeurs ajustées augmentent.
 
-On observe **une augmentation de la dispersion** pour les **valeurs ajustées plus élevées** (à partir d’environ 1200–1500 €).
+On observe **une augmentation de la dispersion** pour les **valeurs
+ajustées plus élevées** (à partir d’environ 1200–1500 €).
 
-**Quelques points extrêmes** apparaissent, ce qui accentue un éventuel phénomène d’hétéroscédasticité.
+**Quelques points extrêmes** apparaissent, ce qui accentue un éventuel
+phénomène d’hétéroscédasticité.
 
-La forme du nuage de points n’est pas totalement aléatoire :
-→ Dans les petites valeurs, les résidus sont assez regroupés.
-→ À mesure que le loyer prédit augmente, la variabilité des résidus augmente nettement.
+La forme du nuage de points n’est pas totalement aléatoire : → Dans les
+petites valeurs, les résidus sont assez regroupés. → À mesure que le
+loyer prédit augmente, la variabilité des résidus augmente nettement.
 
 **Conclusion**
 
 Le graphique suggère clairement une hétéroscédasticité :
 
-La variance des résidus augmente lorsque les valeurs ajustées augmentent.
+La variance des résidus augmente lorsque les valeurs ajustées
+augmentent.
 
-Cela signifie que l’erreur du modèle est plus importante pour les logements chers, ce qui viole l’hypothèse de variance constante des erreurs.
+Cela signifie que l’erreur du modèle est plus importante pour les
+logements chers, ce qui viole l’hypothèse de variance constante des
+erreurs.
 
 **Conséquences possibles**
 
-Les estimateurs restent non biaisés, mais leurs variances sont mal estimées.
+-Les estimateurs restent non biaisés mais leurs variances sont mal
+estimées.
 
-Les tests t et F deviennent moins fiables.
+-Les tests t et F deviennent moins fiables.
 
-Il est nécessaire d’utiliser des erreurs robustes (type White) ou d’envisager une transformation du loyer (souvent log-loyer).
-**Test de Breusch–Pagan**
+Il est nécessaire d’utiliser des erreurs robustes (type White) ou
+d’envisager une transformation du loyer (souvent log-loyer). **Test de
+Breusch–Pagan**
+
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 ###############################################################
 # Test de Breusch–Pagan
@@ -1433,17 +1498,21 @@ bp <- bptest(reg)
 bp
 
 # Commentaire :
-# Si la p-valeur est faible (< 5%), on rejette H0 d'homoscédasticité.
+# Si la p-valeur est faible (< 5%), on rejette H0 et l'hypothèse d'homoscédasticité.
 # Le modèle présente alors une variance non constante des résidus.
 ```
-Le test de Breusch–Pagan vérifie si la variance des résidus dépend des variables explicatives.
-- La p-value est **nettement inférieure à 5%**  
-- **On rejette l’hypothèse nulle d’homoscédasticité.**
-- Cela signifie que la variance des résidus **n’est pas constante**, ce qui constitue une violation des hypothèses des MCO.
 
-En conclusion, le test indique une **hétéroscédasticité significative** dans le modèle.
+Le test de Breusch–Pagan vérifie si la variance des résidus dépend des
+variables explicatives. - La p-value est **nettement inférieure à 5%**\
+- **On rejette l’hypothèse nulle d’homoscédasticité.** - Cela signifie
+que la variance des résidus **n’est pas constante**, ce qui constitue
+une violation des hypothèses des MCO.
+
+En conclusion, le test indique une **hétéroscédasticité significative**
+dans le modèle.
 
 **Test de White (version longue)**
+
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 ###############################################################
 #  Test de White (version longue)
@@ -1460,19 +1529,26 @@ summary(ModresWhite)
 Whitestat <- summary(ModresWhite)$r.squared * nrow(annonces)
 Whitestat
 
-# Commentaire :
+# Commentaires :
 # Si la p-valeur associée est faible, cela confirme l’hétéroscédasticité.
+#Or ici la p-value < 1%.
 # White est plus général que Breusch–Pagan → confirmation supplémentaire.
 ```
-Le test de White est plus général que celui de Breusch–Pagan :  
-il inclut les effets quadratiques et les interactions entre variables explicatives.
 
-- La p-value est **très faible**, largement en dessous du seuil de 5 %.  
--  **On rejette l’hypothèse d’homoscédasticité.**
+Le test de White est plus général que celui de Breusch–Pagan :\
+il inclut les effets quadratiques et les interactions entre variables
+explicatives.
 
-Ce test confirme donc, de manière robuste, la présence **d’hétéroscédasticité**, et ce même dans un cadre élargi incluant des termes non linéaires.
+-   La p-value est **très faible**, largement en dessous du seuil de 5
+    %.\
+-   **On rejette l’hypothèse d’homoscédasticité.**
+
+Ce test confirme donc, de manière robuste, la présence
+**d’hétéroscédasticité**, et ce même dans un cadre élargi incluant des
+termes non linéaires.
 
 **Test de Goldfeld–Quandt**
+
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 ###############################################################
 # 5. Test de Goldfeld–Quandt
@@ -1481,34 +1557,42 @@ Ce test confirme donc, de manière robuste, la présence **d’hétéroscédasti
 gq <- gqtest(reg, order.by = ~ Surface, fraction = 6, data = annonces)
 gq
 ```
-Le test de Goldfeld–Quandt examine si la variance des erreurs augmente systématiquement lorsqu’une variable explicative croît (ici : la surface).
 
-- La p-value est **extrêmement faible**.
-- **L’hypothèse d’homoscédasticité est rejetée très fortement.**
+Le test de Goldfeld–Quandt examine si la variance des erreurs augmente
+systématiquement lorsqu’une variable explicative croît (ici : la
+surface).
 
-**Conclusion retirée apres les tests dessus**
-Les trois tests convergent vers la même conclusion :
+-   La p-value est **extrêmement faible** (inférieure à 1%).
+-   **Par conséquent, nous rejettons l’hypothèse d’homoscédasticité.**
 
-- **Breusch–Pagan : hétéroscédasticité**  
-- **White : hétéroscédasticité**  
-- **Goldfeld–Quandt : hétéroscédasticité**
+**Conclusion retirée apres les tests dessus** Les trois tests convergent
+vers la même conclusion :
 
-Le modèle souffre donc clairement d’un **problème d’hétéroscédasticité**, indiquant que :
+-   **Breusch–Pagan : hétéroscédasticité**\
+-   **White : hétéroscédasticité**\
+-   **Goldfeld–Quandt : hétéroscédasticité**
 
-- la variance des erreurs n’est **pas constante**,  
-- et les intervalles de confiance ainsi que les tests de significativité standards peuvent être **biaisés**.
+Le modèle souffre donc clairement d’un **problème
+d’hétéroscédasticité**, indiquant que :
 
-## 4.2 Analyses complémentaires  
+-   la variance des erreurs n’est **pas constante**,\
+-   et les intervalles de confiance ainsi que les tests de
+    significativité standards peuvent être **biaisés**.
+
+## 4.2 Analyses complémentaires
 
 ### Transformations de variables / effets non linéaires
+
 **Création de variables transformées (log)**
+
 ```{r , message=FALSE, warning=FALSE}
 annonces$log_Loyer_TCC  <- log(annonces$Loyer_TCC)
 annonces$log_Surface    <- log(annonces$Surface)
 annonces$log_Charges    <- log(annonces$Charges + 1)   # +1 pour éviter log(0)
 ```
 
-**Modèle log-linéaire : log(loyer) ~ log(surface) + autres**
+**Modèle log-linéaire : log(loyer) \~ log(surface) + autres**
+
 ```{r , message=FALSE, warning=FALSE}
 mod_log <- lm(log_Loyer_TCC ~ log_Surface + log_Charges + kWh +
                 Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
@@ -1517,16 +1601,19 @@ summary(mod_log)
 ```
 
 **Modèle avec effets non linéaires (termes quadratiques)**
+
 ```{r , message=FALSE, warning=FALSE}
 mod_poly <- lm(Loyer_TCC ~ Surface + I(Surface^2) +
                               Charges + I(Charges^2) +
                               kWh + I(kWh^2) +
                               Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
                data = annonces)
-summary(mod_poly)
+summary(mod_poly) 
+
 ```
 
 ### Changement structurel
+
 ```{r , message=FALSE, warning=FALSE}
 
 # On teste un éventuel changement de structure selon la surface
@@ -1558,11 +1645,14 @@ mod_ord <- lm(Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Centre,
 point_rupture <- which(annonces_ord$Surface > 70)[1]
 
 # Test de Chow au point choisi
-sctest(mod_ord, type = "Chow", point = point_rupture)
+sctest(mod_ord, type = "Chow", point = point_rupture) #p-value extrêmement élévée.
+
 ```
 
 ### Effets croisés de variables (interactions)
+
 **Interaction entre surface et quartier centre**
+
 ```{r , message=FALSE, warning=FALSE}
 mod_inter1 <- lm(Loyer_TCC ~ Surface*Quartiers_Centre +
                                Charges + kWh +
@@ -1572,6 +1662,7 @@ summary(mod_inter1)
 ```
 
 **Interaction entre charges et consommation énergétique**
+
 ```{r , message=FALSE, warning=FALSE}
 mod_inter2 <- lm(Loyer_TCC ~ Surface +
                                Charges*kWh +
@@ -1581,6 +1672,7 @@ summary(mod_inter2)
 ```
 
 **Modèle plus complet avec plusieurs interactions**
+
 ```{r , message=FALSE, warning=FALSE}
 mod_inter3 <- lm(Loyer_TCC ~ Surface*Charges +
                                Charges*kWh +
@@ -1592,17 +1684,120 @@ summary(mod_inter3)
 
 # **5. Conclusion générale et perspectives**
 
-Rappel de la problématique et de la méthodologie
+Nous pouvons donc conclure que les différents facteurs structurels
+expliquent les variations des loyers au sein de la ville de Rennes. Nous
+avons par conséquent examiner comme facteurs structurels:
 
-Synthèse des résultats principaux
+-L’effet de la surface.
+
+-Le nombre de pièces.
+
+-Les charges.
+
+-La consommation énergétique.
+
+-La localisation géographique.
+
+Pour cela nous avons utilisé les modèles de régression multiple avec la
+méthode des MCO. L'objectif des MCO est d’étudier comment une variable
+quantitative dépend de plusieurs caractéristiques propres au logement.
+Pour expliquer les variations des loyers au sein de la ville de Rennes
+en fonction des différents facteurs structurels, nous avons décidé de
+prendre le modèle ayant le le R² ajusté le plus élevé parce que nous
+sommes dans le cadre d'une régression multiple. Dans notre cas de
+figure, le modèle ayant le meilleur R² ajusté est le modèle avec les
+effets non linéaires (en effet le modèle a des termes quadratiques), en
+effet ce modèle possède un R² ajusté de 0.8923 et a pour équation:
+
+$$ \begin{aligned} \text{Loyer_TCC} &= \beta_0 + \beta_1\,\text{Surface} + \beta_2\,\text{Surface}^2 + \beta_3\,\text{Charges} + \beta_4\,\text{Charges}^2 \\ &\quad + \beta_5\,\text{kWh} + \beta_6\,\text{kWh}^2 \\ &\quad + \beta_7\,\text{Quartiers_Centre} + \beta_8\,\text{Quartiers_Nord_Est}\\ &\quad + \beta_9\,\text{Quartiers_Nord_Ouest} + \varepsilon \end{aligned} $$
+
+Cela veut dire que 89.23% de la variance des loyers_TCC (i.e. charges
+comprises) est expliquée par ce modèle qui est représenté par les
+variables explicatives suivantes:
+
+-Surface.
+
+-Surface².
+
+-Charges.
+
+-Consommation énergétique (kWh).
+
+-kWh².
+
+-Quartiers Centre.
+
+-Quartiers Nord-Est.
+
+-Quartiers Nord-Ouest.
+
+Nous avons testé la significativité de ces variables par l'intérmédiaire
+de leurs p-values. Parmi ces p-values nous avons 2 p-values supérieures
+à 10% avec premièrement la p-value des quartiers Nord-Est égale à
+50.7279% et deuxièmement la p-value de la surface au carré égale à
+16.4571%. Nous avons également la p-value des charges au carré qui est
+supérieure à 5% (7.6346%). Nous avons par conséquent testé des modèles
+sans ces variables et parmi tous ces modèles, il n'y a qu'un seul modèle
+qui présente un R² ajusté supérieur à 0.8923. Le modèle en question est
+le modèle où l'on a retiré uniquement la variable représentant celle des
+quartiers Nord-Est (p-value extrêmement élevée). Le nouveau modèle que
+nous avons finalement choisi possède l'équation suivante:
+
+$$ \begin{aligned} \text{Loyer_TCC} &= \beta_0 + \beta_1\,\text{Surface} + \beta_2\,\text{Surface}^2 + \beta_3\,\text{Charges} + \beta_4\,\text{Charges}^2 \\ &\quad + \beta_5\,\text{kWh} + \beta_6\,\text{kWh}^2 \\ &\quad + \beta_7\,\text{Quartiers_Centre} + \beta_8\,\text{Quartiers_Nord_Ouest}\\ &\quad + \varepsilon\end{aligned} $$
+
+Ce modèle présente un R² ajusté de 0.8926 ce qui veut dire que 89.26% de
+la variance des loyers_TCC (i.e. charges comprises) est expliquée par ce
+modèle qui est représenté par les variables explicatives suivantes:
+
+-Surface.
+
+-Surface².
+
+-Charges.
+
+-Consommation énergétique (kWh).
+
+-kWh².
+
+-Quartiers Centre.
+
+-Quartiers Nord-Ouest.
 
 Contributions du mémoire, apports scientifiques et/ou applicatifs
 
-Perspectives d’amélioration ou de recherche future
+Au sens du document bibliographique, la hausse des prix des loyers n'est
+pas seulement due à la rareté du foncier mais à une forte valeur
+d'habitabilité. Cette valeur d'habitabilité est attribuée à un lieu en
+tant qu'espace où l'on souhaite vivre, indépendamment de la production
+ou de la spéculation. D'après la théorie néoclassique, l'approche
+hédonique définit le prix d’un bien qui est la somme implicite des prix
+de ses caractéristiques, telles qu’elles sont valorisées par les
+préférences des consommateurs sur un marché. Selon cette approche, la
+valeur foncière élevée s'explique par l'accessibilité aux emplois et aux
+services, la densité des équipements (transports, culture, universités),
+la classe sociale (forte présence de catégories diplômées) et les
+aménités urbaines (espaces publics, centralités). Cette approche
+s'explique pour la ville de Rennes qui est une ville particulièrement
+étudiante où il y a un fort taux de hauts diplômées. En 2020, selon
+l'INSEE, la part des diplômés d'un BAC+5 ou plus dans la pop. non
+scolarisée de 15 ans ou + était de 12% en Ille et vilaine, ce qui situe
+le département dans le premier parmi les 25% les plus diplômés.
+
+En guise d'ouverture, nous aimerons discuter des perspectives
+d'amélioration. Dans ce projet, le plus difficile a été de mettre en
+lien un document bibliographique avec notre projet. En effet notre
+document était très généraliste et ne s'appuyait pas sur les
+spécificités de la ville de Rennes.
 
 # Bibliographie - Source des données
 
+<https://ec.europa.eu/eurostat/fr/web/main/data>
 
+<https://statistiques-locales.insee.fr/#c=home>
+
+<https://www.researchgate.net/profile/Claude-Napoleone-2/publication/264393700_Les_determinants_socio-economiques_des_marches_fonciers/links/53db5ba30cf2a19eee8b6960/Les-determinants-socio-economiques-des-marches-fonciers.pdf>
+
+<https://www.ouestfrance-immo.com/immobilier/vente-location/logement/rennes-35-35238/?at_medium=sl&at_campaign=SN_Marque_OFI_geo&at_platform=google&at_creation=Marque_TopVilles_Exact&at_network=search&at_term=ouest%20france%20immo%20rennes&at_variant=517647334685&gad_source=1&gad_campaignid=12874941587&gclid=Cj0KCQiAgP_JBhD-ARIsANpEMxyr19JemJx33OeClsMGOdxiPciI9ZpSIVklft3bsbmv44u28YnQA8waAhCBEALw_wcB>
 
 ---
 
