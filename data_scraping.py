@@ -8,6 +8,7 @@ from urllib.parse import urljoin
 import re
 import pandas as pd
 from chemin_vers_liste_annonces import dict_quartier_et_liens_trouvé
+import os
 # ------------------------
 # URL de la page de RESULTATS (liste d'annonces)
 # ------------------------
@@ -170,7 +171,29 @@ for quartiers , liens in dict_quartier_et_liens_trouvé.items():
         except : 
             pass
 df = pd.DataFrame(données)
-df.to_csv("annonces.csv", index=False, encoding="utf-8")
 
+nom_fichier = "data_raw/annonces.csv"
+fichier_existe = os.path.exists(nom_fichier)
+
+if fichier_existe:
+    # 1. Lire uniquement les noms de colonnes du fichier existant
+    colonnes_existantes = pd.read_csv(nom_fichier, nrows=0).columns.tolist()
+
+    # 2. Reordonner le nouveau DataFrame selon cet ordre (et ajouter les colonnes manquantes si besoin)
+    df = df.reindex(columns=colonnes_existantes)
+
+# 3. Écriture / Ajout
+df.to_csv(
+    nom_fichier,
+    mode="a" if fichier_existe else "w",
+    header=not fichier_existe,
+    index=False,
+    encoding="utf-8-sig",
+)
+
+if fichier_existe:
+    print("Données réalignées et ajoutées au fichier existant.")
+else:
+    print("Fichier créé et nouvelles données enregistrées.")
 
 
