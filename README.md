@@ -165,9 +165,7 @@ Plusieurs éléments motivent ces choix :
 
 ---
 
-## 3. Analyse des données
-
-### 3.1 Cadre des données
+## 3. Cadre des données
 
 Les données proviennent du site **Ouest-France Immo**, collectées à
 l’aide d’un script de web scraping. Elles décrivent des logements mis en
