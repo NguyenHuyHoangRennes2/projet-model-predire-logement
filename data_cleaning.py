@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-annonces = pd.read_csv("annonces.csv" , delimiter="," , decimal=".") 
+annonces = pd.read_csv("data_raw/annonces.csv" , delimiter="," , decimal=".") 
 
 #Sélectionner les colonnes d'intérêt
 annonces = annonces.loc[ :  ,['Loyer' , "Surface habitable" ,'Dont charges' , 'Pièces' ,'label_eco' , 'kWh/m² .an' ,'kgCO2/m² .an' , 'Quartiers'  ]]
@@ -45,6 +45,7 @@ annonces["Charges"] = annonces.groupby('Loyer_Groupe')['Charges'].transform(lamb
 print(annonces[annonces.isna().any(axis=1)]) 
 
 #Exporter les données nettoyées
+print(annonces.head())
 df_to_export = annonces.drop(columns=['Loyer_Groupe'])
-df_to_export.to_csv("Loyer_Rennes.csv", sep=";" , decimal="." , index=False)
-print("Données nettoyées exportées vers 'Loyer_Rennes.csv'")
+df_to_export.to_csv("data_cleaning/annonces.csv", sep=";" , decimal="." , index=False)
+print("Données nettoyées exportées vers 'data_cleaning/annonces.csv'")
