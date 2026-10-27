@@ -2,14 +2,16 @@ import pandas as pd
 import numpy as np
 
 annonces = pd.read_csv("data_raw/annonces.csv" , delimiter="," , decimal=".") 
+annonces = annonces.drop_duplicates()
 
 #Sélectionner les colonnes d'intérêt
-annonces = annonces.loc[ :  ,['Loyer' , "Surface habitable" ,'Dont charges' , 'Pièces' ,'label_eco' , 'kWh/m² .an' ,'kgCO2/m² .an' , 'Quartiers'  ]]
+annonces = annonces.loc[ :  ,['Loyer' , "Surface habitable" ,'Dont charges' , 'Pièces' ,'label_eco' , 'kWh/m² .an' ,'kgCO2/m² .an' , 'Quartiers' , 'Type stationnement' ]]
 annonces.rename(columns={'Loyer' :  "Loyer_TTC" ,
                          "Surface habitable" :"Surface",
                         'Dont charges': 'Charges' ,
                         'kWh/m² .an' :"kWh" 
-                         ,'kgCO2/m² .an' :"kgCO2" }, inplace=True)
+                         ,'kgCO2/m² .an' :"kgCO2" , "Type stationnement" : "station" }, inplace=True)
+annonces = annonces[~annonces["Loyer_TTC"].isna()]
 #identifier les lignes avec des valeurs manquantes
 print(annonces[annonces.isna().any(axis=1)]) 
 
@@ -33,19 +35,38 @@ annonces['kWh'] = annonces.groupby('label_eco')['kWh'].transform(lambda x: x.fil
 annonces['kgCO2'] = annonces.groupby('label_eco')['kgCO2'].transform(lambda x: x.fillna(x.mean()))
 print(annonces[annonces.isna().any(axis=1)]) 
 
-# Estimer les valeurs des charges manquantes en fonction de Loyer TTC
-min_loyer = annonces['Loyer_TTC'].min()
-max_loyer = annonces['Loyer_TTC'].max()
-seuils_loyer = np.linspace(min_loyer, max_loyer, 6)
-annonces['Loyer_Groupe'] = pd.cut(annonces['Loyer_TTC'], bins=seuils_loyer, include_lowest=True)
+# Estimer les valeurs des charges manquantes en fonction de surface
+# Estimer les valeurs des charges manquantes en fonction de la surface (5 tranches de même effectif)
+tranche_surface = pd.qcut(annonces["Surface"], 5)
+annonces['Charges'] = annonces.groupby(tranche_surface, observed=True)['Charges'].transform(lambda x: x.fillna(x.mean()))
 
-print(annonces["Loyer_Groupe"].value_counts(dropna=True))
-
-annonces["Charges"] = annonces.groupby('Loyer_Groupe')['Charges'].transform(lambda x : x.fillna(round(x.mean(), 2)))
 print(annonces[annonces.isna().any(axis=1)]) 
+
+#retirer le coloc
+
+prix_m2 = annonces["Loyer_TTC"] / annonces["Surface"]
+surf_piece = annonces["Surface"] / annonces["Pièces"]
+
+colocation = (prix_m2 < 8) | (surf_piece < 8)
+print(colocation.sum(), "annonces retirées (colocations probables)")
+annonces = annonces[~colocation]
+#station -> reiseigner ou non
+annonces["station"] = np.where(annonces["station"].isna() , "Non/Non_renseigner" ,annonces["station"] )
+
+#Regrouper les types de stationnement en 4 catégories
+annonces["station"] = annonces["station"].replace({
+    "Non/Non_renseigner": "Aucun",
+    "Garage fermé": "Garage", "Garage, Garage fermé": "Garage",
+    "Garage, Sous-sol": "Garage", "Garage, Parking": "Garage",
+    "Sous-sol": "Couvert/Sous-sol", "Stationnement en sous-sol": "Couvert/Sous-sol",
+    "Couvert": "Couvert/Sous-sol", "Stationnement couvert": "Couvert/Sous-sol",
+    "Parking": "Extérieur", "Aérien": "Extérieur", "Stationnement aérien": "Extérieur",
+})
+inconnues = set(annonces["station"]) - {"Aucun", "Garage", "Couvert/Sous-sol", "Extérieur"}
+assert not inconnues, f"Stationnement non regroupé : {inconnues}"
 
 #Exporter les données nettoyées
 print(annonces.head())
-df_to_export = annonces.drop(columns=['Loyer_Groupe'])
-df_to_export.to_csv("data_cleaning/annonces.csv", sep=";" , decimal="." , index=False)
+
+annonces.to_csv("data_cleaning/annonces.csv", sep=";" , decimal="." , index=False)
 print("Données nettoyées exportées vers 'data_cleaning/annonces.csv'")

@@ -1,22 +1,26 @@
 ---
-title: "Analyse des déterminants du loyer à Rennes"  
+title: "Analyse des déterminants du loyer à Rennes"
 date: "`r Sys.Date()`"
 output:
   rmdformats::robobook:
     highlight: kate
     number_sections: FALSE
     df_print: paged
-editor_options: 
-  markdown: 
+editor_options:
+  markdown:
     wrap: 72
 ---
 
 ```{r setup, include=FALSE , echo=FALSE}
 knitr::opts_chunk$set(cache = F,
                         message = FALSE,   # ↩ cache les messages (library, etc.)
-                         warning = FALSE) 
+                         warning = FALSE)
 options("install.lock"=FALSE) #Désactiver le verrouillage d’installation des packages
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) ## configure le chemin du dossier automatiquement
+## configure le chemin du dossier automatiquement (uniquement dans RStudio ; le knit utilise déjà le dossier du fichier)
+if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+}
+fp <- function(p) formatC(p, format = "f", digits = 4)   # affichage des p-values dans le texte
 ```
 
 **EL GOURAINI Tâo-Loup** [**Master 1 MAS - Université de
@@ -28,12 +32,12 @@ Rennes**](https://eco.univ-rennes.fr/master-mathematiques-appliquees-statistique
 # 1. Introduction
 
 L’accès au logement constitue aujourd’hui un enjeu socio-économique
-majeur en France. Dans le cadre d'un contexte représentant une pression
-croissante sur le marché de la location, notamment pour les villes ayant
-une forte attractivité universitaire comme la ville de Rennes. Les
-ménages sont ainsi confrontés à une hausse importante des loyers.
+majeur en France. Le marché de la location subit une pression
+croissante, notamment dans les villes ayant une forte attractivité
+universitaire comme Rennes, et les ménages sont confrontés à une hausse
+importante des loyers.
 
-Afin de comprendre comment ceci est arrivé nous avons choisi d'analyser
+Afin de comprendre comment ceci est arrivé, nous avons choisi d'analyser
 les facteurs influençant le prix des logements. Ces facteurs sont
 essentiels pour analyser les disparités territoriales et éclairer les
 décisions prises par les pouvoirs publics.
@@ -42,7 +46,7 @@ Pour ce projet, nous chercherons à analyser empiriquement les
 **déterminants du loyer charges comprises** des logements situés à
 Rennes, en utilisant des données que nous avons collectées
 automatiquement par web scraping sur le site *Ouest-France Immo*.
-L’étude se concentre sur les logements répartis dans quatre grands
+L’étude se concentre sur les appartements répartis dans quatre grands
 secteurs de Rennes : **Centre**, **Ouest**, **Nord-Est** et
 **Nord-Ouest**.
 
@@ -50,10 +54,10 @@ secteurs de Rennes : **Centre**, **Ouest**, **Nord-Est** et
 
 Le marché rennais est particulièrement dynamique en raison de sa
 croissance démographique, de son attractivité étudiante et des limites
-au sein de son offre locative. Nous nous demanderons donc :
+de son offre locative. Nous nous demanderons donc :
 
-**Quels facteurs structurels expliquent les variations de loyer à Rennes
-?**
+**Quels facteurs structurels expliquent les variations de loyer à
+Rennes ?**
 
 Cela conduit à examiner l’effet de la surface, du nombre de pièces, des
 charges, de la performance énergétique et de la localisation
@@ -63,16 +67,14 @@ géographique.
 
 Ce travail présente plusieurs intérêts :
 
-\- Illustrer une application réelle de la **régression linéaire** à
-partir de données collectées soi-même.
-
-\- Analyser les **disparités intra-urbaines** du marché locatif rennais.
-
-\- Évaluer l’influence de caractéristiques structurelles ou
-environnementales du logement.
-
-\- Proposer un exemple complet de démarche allant de la collecte de
-données au modèle final.
+-   Illustrer une application réelle de la **régression linéaire** à
+    partir de données collectées soi-même.
+-   Analyser les **disparités intra-urbaines** du marché locatif
+    rennais.
+-   Évaluer l’influence de caractéristiques structurelles ou
+    environnementales du logement.
+-   Proposer un exemple complet de démarche allant de la collecte de
+    données au modèle final.
 
 ## 1.3 Questions de recherche et hypothèses
 
@@ -88,13 +90,10 @@ Les questions principales sont :
 Les hypothèses qui en découlent sont :
 
 -   **H1 :** une surface plus élevée entraîne un loyer plus élevé
-
 -   **H2 :** des charges plus importantes augmentent le loyer charges
     comprises
-
 -   **H3 :** une meilleure performance énergétique est associée à un
     loyer supérieur
-
 -   **H4 :** les logements du Centre sont plus chers que ceux des autres
     quartiers.
 
@@ -102,13 +101,10 @@ Les hypothèses qui en découlent sont :
 
 Les objectifs de ce projet sont les suivants :
 
--Modéliser et expliquer le loyer mensuel charges comprises.
-
--Identifier les déterminants les plus significatifs.
-
--Analyser les différences selon les quartiers rennais.
-
--Proposer une interprétation économétrique rigoureuse.
+-   Modéliser et expliquer le loyer mensuel charges comprises.
+-   Identifier les déterminants les plus significatifs.
+-   Analyser les différences selon les quartiers rennais.
+-   Proposer une interprétation économétrique rigoureuse.
 
 ## 1.5 Plan du document
 
@@ -129,12 +125,11 @@ méthodologiques qui ont guidé notre estimation.
 
 ## 2.1 Choix méthodologiques : régression linéaire et MCO
 
-Le modèle retenu est une **régression linéaire multiple**. Cette
-régression linéaire multiple est estimée à l’aide de la méthode des
-**Moindres Carrés Ordinaires (MCO)**. Cette approche permet d’étudier
-comment une variable quantitative (dans notre cas de figure, le loyer
-charges comprises) dépend de plusieurs caractéristiques propres au
-logement.
+Le modèle retenu est une **régression linéaire multiple**, estimée à
+l’aide de la méthode des **Moindres Carrés Ordinaires (MCO)**. Cette
+approche permet d’étudier comment une variable quantitative (dans notre
+cas, le loyer charges comprises) dépend de plusieurs caractéristiques
+propres au logement.
 
 La méthode MCO consiste à minimiser la somme des carrés des écarts entre
 les valeurs observées et celles prédites par le modèle. Cette méthode
@@ -151,15 +146,14 @@ Les variables explicatives sont :
 -   la **surface** du logement (m²),
 -   les **charges comprises** (euros),
 -   le **nombre de pièces**,
--   la **classe énergétique** (A, B, C, …),
--   la **consommation énergétique annuelle** (kWh/an),
--   les **émissions de CO₂** (kg/an),
+-   la **classe énergétique** (B+, C, D, E, F),
+-   la **consommation énergétique** (kWh/m²/an),
+-   les **émissions de CO₂** (kgCO₂/m²/an),
 -   le **quartier** (Centre, Ouest, Nord-Est, Nord-Ouest).
 
 Le modèle général s’écrit :
 
-
-\[
+$$
 \begin{aligned}
 \text{Loyer}_i
 &= \beta_0
@@ -174,16 +168,14 @@ Le modèle général s’écrit :
 + \sum_q \gamma_q \text{Quartier}_{qi}
 + \varepsilon_i
 \end{aligned}
-\]
+$$
 
+où :
 
-où : - $\beta_0$ est la constante
-
+-   $\beta_0$ est la constante
 -   $\beta_j$ mesure l’effet marginal de chaque caractéristique
-
 -   $\gamma_q$ capture l’effet des quartiers par rapport à un quartier
     de référence
-
 -   $\varepsilon_i$ est le terme d’erreur
 
 ## 2.3 Justification des choix techniques
@@ -192,7 +184,7 @@ Plusieurs éléments motivent ces choix :
 
 -   La régression linéaire est un outil adapté pour analyser les
     facteurs influençant une variable économique.
--   La méthode MCO fournit des estimateurs robustes et facilement
+-   La méthode MCO fournit des estimateurs sans biais et facilement
     interprétables.
 -   L’utilisation de **variables indicatrices** pour les quartiers
     permet de mettre en évidence les différences géographiques de prix.
@@ -208,49 +200,41 @@ Plusieurs éléments motivent ces choix :
 ## 3.1 Cadre des données
 
 Les données proviennent du site **Ouest-France Immo**, collectées à
-l’aide d’un script de web scraping. Elles décrivent des logements mis en
-location au sein de la **ville de Rennes**, .
+l’aide d’un script de web scraping (Python, Selenium et BeautifulSoup).
+Elles décrivent des appartements mis en location au sein de la **ville
+de Rennes**.
 
 L’étude porte sur **quatre secteurs géographiques** :
 
 -   Quartiers Centre
-
 -   Quartiers Ouest
-
 -   Quartiers Nord-Est
-
 -   Quartiers Nord-Ouest
 
-Chaque ligne du jeu de données correspond à **une annonce unique**.\
-Les variables collectées décrivent :
+Chaque ligne du jeu de données final correspond à **une annonce
+unique**. Les variables collectées décrivent :
 
--   Les caractéristiques du logement (surface, nombre de pièces,
-    charges)
-
--   Sa performance énergétique (classe, consommation, émissions)
-
--   Sa localisation.
+-   les caractéristiques du logement (surface, nombre de pièces,
+    charges, stationnement) ;
+-   sa performance énergétique (classe, consommation, émissions) ;
+-   sa localisation.
 
 ### a) Importation des données
 
+Le jeu de données est produit par le script de nettoyage
+`data_cleaning.py` (voir section 3.2) et enregistré dans
+`data_cleaning/annonces.csv`.
+
 ```{r, echo=FALSE}
 library("tidyverse")
-annonces <- read.csv("annonces.csv" , sep=",")
-annonces <- annonces[, c("Loyer", "Surface.habitable", "Dont.charges",
-                         "Pièces" , "Pièce", "label_eco", "kWh.m...an",
-                         "kgCO2.m...an", "Quartiers")]
+annonces_lues <- read.csv("data_cleaning/annonces.csv", sep = ";", encoding = "UTF-8")
 
-annonces <- annonces %>%
-  rename(
-    Loyer_TCC = Loyer,
-    Surface   = `Surface.habitable`,
-    Charges   = `Dont.charges`,
-    kWh       =  kWh.m...an,
-    kgCO2     = `kgCO2.m...an`
-  )
+annonces <- annonces_lues %>%
+  distinct() %>%                       # une ligne = une annonce unique
+  rename(Loyer_TCC = Loyer_TTC)        # TCC : toutes charges comprises
 
-annonces$label_eco <- factor(annonces$label_eco)
-head(annonces,5)
+n_doublons <- nrow(annonces_lues) - nrow(annonces)
+head(annonces, 5)
 ```
 
 ### b) Description des variables
@@ -258,221 +242,137 @@ head(annonces,5)
 ```{r, echo=FALSE}
 knitr::kable(
   data.frame(
-    `Code de la série` = c("Loyer_TCC", "Surface", "Charges", "Pieces", 
-                           "label_eco", "kWh", "kgCO2", "Quartiers"),
+    `Code de la série` = c("Loyer_TCC", "Surface", "Charges", "Pièces",
+                           "label_eco", "kWh", "kgCO2", "Quartiers", "station"),
     `Définition` = c("Loyer mensuel charges comprises",
                      "Surface habitable du logement",
                      "Montant des charges mensuelles",
                      "Nombre de pièces du logement",
-                     "Classe énergétique du logement",
-                     "Consommation énergétique annuelle",
-                     "Émissions annuelles de CO2",
-                     "Secteur géographique du logement"),
-    `Unité` = c("Euros", "m²", "Euros", "Nombre", 
-                "Catégorie (A–G)", "kWh/an", "kg/an", "Nom du quartier"),
-    `Source` = rep("Ouest-France Immo (web scraping)", 8)
+                     "Classe énergétique du logement (DPE)",
+                     "Consommation énergétique annuelle par m²",
+                     "Émissions annuelles de CO2 par m²",
+                     "Secteur géographique du logement",
+                     "Type de stationnement mentionné"),
+    `Unité` = c("Euros", "m²", "Euros", "Nombre",
+                "Catégorie (B+ à F)", "kWh/m²/an", "kgCO2/m²/an", "Nom du quartier",
+                "Catégorie"),
+    `Source` = rep("Ouest-France Immo (web scraping)", 9),
+    check.names = FALSE
   ),
   caption = "Tableau 1 : Description des variables"
 )
-
-
 ```
 
 ## 3.2 Prétraitement et nettoyage des données
 
-Avant de procéder aux analyses descriptives et économétriques, il a été
-nécessaire de réaliser un travail approfondi de préparation des données
-issues du web scraping. Comme souvent avec des données collectées
-directement sur un site d’annonces, plusieurs problèmes se présentent :
-valeurs manquantes, incohérences, doublons, hétérogénéité dans les
-formats ou dans les catégories. Cette section présente de manière
-structurée l’ensemble des opérations réalisées pour obtenir un jeu de
-données que l'on a pu exploiter.
+Comme souvent avec des données collectées directement sur un site
+d’annonces, plusieurs problèmes se présentent : valeurs manquantes,
+incohérences, doublons, hétérogénéité dans les formats ou dans les
+catégories. Le nettoyage est réalisé en Python par le script
+`data_cleaning.py`. Cette section présente de manière structurée
+l’ensemble des opérations réalisées.
 
-### a)Sélection et renommage des variables
+### a) Sélection et renommage des variables
 
-Dans un premier temps, seules les variables pertinentes pour l’étude ont
-été conservées.\
-Les colonnes correspondant "Loyer", "Surface.habitable",
-"Dont.charges","Pièces" , "Pièce", "label_eco",
-"kWh.m...an","kgCO2.m...an", "Quartiers" ont été extraites.\
-Les noms ont également été standardisés pour faciliter leur manipulation
-(par exemple : renommer *Surface habitable* en *Surface*, *Dont charges*
-en *Charges*, etc.).
+Seules les variables pertinentes pour l’étude ont été conservées : le
+loyer, la surface habitable, les charges, le nombre de pièces, la classe
+énergétique, la consommation (kWh/m²/an), les émissions (kgCO₂/m²/an),
+le quartier et le type de stationnement. Les noms ont été standardisés
+pour faciliter leur manipulation (par exemple : *Surface habitable*
+devient *Surface*, *Dont charges* devient *Charges*). Les annonces sans
+loyer ont été supprimées.
 
-### b) Corriger les valeurs manquantes et modéliser les niveaux
+### b) Correction des valeurs manquantes et regroupement des catégories
 
-#### b.1 Modéliser les niveaux
+-   **Nombre de pièces** : le site renseigne le nombre de pièces
+    uniquement pour les logements de plus d'une pièce. Les valeurs
+    manquantes ont donc été remplacées par 1 (studios).
 
-**Découper le Loyer TCC en 4 facteurs**
+-   **Classe énergétique** : les logements portant la mention *NC* (Non
+    Classé) ont été retirés. Les classes *A*, *B* et *NS* (Non
+    Significatif), peu représentées, ont été regroupées dans une classe
+    commune *B+*. Il reste cinq classes ordonnées, de la plus
+    performante à la moins performante : B+, C, D, E et F. Pour les
+    modèles, la classe est codée de 1 (B+) à 5 (F).
 
-```{r, message=FALSE, warning=FALSE , echo=FALSE}
-seuil <-  quantile(annonces$Loyer_TCC ,probs = seq(0, 1, 0.25))
-annonces$Loyer_Groupe <- cut(annonces$Loyer_TCC , breaks = seuil , include.lowest = TRUE)
-levels(annonces$Loyer_Groupe)
+-   **Imputation énergétique** : les valeurs manquantes de consommation
+    (kWh) et d'émissions (kgCO₂) ont été remplacées par la moyenne
+    calculée au sein de chaque classe énergétique, ce qui reste cohérent
+    avec le profil énergétique du logement.
+
+-   **Charges manquantes** : plutôt qu’une suppression, les charges
+    manquantes ont été estimées par la moyenne des charges des
+    logements de **surface comparable** (cinq tranches de surface de
+    même effectif). Nous n'avons volontairement pas utilisé le loyer
+    pour cette estimation : comme le loyer est la variable à expliquer,
+    l'utiliser pour construire une variable explicative fausserait les
+    résultats.
+
+-   **Stationnement** : les nombreux libellés du site ont été regroupés
+    en quatre catégories : *Aucun* (dont non renseigné), *Extérieur*,
+    *Couvert/Sous-sol* et *Garage*.
+
+```{r, echo=FALSE}
+annonces$classe_energie <- factor(annonces$label_eco, levels = c("B+", "C", "D", "E", "F"))
+annonces$label_eco <- as.numeric(annonces$classe_energie)   # 1 = B+ ... 5 = F
 ```
 
-**Exclusion des annonces non classées énergétiquement** Les logements
-portant la mention *NC* (Non Classé) ont été retirés.
+### c) Retrait des annonces incohérentes
 
-**Regroupement de certaines catégories énergétiques** : les labels *G*,
-*A* , *B* et *C* ont été regroupés dans une catégorie commune (*C+*) et
-les labels *E* et *F* ont été regroupés dans une catégorie commune
-(*E-*) pour éviter des classes trop peu représentées.
+-   **Colocations probables** : certaines annonces indiquent la surface
+    de l'appartement entier mais le loyer d'une seule chambre (ou
+    l'inverse). Elles ont été repérées par un loyer inférieur à 8 €/m²
+    ou une surface inférieure à 8 m² par pièce, puis retirées : elles ne
+    décrivent pas le même objet que les autres annonces.
 
-```{r,echo=FALSE}
-annonces <-annonces %>%filter(label_eco !="NC") # levels il reste toujours meme si le nombre d'effective =0
-annonces$label_eco <- droplevels(annonces$label_eco)
-levels(annonces$label_eco)[levels(annonces$label_eco) %in% c("G","A","B" ,"C")] <-"C+"
-levels(annonces$label_eco)[levels(annonces$label_eco) %in% c("E","F")] <-"E-"
-levels(annonces$label_eco)[] <-levels(annonces$label_eco)[1:3]
-levels(annonces$label_eco)
-idx <- which(annonces$label_eco == "C+")
-annonces$label_eco <- as.numeric(annonces$label_eco)
+-   **Doublons** : le scraping a été exécuté plusieurs fois, si bien
+    qu'une même annonce pouvait apparaître plusieurs fois. Les doublons
+    ont été supprimés (`r n_doublons` lignes au moment de l'import).
+    Sans cette étape, une même annonce compterait plusieurs fois et
+    gonflerait artificiellement la qualité d'ajustement des modèles.
 
-
-
-```
-
-**Apres traitement**
-
-```{r,echo=FALSE}
-table(annonces$label_eco)
-```
-
-#### b.2 One Hot Encoding la variables Quartiers
+### d) Encodage des quartiers (One Hot Encoding)
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 #install.packages("fastDummies")
 library(fastDummies)
-annonces <- annonces%>% mutate(Quartiers = sub("Quartiers " , "" , Quartiers))
-annonces <- annonces%>% mutate(Quartiers = sub("-" , "_" , Quartiers))
+annonces <- annonces %>% mutate(Quartiers = sub("Quartiers " , "" , Quartiers))
+annonces <- annonces %>% mutate(Quartiers = sub("-" , "_" , Quartiers))
 annonces$Quartiers <- factor(annonces$Quartiers)
 annonces <- dummy_cols(annonces, select_columns = "Quartiers")
 head(annonces,3)
 ```
 
-```         
-```
-
-#### b.3 Correction des valeurs manquantes.
-
--   **Correction des pièces manquantes** : Le jeu de données contient
-    deux variables liées au nombre de pièces du logement :
-
--   **Pièces** : prend une valeur manquante (`NA`) ou bien un nombre de
-    pièces **strictement supérieur à 1** ;
-
--   **Piece** : variable binaire prenant la valeur `1` ou `NA`, et
-    renseignée uniquement lorsque `Pièces` est une valeur manquante.
-    Finalement, nous avons remplacé toutes les valeurs manquantes par 1
-    (1 pièce).
-
-```{r ,echo=F}
-library(tidyverse)
-annonces <- annonces %>% mutate(Pièces = ifelse(is.na(Pièces) , 1 ,Pièces))
-annonces <- dplyr::select(annonces, -Pièce)
-```
-
--   **Imputation énergétique** : les valeurs manquantes concernant la
-    consommation en kWh et les émissions de CO₂ ont été remplacées par
-    la moyenne calculée au sein de chaque classe énergétique.\
-    Cela permet une imputation cohérente avec le profil énergétique du
-    logement.
-
-Ces opérations permettent d’éviter la perte excessive d’observations
-tout en conservant une cohérence structurelle entre les variables.
-
-```{r,echo=F}
-annonces <- annonces %>%
-  group_by(label_eco) %>%
-  mutate(
-    kWh   = ifelse(is.na(kWh),   mean(kWh,   na.rm = TRUE), kWh),
-    kgCO2 = ifelse(is.na(kgCO2), mean(kgCO2, na.rm = TRUE), kgCO2)
-  ) %>%
-  ungroup()
-
-```
-
-**Remplacer des valeurs manquantes dans les charges**
-
-Certaines annonces ne précisaient pas le montant des charges.\
-Plutôt qu’une suppression pure et simple, les charges manquantes ont été
-estimées en utilisant une méthode par **groupes de loyers** :
-
-1.  Le loyer total a été divisé en quatre intervalles (du plus faible au
-    plus élevé).
-
-2.  Chaque logement a été associé à un groupe de loyer.
-
-3.  Les charges manquantes ont été remplacées par la moyenne observée
-    dans leur groupe de loyers respectif.
-
-```{r,echo=F}
-# Remplacer les charges manquantes par la moyenne du groupe de loyer (arrondi à 2 décimales)
-annonces <- annonces %>%
-  group_by(Loyer_Groupe) %>%
-  mutate(
-    Charges = ifelse(
-      is.na(Charges),
-      round(mean(Charges, na.rm = TRUE), 2),
-      Charges
-    )
-  ) %>%
-  ungroup()
-
-```
-
-### c) Vérification des effectifs et cohérence interne
-
-Les effectifs par label énergétique ont été inspectés pour vérifier la
-répartition des logements après nettoyage.\
-Cette étape permet de s’assurer que les regroupements effectués ne
-créent pas de déséquilibres majeurs ou de classes trop petites.
-
-Le travail consiste également à vérifier la cohérence logique des
-données, comme :
-
--   Absence de valeurs énergétiques impossibles.
--   Absence de surfaces irréalistes.
--   Cohérence entre loyer et charges.
-
-Les observations incohérentes ont été retirées ou corrigées selon les
-cas.
-
-**Vérification l'absence de valeur manquante**
+**Vérification de l'absence de valeur manquante**
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 anyNA(annonces)
 ```
 
-### d) Constitution du jeu de données final
+### e) Constitution du jeu de données final
 
-Après l’ensemble de ces traitements, la base obtenue présente les
-caractéristiques suivantes :
+Après l’ensemble de ces traitements, la base obtenue compte
+**`r nrow(annonces)` annonces** et présente les caractéristiques
+suivantes :
 
 -   absence de doublons,
--   absence de valeurs cruciales manquantes,
+-   absence de valeurs manquantes,
 -   cohérence des formats (numérique, catégoriel, etc.),
 -   regroupement homogène des catégories énergétiques,
--   estimation raisonnable des charges manquantes,
+-   estimation des charges manquantes sans utiliser le loyer,
 -   structure compatible avec les outils de modélisation et d’analyse
     statistique.
 
 Cette base nettoyée constitue le fondement de l’analyse descriptive
-(Section 3.3) et du modèle économétrique présenté dans la Section 4.
+(section 3.3) et du modèle économétrique présenté dans la section 4.
 
 ## 3.3 Analyse descriptive univariée des données
 
 Cette section présente une description statistique des variables
 utilisées dans le modèle, après les étapes de nettoyage décrites
-précédemment.\
-L’objectif est de caractériser la distribution de chacune des variables,
-d’identifier les tendances générales et de repérer d’éventuelles valeurs
-atypiques.\
-L’analyse s’appuie sur des tableaux de statistiques descriptives ainsi
-que des représentations graphiques adaptées (histogrammes, boxplots,
-diagrammes en barres).
+précédemment. L’objectif est de caractériser la distribution de chacune
+des variables, d’identifier les tendances générales et de repérer
+d’éventuelles valeurs atypiques.
 
 ### a) Résumé statistique
 
@@ -482,15 +382,13 @@ Les principales variables quantitatives du jeu de données sont :
 -   la **surface habitable** (m²),
 -   les **charges mensuelles** (euros),
 -   le **nombre de pièces**,
--   la **consommation énergétique** (kWh/an),
--   les **émissions de CO₂** (kg/an).
+-   la **consommation énergétique** (kWh/m²/an),
+-   les **émissions de CO₂** (kgCO₂/m²/an).
 
 Le tableau suivant présente les statistiques descriptives classiques :
 moyenne, médiane, minimum, maximum et écart-type.
 
 ```{r , echo=FALSE}
-#install.packages("tidyverse")
-library(tidyverse)
 summary_stats <- annonces %>% select(Loyer_TCC, Surface, Charges, Pièces , label_eco, kWh, kgCO2)
 
 result <- data.frame(
@@ -504,21 +402,15 @@ result <- data.frame(
   SD     = sapply(summary_stats, sd, na.rm = TRUE)
 )
 
-knitr::kable(result, caption = "Tableau 2 : Statistiques descriptives des variables quantitatives")
+knitr::kable(result, digits = 1, row.names = FALSE,
+             caption = "Tableau 2 : Statistiques descriptives des variables quantitatives")
 ```
 
 ### b) Statistiques descriptives des variables catégorielles
 
-Les variables qualitatives que nous avons retenues dans l’analyse sont :
-
--   Le quartier du logement.
-
--   La classe énergétique.
-
--   Le tableau suivant présente la distribution des effectifs pour ces
-    variables.
-
--   Le groupe du loyer après la modélisation.
+Les variables qualitatives retenues dans l’analyse sont le quartier, la
+classe énergétique, le nombre de pièces et le type de stationnement. Le
+tableau suivant présente la distribution de leurs effectifs.
 
 ```{r, echo=FALSE}
 library(knitr)
@@ -543,18 +435,18 @@ table.freqtab th, table.freqtab td {
 # 1. TABLES DE FRÉQUENCE EN DATA.FRAME
 # ------------------------------------------------
 freq_quartiers <- table(annonces$Quartiers)
-freq_energie   <- table(annonces$label_eco)
+freq_energie   <- table(annonces$classe_energie)
 freq_pieces    <- table(annonces$Pièces)
-freq_loyer_grp <- table(annonces$Loyer_Groupe)
+freq_station   <- table(annonces$station)
 
 # ------------------------------------------------
 # 2. FONCTION : CRÉER UNE TABLE COLORÉE & BORDÉE
 # ------------------------------------------------
 make_table <- function(tab, title, colname){
-  
+
   df <- as.data.frame(tab)
   names(df) <- c(colname, "Freq")  # renomme Var1
-  
+
   kable(
     df,
     format      = "html",
@@ -577,7 +469,7 @@ make_table <- function(tab, title, colname){
 t1 <- make_table(freq_quartiers, "Quartiers",          "Quartier")
 t2 <- make_table(freq_energie,   "Classe énergétique", "Classe")
 t3 <- make_table(freq_pieces,    "Nombre de pièces",   "Pièces")
-t4 <- make_table(freq_loyer_grp, "Groupes de loyers",  "Groupe")
+t4 <- make_table(freq_station,   "Stationnement",      "Type")
 
 # ------------------------------------------------
 # 4. AFFICHAGE HORIZONTAL AVEC CADRES COLORÉS
@@ -613,83 +505,65 @@ htmltools::tagList(
     )
   )
 )
-
-
 ```
 
 **Interprétation** :
 
-Les quatre tableaux que nous avons obtenus après les étapes de nettoyage
-permettent d’apprécier la structure du jeu de données final. De manière
-générale, ces étapes permettent de nous montrer une base désormais
-cohérente, équilibrée et prête pour l’analyse statistique.
-
 -   **Répartition géographique**\
-    La distribution des logements entre les quatre secteurs de Rennes
-    (Centre, Nord-Est, Nord-Ouest et Ouest) est relativement homogène.\
-    Aucun quartier n’est surreprésenté, garantissant ainsi une analyse
-    territoriale équilibrée et évitant ainsi un biais lié à la
-    localisation.
+    Les quatre secteurs sont tous bien représentés (entre
+    `r min(freq_quartiers)` et `r max(freq_quartiers)` annonces). Le
+    Centre est le secteur le plus fourni, ce qui reflète la
+    concentration de l'offre locative dans l'hypercentre, mais aucun
+    secteur n'est assez petit pour empêcher une analyse territoriale.
 
 -   **Performance énergétique**\
-    Après la suppression des logements non classés (NC) et le
-    regroupement des classes rares, les performances énergétiques se
-    répartissent de manière équilibrée entre trois catégories
-    principales (C+, D et E−).\
-    Cette restructuration permet d’obtenir des effectifs suffisants dans
-    les différentes classes pour une analyse économétrique fiable.
+    Les classes **C** et **D** regroupent la majorité des logements
+    (`r freq_energie["C"] + freq_energie["D"]` annonces). Les classes
+    extrêmes B+ (`r freq_energie["B+"]`) et F (`r freq_energie["F"]`)
+    sont peu représentées, ce qui justifie le regroupement des classes
+    A, B et NS.
 
 -   **Nombre de pièces**\
-    La majorité des annonces concernent des logements n'ayant qu'une
-    seule pièce, ce qui est cohérent avec la forte présence des
-    étudiants à Rennes.\
-    Cependant, les logements de deux à cinq pièces restent suffisamment
-    représentés pour évaluer leur impact sur les variations de loyer.
+    La majorité des annonces concernent des logements d'une seule pièce
+    (`r freq_pieces["1"]` annonces), ce qui est cohérent avec la forte
+    présence étudiante à Rennes. Les logements de deux à quatre pièces
+    restent suffisamment représentés, tandis que les logements de cinq
+    pièces et plus sont rares.
 
--   **Groupes de loyers**\
-    La découpe des loyers en intervalles fournit des groupes de taille
-    comparable, reflétant ainsi un diversification locative au sein du
-    marché du logement allant des petits logements économiques aux biens
-    plus spacieux et onéreux.\
-    Cette structuration facilite les comparaisons et sert également de
-    base à certaines imputations, notamment pour le montant des charges.
-### c)  Graphique des principales variables
+-   **Stationnement**\
+    Plus de la moitié des annonces ne mentionnent aucun stationnement
+    (`r freq_station["Aucun"]` annonces). Cette catégorie mélange
+    l'absence réelle de stationnement et l'absence d'information dans
+    l'annonce.
 
-L’histogramme permet de visualiser la distribution des variables quantitatives.
-Les graphiques suivants représentent :
+### c) Graphique des principales variables
 
+Les boxplots suivants permettent de visualiser la distribution des
+variables quantitatives et de repérer d'éventuelles valeurs extrêmes.
 
-
-```{r,, echo=FALSE}
+```{r, echo=FALSE}
 library(ggplot2)
 library(gridExtra)
-#On peut aussi regarder les boxplots pour chaque variable pour avoir une idée rapide des quartiles.
 
 graphConso.bp <- function(uneVariable){
-  ggplot(data = annonces, aes_string(x = "factor(0)", y = uneVariable)) +
-    geom_boxplot() + xlab("")
+  ggplot(data = annonces, aes(x = factor(0), y = .data[[uneVariable]])) +
+    geom_boxplot() + xlab("") + ylab(uneVariable)
 }
 p1.bp <- graphConso.bp("Surface")
 p2.bp <- graphConso.bp("Charges")
 p3.bp <- graphConso.bp("kWh")
 p4.bp <- graphConso.bp("kgCO2")
 
-
-
 grid.arrange(p1.bp, p2.bp, p3.bp, p4.bp, ncol = 2)
-
-
 ```
 
 ```{r , echo=FALSE}
-library(kableExtra)
-library(knitr)
 resume <- data.frame(
 Variable = c("Surface", "Charges", "kWh", "kgCO2"),
 Homogénéité = c("Forte", "Moyenne", "Acceptable", "Bonne"),
-Outliers = c("Faibles voire nuls", "Nombreux", "Présents", "Quelques-uns"),
+Outliers = c("Quelques grands logements", "Nombreux", "Présents", "Quelques-uns"),
 Commentaire = c(
-"Logements de taille homogène",
+"Majorité de petites surfaces, quelques grands appartements",
 "Attention, influence forte possible",
 "Logements très énergivores identifiables",
 "Lié à la consommation énergétique"
@@ -704,133 +578,136 @@ row_spec(1, background = "#E8F8F5") %>%
 row_spec(2, background = "#FEF9E7") %>%
 row_spec(3, background = "#FDEDEC") %>%
 row_spec(4, background = "#EBF5FB")
-
 ```
 
+#### La distribution du prix du loyer selon les facteurs
 
-#### La distribution du prix de Loyer selon les facteurs.
-```{r,,echo=F}
-selon_quartier <-ggplot(annonces, aes(x = Quartiers, y = Loyer_TCC)) +
+```{r, echo=F}
+selon_quartier <- ggplot(annonces, aes(x = Quartiers, y = Loyer_TCC)) +
   geom_boxplot(fill = "orange", color = "black") +
   labs(
-    title = "Graphe 1 :Distribution du prix du loyer selon quartiers",
-    x = "Nom de quartiers ",
+    title = "Graphe 1 : Distribution du loyer selon le quartier",
+    x = "Quartier",
     y = "Loyer TCC (euros)"
   ) +
   theme_minimal()
 
-selon_nbpcs <-ggplot(annonces, aes(x = factor(Pièces), y = Loyer_TCC)) +
+selon_nbpcs <- ggplot(annonces, aes(x = factor(Pièces), y = Loyer_TCC)) +
   geom_boxplot(fill = "lightgreen", color = "black") +
   labs(
-    title = "Graphe 2 :Distribution du prix du loyer selon le nombre de pièces",
+    title = "Graphe 2 : Distribution du loyer selon le nombre de pièces",
     x = "Nombre de pièces",
     y = "Loyer TCC (euros)"
   ) +
   theme_minimal()
-selon_label <-ggplot(annonces, aes(x = factor(label_eco), y = Loyer_TCC)) +
-  geom_boxplot(fill = "lightgreen", color = "black") +
+
+selon_label <- ggplot(annonces, aes(x = classe_energie, y = Loyer_TCC)) +
+  geom_boxplot(fill = "lightblue", color = "black") +
   labs(
-    title = "Graphe 3 : Distribution du prix du loyer selon le nombre de pièces",
-    x = "Classe d'énergitique",
+    title = "Graphe 3 : Distribution du loyer selon la classe énergétique",
+    x = "Classe énergétique",
     y = "Loyer TCC (euros)"
   ) +
   theme_minimal()
+
 grid.arrange(selon_quartier , selon_label , selon_nbpcs, ncol = 2)
+
+med_quartier <- tapply(annonces$Loyer_TCC, annonces$Quartiers, median)
+surf_quartier <- tapply(annonces$Surface, annonces$Quartiers, median)
+med_pieces <- tapply(annonces$Loyer_TCC, annonces$Pièces, median)
 ```
-**Analyse du loyer selon le nombre de pièces:**
- **Hausse nette du loyer avec le nombre de pièces**  
-   Le boxplot montre une relation clairement croissante :  
-   plus le logement comporte de pièces, plus le loyer tout compris augmente.  
-   Cette tendance est attendue, car les appartements plus spacieux nécessitent un loyer plus élevé.
 
- **Progression marquée entre chaque catégorie**  
-   À chaque passage d’une catégorie de pièces à la suivante (1 → 2, 2 → 3, etc.),  
-   la médiane du loyer augmente significativement.  
-   Cela confirme que le nombre de pièces constitue un déterminant majeur du niveau de loyer.
+**Analyse du loyer selon le nombre de pièces :**
 
- **Dispersion croissante pour les grands logements**  
-   Les logements de 3 pièces et plus présentent une plus grande variabilité de prix :  
-   - les biens peuvent varier fortement en surface,  
-   - en standing,  
-   - ou en localisation.  
-   Cette diversité se traduit par des écarts-types plus élevés et quelques valeurs extrêmes, notamment pour les 4 pièces.
+**Hausse nette du loyer avec le nombre de pièces**\
+Le boxplot montre une relation clairement croissante : plus le logement
+comporte de pièces, plus le loyer tout compris augmente. La médiane
+passe de `r med_pieces["1"]` € pour une pièce à `r med_pieces["2"]` €
+pour deux pièces et `r med_pieces["3"]` € pour trois pièces. Cette
+tendance est attendue, car les appartements plus spacieux nécessitent un
+loyer plus élevé.
 
- **Présence d’outliers chez les petits et grands logements**  
-   - Quelques studios (1 pièce) affichent des loyers anormalement élevés, probablement liés à une localisation très centrale ou à des logements meublés haut de gamme.  
-   - À l’inverse, certains logements de 4 pièces présentent des loyers exceptionnellement hauts (plus de 2000 €), cohérents avec des biens très spacieux ou haut standing.
+**Dispersion croissante pour les grands logements**\
+Les logements de trois pièces et plus présentent une plus grande
+variabilité de prix : les biens peuvent varier fortement en surface, en
+standing ou en localisation. Les logements de cinq pièces et plus sont
+rares et atteignent les loyers les plus élevés de l'échantillon.
 
- **Conclusion générale**  
-   Le graphique confirme que **le nombre de pièces est un facteur explicatif déterminant du loyer**.  
-   Il influence à la fois le niveau central du loyer (médiane) et sa dispersion.  
-   Ce constat justifie l’intégration de cette variable dans la régression linéaire comme variable explicative structurante.
+**Conclusion**\
+Le graphique confirme que **le nombre de pièces est fortement lié au
+loyer**. Comme il est aussi très lié à la surface, son effet propre
+devra être examiné avec prudence dans la régression (voir les VIF).
 
 **Analyse du loyer selon les différents quartiers de Rennes**
 
-   **Quartiers Centre : les loyers les plus élevés**  
-   Le quartier Centre présente les niveaux de loyer les plus hauts de l’échantillon.  
-   La médiane y dépasse nettement celle des autres secteurs, et la dispersion est importante.  
-   Cette variabilité reflète la diversité de l’offre dans l’hypercentre (studios chers, logements rénovés, petites surfaces premium).
+-   **Nord-Ouest : la médiane la plus élevée**\
+    Le Nord-Ouest présente la médiane de loyer la plus haute
+    (`r med_quartier["Nord_Ouest"]` €), mais aussi la surface médiane la
+    plus grande (`r surf_quartier["Nord_Ouest"]` m²) : ses loyers
+    élevés s'expliquent en partie par des logements plus grands.
 
-  **Quartier Nord-Est : le secteur le plus abordable**  
-   Le Nord-Est affiche les loyers les plus faibles, avec une médiane sensiblement inférieure à celles des autres quartiers.  
-   Ce secteur regroupe majoritairement des logements plus petits et plus accessibles, ce qui explique son positionnement plus bas dans la distribution.
+-   **Centre : des loyers élevés pour des surfaces modestes**\
+    Le Centre a une médiane de `r med_quartier["Centre"]` € pour une
+    surface médiane de seulement `r surf_quartier["Centre"]` m². À
+    surface égale, c'est donc probablement le secteur le plus cher, ce
+    que la régression permettra de vérifier.
 
-  **Quartier Nord-Ouest : un niveau intermédiaire mais dispersé**  
-   Le Nord-Ouest présente une médiane de loyer proche de celle du Centre, tout en restant légèrement inférieure.  
-   La dispersion est cependant importante, signe d’une grande hétérogénéité du parc locatif (logements étudiants, maisons familiales, rénovations récentes).
+-   **Ouest et Nord-Est : les secteurs les plus abordables**\
+    L'Ouest (`r med_quartier["Ouest"]` €) et surtout le Nord-Est
+    (`r med_quartier["Nord_Est"]` €) affichent les médianes les plus
+    basses.
 
-  **Quartier Ouest : des loyers modérés mais plus variés**  
-   Le quartier Ouest se situe dans une position intermédiaire, avec une médiane plus élevée que celle du Nord-Est mais inférieure à celle du Centre et du Nord-Ouest.  
-   Une dispersion notable indique la coexistence de logements modestes et de biens plus spacieux ou récents.
+## 3.4 Analyse descriptive bivariée des données
 
+### a) Corrélation
 
-## 3.4 Analyse descriptive bivariée des données 
-### Corrélation
-####  Coefficient de Corrélation
 ```{r, echo=FALSE}
 library(corrplot)
-vars_quanti <- annonces %>% select(-c(Quartiers , Loyer_Groupe))
-corrplot(cor(vars_quanti), method="circle")
-corrplot(cor(vars_quanti), method="number")
-
+vars_quanti <- annonces %>% select(Loyer_TCC, Surface, Charges, Pièces, label_eco, kWh, kgCO2,
+                                   starts_with("Quartiers_"))
+cm <- cor(vars_quanti)
+corrplot(cm, method="circle")
+corrplot(cm, method="number")
+r <- function(a, b) round(cm[a, b], 2)
 ```
 
-Le tableau met en évidence plusieurs relations importantes entre la variable expliquée (*Loyer_TCC*) et les variables explicatives quantitatives :
+Le tableau met en évidence plusieurs relations importantes entre la
+variable expliquée (*Loyer_TCC*) et les variables explicatives
+quantitatives :
 
-1. **Surface (corr = 0.93)**  
-   C’est la corrélation la plus forte observée.  
-   Le loyer augmente très fortement avec la surface du logement.  
-   Cette relation quasi linéaire confirme que la surface est le principal déterminant du prix.
+1.  **Surface (corr = `r r("Loyer_TCC", "Surface")`)**\
+    C’est la corrélation la plus forte observée : le loyer augmente
+    très fortement avec la surface du logement. La surface est le
+    principal déterminant du prix.
 
-2. **Nombre de pièces (corr = 0.87)**  
-   Le nombre de pièces est également fortement corrélé au loyer.  
-   Cela s’explique naturellement par le fait qu’un logement comportant plus de pièces possède généralement une surface plus importante et un niveau de confort supérieur.
+2.  **Nombre de pièces (corr = `r r("Loyer_TCC", "Pièces")`)**\
+    Le nombre de pièces est également fortement corrélé au loyer, car un
+    logement comportant plus de pièces possède généralement une surface
+    plus importante.
 
-3. **Charges (corr = 0.61)**  
-   Une corrélation positive modérée :  
-   les logements ayant des charges plus élevées ont souvent des loyers plus élevés.  
-   Cependant, la relation est moins forte que pour la surface et les pièces.
+3.  **Charges (corr = `r r("Loyer_TCC", "Charges")`)**\
+    Une corrélation positive modérée : les logements ayant des charges
+    plus élevées ont souvent des loyers plus élevés, mais la relation
+    est moins forte que pour la surface et les pièces.
 
-4. **Consommation énergétique kWh (corr = –0.30)**  
-   La corrélation est faible et négative.  
-   Cela suggère que les logements très énergivores (kWh élevés) ont tendance à être légèrement moins chers, ce qui est cohérent avec l’idée qu’un mauvais bilan énergétique peut réduire la valeur locative.
+4.  **Consommation énergétique kWh (corr = `r r("Loyer_TCC", "kWh")`)**\
+    La corrélation est faible et négative : les logements très
+    énergivores ont tendance à être légèrement moins chers, ce qui est
+    cohérent avec l’idée qu’un mauvais bilan énergétique réduit la
+    valeur locative.
 
-5. **Émissions de CO₂ (corr = 0.21)**  
-   Corrélation faible et positive.  
-   Cela signifie qu’il n’existe pas de relation claire entre les émissions de CO₂ et le montant du loyer.  
-   Le CO₂ est probablement un facteur indirect qui reflète davantage la performance énergétique ou la taille du logement.
+5.  **Émissions de CO₂ (corr = `r r("Loyer_TCC", "kgCO2")`)**\
+    Il n’existe pas de relation claire entre les émissions de CO₂ et le
+    montant du loyer.
 
+Si la valeur absolue du coefficient de corrélation entre deux variables
+explicatives excède 0,8, on peut soupçonner une colinéarité.
 
-Si la valeur absolue du coefficient de corrélation entre deux variables excède 0.8, on peut soupçonner la colinéarité.
+### b) Nuage de points vis-à-vis de Y
 
-
-
-
-### b) Nuage de point vis à vis de Y
-```{r, warning=FALSE, message=FALSE}
-
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 graphConso <- function(uneVariable){
-  ggplot(data = annonces, aes_string(x = uneVariable, y = "Loyer_TCC")) + geom_point() + geom_smooth()
+  ggplot(data = annonces, aes(x = .data[[uneVariable]], y = Loyer_TCC)) + geom_point() + geom_smooth()
 }
 
 p1 <- graphConso("Surface")
@@ -839,171 +716,186 @@ p3 <- graphConso("kWh")
 p4 <- graphConso("kgCO2")
 
 grid.arrange(p1, p2, p3, p4, ncol = 2)
-
-
-
-
 ```
+
 **Nature des relations entre les variables explicatives et le loyer**
 
 **Surface → Loyer_TCC**
-- Relation : clairement linéaire et fortement croissante. 
-- Le nuage de points suit une progression régulière, sans inflexion notable.
-- La courbe lissée (loess) confirme une **relation quasi parfaitement linéaire**.
+
+-   Relation fortement croissante et proche de la linéarité pour la
+    majorité des logements.
+-   Pour les grandes surfaces, la pente semble s'accentuer : une
+    éventuelle rupture de structure sera testée en section 4.3.
 
 **Charges → Loyer_TCC**
-- **Relation : croissante mais non strictement linéaire.**  
-- On observe une **courbure légère** :  
-  - faible pente pour charges < 80 €  
-  - forte augmentation entre 80 € et 120 €  
-  - puis une phase de stabilisation
-- Cette forme évoque une **relation légèrement non linéaire**, possiblement **quadratique ou en plateau**.
+
+-   Relation croissante mais très dispersée.
+-   Quelques logements aux charges très élevées s'écartent du nuage et
+    peuvent influencer fortement l'estimation.
 
 **kWh → Loyer_TCC**
-- **Relation : faible et non linéaire.**  
-- La courbe montre une **forme en U très aplati** :  
-  - légère décroissance pour kWh faibles,  
-  - puis remontée aux kWh élevés.
-- Cette forme suggère une **relation quadratique faible**.
-- La dispersion est très importante → faible pouvoir prédictif.
+
+-   Relation faible et légèrement décroissante, avec une très forte
+    dispersion : faible pouvoir prédictif pris isolément.
 
 **kgCO2 → Loyer_TCC**
-- **Relation : très faible et essentiellement non linéaire.**  
-- La courbe est presque plate avec une **petite forme ondulante**, sans tendance marquée.
-- La variance des loyers reste élevée quel que soit le niveau de CO₂.
 
-
+-   Relation quasi inexistante : la courbe est presque plate et la
+    variance des loyers reste élevée quel que soit le niveau de CO₂.
 
 ### c) Corrélations entre les variables explicatives
-L’analyse de la matrice de corrélation entre les variables explicatives permet de détecter
-d’éventuels problèmes de multicolinéarité dans le futur modèle de régression.
 
-1. **Surface et nombre de pièces (corr = 0.94)**  
-   Il s’agit de la corrélation la plus élevée entre les variables explicatives.  
-   Cela s’explique par le fait que les logements comportant davantage de pièces
-   sont presque toujours plus grands.  
-   Cette corrélation très forte peut poser un risque de multicolinéarité dans la régression.
-   Le modèle devra en tenir compte, par exemple en n’interprétant pas séparément
-   ces deux variables ou en examinant les VIF.
+L’analyse de la matrice de corrélation entre les variables explicatives
+permet de détecter d’éventuels problèmes de multicolinéarité dans le
+futur modèle de régression.
 
-2. **Surface et Charges (corr = 0.61)**  
-   Les logements plus grands ont en général des charges plus élevées (chauffage collectif,
-   copropriété, entretien).  
-   La corrélation est modérée mais non problématique.
+1.  **Surface et nombre de pièces (corr = `r r("Surface", "Pièces")`)**\
+    Il s’agit de la corrélation la plus élevée : les logements
+    comportant davantage de pièces sont presque toujours plus grands.
+    Cette corrélation très forte présente un risque de multicolinéarité.
 
-3. **Pièces et Charges (corr = 0.54)**  
-   Les appartements ayant plus de pièces entraînent généralement plus de charges.  
-   Cette corrélation reste raisonnable et ne conduit pas à une multicolinéarité forte.
+2.  **Classe énergétique et consommation (corr = `r r("label_eco", "kWh")`)**\
+    La classe énergétique (DPE) est calculée à partir de la consommation
+    : les deux variables mesurent presque la même chose.
 
-4. **Variables énergétiques (kWh, CO₂)**  
-   - kWh présente de faibles corrélations avec les autres variables (entre −0.30 et −0.20).  
-   - kgCO₂ montre également des corrélations faibles (entre 0.18 et 0.25).  
+3.  **Surface et Charges (corr = `r r("Surface", "Charges")`)**\
+    Les logements plus grands ont en général des charges plus élevées.
+    La corrélation est modérée et non problématique.
 
-   Ces valeurs indiquent que la performance énergétique évolue de manière
-   relativement indépendante des autres caractéristiques du logement.
-   Il n’existe donc pas de risque de multicolinéarité majeure provenant des variables énergétiques.
+4.  **Variables énergétiques et taille du logement**\
+    Les corrélations entre kWh ou kgCO₂ et la surface restent faibles
+    (`r r("Surface", "kWh")` et `r r("Surface", "kgCO2")`) : la
+    performance énergétique évolue de manière relativement indépendante
+    de la taille du logement.
 
-5. **Absence de corrélations problématiques en dehors de Surface–Pièces**  
-   Globalement, toutes les corrélations sont faibles ou modérées,
-   à l’exception du couple Surface–Pièces, qui présente une colinéarité naturellement élevée
-   mais interprétable.
+**Conclusion :**\
+Deux paires de variables sont fortement colinéaires : *Surface* et
+*Pièces*, ainsi que *label_eco* et *kWh*. Cela doit être vérifié lors de
+l’estimation du modèle par les VIF.
 
+**Vérification par les VIF**
 
-
-**Conclusion :**  
-La seule multicolinéarité forte concerne *Surface* et *Pièces*.  
-Cela devra être vérifié lors de l’estimation du modèle (par les VIF),
-mais les autres variables explicatives sont suffisamment indépendantes
-pour être intégrées sans risque dans la régression linéaire.
-
-**Vérifier par VIF**
- Les 4 colonnes Quartiers_xxx contiennent toute l’information, et leur somme = 1 pour chaque ligne.
-
- Cela crée une dépendance linéaire exacte → impossible à estimer dans un modèle linéaire.
-
- R ne peut pas inclure toutes les colonnes, alors il en retire une automatiquement , ici Quartiers_Ouest = NA . Donc on n'inclus 3 sur 4 colonnes
+Les 4 colonnes Quartiers_xxx contiennent toute l’information et leur
+somme vaut 1 pour chaque ligne. Cela crée une dépendance linéaire exacte
+avec la constante. On n'inclut donc que 3 colonnes sur 4 : le quartier
+Ouest sert de référence.
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
 # Calcul du VIF
 library(car)
-library(kableExtra)
-library(dplyr)
 modele_vif <- lm(Loyer_TCC ~ Surface + Charges + Pièces + label_eco + kWh + kgCO2 +
                    Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest ,
                  data = annonces)
-vif_values <-vif(modele_vif)
+vif_values <- vif(modele_vif)
 vif_df <- data.frame(
   Variable = names(vif_values),
   VIF = round(vif_values, 2),
-  Interpretation = c(
-    "Multicolinéarité très forte ; redondance avec Pièces, variable instable",
-    "Multicolinéarité faible ; variable stable et indépendante",
-    "Forte redondance avec Surface ; à retirer si instabilité",
-    "Multicolinéarité faible à modérée ; acceptable",
-    "Multicolinéarité faible ; relation logique avec label_eco",
-    "Multicolinéarité très faible ; variable indépendante",
-    "Multicolinéarité faible ; normal pour une variable catégorielle",
-    "Multicolinéarité faible ; aucune préoccupation",
-    "Multicolinéarité faible ; variable non problématique"
+  Interpretation = case_when(
+    vif_values > 10 ~ "Multicolinéarité très forte",
+    vif_values > 5  ~ "Multicolinéarité forte : redondance avec une autre variable",
+    vif_values > 2.5 ~ "Multicolinéarité modérée ; acceptable",
+    TRUE            ~ "Multicolinéarité faible ; aucune préoccupation"
   )
 )
 
 # Affichage du tableau formaté
 vif_df %>%
-  kable("html", caption = "Interprétation du VIF") %>%
+  kable("html", caption = "Interprétation du VIF", row.names = FALSE) %>%
   kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed")) %>%
   row_spec(0, bold = TRUE, background = "#2C3E50", color = "white")
+
+p_vif <- summary(modele_vif)$coefficients[, 4]
 ```
-**Décision finale apres VIF :**
 
-Les résultats du VIF montrent **une multicolinéarité** importante entre les variables Surface et Pièces. 
-Surface constitue un prédicteur majeur du loyer et doit être conservée. 
-En revanche, la variable Pièces présente un VIF élevé, n’est pas significative dans le modèle et apporte une information redondante par rapport à la Surface. 
-La décision retenue est donc de retirer la variable Pièces du modèle afin d’améliorer la stabilité et l’interprétation de la régression. 
-Toutes les autres variables présentent des VIF faibles et sont donc conservées.
+**Décision finale après VIF :**
 
+Les VIF confirment une multicolinéarité importante entre *Surface*
+(VIF = `r round(vif_values["Surface"], 1)`) et *Pièces*
+(VIF = `r round(vif_values["Pièces"], 1)`), ainsi qu'entre *label_eco*
+(VIF = `r round(vif_values["label_eco"], 1)`) et *kWh*
+(VIF = `r round(vif_values["kWh"], 1)`).
 
+-   La surface est le prédicteur majeur du loyer et doit être conservée.
+    La variable *Pièces* apporte une information redondante et n’est pas
+    significative dans le modèle complet (p-value =
+    `r round(p_vif["Pièces"], 3)`) : elle est retirée des modèles
+    suivants.
+-   De même, *label_eco* n'est pas significative
+    (p-value = `r round(p_vif["label_eco"], 3)`) et fait double emploi
+    avec la consommation *kWh*.
 
 # 4. Analyse et discussion des résultats
 
 ## 4.1 Modélisation principale
 
+```{r, echo=FALSE}
+# Modèle 1 : toutes les variables
+modele1 <- lm(Loyer_TCC ~ Surface + Charges + Pièces +
+                label_eco + kWh + kgCO2 +
+                Quartiers_Centre + Quartiers_Nord_Est +
+                Quartiers_Nord_Ouest ,
+              data = annonces)
 
-- **Le premier modèle** inclut toutes les variables explicatives : la surface, les charges, le nombre de pièces, la classe énergétique, la consommation énergétique, les émissions de CO₂ ainsi que les différentes modalités du quartier. Il sert de point de départ pour évaluer les relations globales et détecter la multicolinéarité.
+# Modèle 2 : sélection automatique (backward / forward)
+modele2 <- step(modele1, direction = "both", trace = 0)
 
-\[
+# Modèle 3 : sans Pièces
+modele3 <- lm(Loyer_TCC ~ Surface + Charges + label_eco +
+                kWh + kgCO2 + Quartiers_Centre + Quartiers_Nord_Est +
+                Quartiers_Nord_Ouest, data = annonces)
+
+# Modèle 4 : variables significatives à 5 % du modèle 3
+p3 <- summary(modele3)$coefficients[-1, 4]
+vars_signif <- names(p3)[p3 < 0.05]
+modele4 <- lm(reformulate(vars_signif, response = "Loyer_TCC"), data = annonces)
+
+# Modèle 5 : termes quadratiques
+modele5 <- lm(Loyer_TCC ~ Surface +
+                Charges + I(Charges^2) +
+                kWh + I(kWh^2) +
+                Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
+              data = annonces)
+
+# Modèle 6 : version épurée du modèle 5
+modele6 <- lm(Loyer_TCC ~ Surface +
+                Charges + I(Charges^2) +
+                Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
+              data = annonces)
+
+vars_m2 <- attr(terms(modele2), "term.labels")
+```
+
+-   **Le premier modèle** inclut toutes les variables explicatives : la
+    surface, les charges, le nombre de pièces, la classe énergétique, la
+    consommation énergétique, les émissions de CO₂ ainsi que les
+    indicatrices de quartier. Il sert de point de départ pour évaluer
+    les relations globales.
+
+$$
 \begin{aligned}
-\text{Loyer_TCC} &= \beta_0 
-+ \beta_1\,\text{Surface} 
-+ \beta_2\,\text{Charges} 
+\text{Loyer_TCC} &= \beta_0
++ \beta_1\,\text{Surface}
++ \beta_2\,\text{Charges}
 + \beta_3\,\text{Pièces} \\
 &\quad + \beta_4\,\text{label_eco}
-+ \beta_5\,\text{kWh} 
++ \beta_5\,\text{kWh}
 + \beta_6\,\text{kgCO2} \\
 &\quad + \beta_7\,\text{Quartiers_Centre}
 + \beta_8\,\text{Quartiers_Nord_Est}\\
 &\quad + \beta_9\,\text{Quartiers_Nord_Ouest}
 + \varepsilon
 \end{aligned}
-\]
+$$
 
-- **Le deuxième modèle**, issu des procédures backward et forward, converge vers une spécification plus parcimonieuse contenant uniquement les variables qui améliorent significativement le modèle : la surface, les charges, la consommation énergétique et l’indicateur du quartier centre.
+-   **Le deuxième modèle** est issu de la sélection automatique
+    (backward et forward, critère AIC). Elle retient les variables
+    suivantes : **`r paste(vars_m2, collapse = ", ")`**.
 
-\[
-\begin{aligned}
-\text{Loyer_TCC} &= \beta_0
-+ \beta_1\,\text{Surface}
-+ \beta_2\,\text{Charges} \\
-&\quad + \beta_3\,\text{kWh}
-+ \beta_4\,\text{Quartiers_Centre}
-+ \varepsilon
-\end{aligned}
-\]
+-   **Le troisième modèle** retire explicitement la variable *Pièces*
+    pour réduire la multicolinéarité, tout en conservant l'ensemble des
+    autres prédicteurs.
 
-
-- **Le troisième modèle** retire explicitement la variable *Pièces* pour réduire la multicolinéarité, tout en conservant l'ensemble des autres prédicteurs jugés pertinents.
-
-\[
+$$
 \begin{aligned}
 \text{Loyer_TCC} &= \beta_0
 + \beta_1\,\text{Surface}
@@ -1016,26 +908,17 @@ Toutes les autres variables présentent des VIF faibles et sont donc conservées
 &\quad + \beta_8\,\text{Quartiers_Nord_Ouest}
 + \varepsilon
 \end{aligned}
-\]
+$$
 
+-   **Le quatrième modèle** conserve uniquement les variables
+    significatives à 5 % du modèle précédent :
+    **`r paste(vars_signif, collapse = ", ")`**.
 
-- **Le quatrième modèle** est construit en conservant uniquement les variables significatives du modèle précédent. Les variables retenues sont : la surface, les charges, la consommation énergétique et le quartier Nord Ouest.
+-   **Le cinquième modèle** introduit des termes quadratiques pour
+    capturer d'éventuelles non-linéarités dans les relations entre le
+    loyer, les charges et la consommation énergétique.
 
-\[
-\begin{aligned}
-\text{Loyer_TCC} &= \beta_0
-+ \beta_1\,\text{Surface}
-+ \beta_2\,\text{Charges} \\
-&\quad + \beta_3\,\text{kWh}
-+ \beta_4\,\text{Quartiers_Nord_Ouest}
-+ \varepsilon
-\end{aligned}
-\]
-
-
-- **Le cinquième modèle** introduit des termes quadratiques pour capturer les non-linéarités observées graphiquement dans les relations entre le loyer, les charges et la consommation énergétique.
-
-\[
+$$
 \begin{aligned}
 \text{Loyer_TCC} &= \beta_0
 + \beta_1\,\text{Surface}
@@ -1045,15 +928,16 @@ Toutes les autres variables présentent des VIF faibles et sont donc conservées
 + \beta_5\,\text{kWh}^2 \\
 &\quad + \beta_6\,\text{Quartiers_Centre}
 + \beta_7\,\text{Quartiers_Nord_Est}\\
-&\quad + \beta_8\,\text{Quartiers_Nord_Ouest} 
+&\quad + \beta_8\,\text{Quartiers_Nord_Ouest}
 + \varepsilon
 \end{aligned}
-\]
+$$
 
+-   **Le sixième modèle** est une version épurée du précédent : le terme
+    quadratique est conservé pour les charges, mais la consommation
+    *kWh* est retirée. Les quartiers sont maintenus.
 
-- **Le sixième modèle** est une version épurée du précédent : les termes quadratiques sont conservés pour les charges, mais la variable *kWh* est retirée en raison de sa faible contribution. Les quartiers sont maintenus.
-
-\[
+$$
 \begin{aligned}
 \text{Loyer_TCC} &= \beta_0
 + \beta_1\,\text{Surface}
@@ -1064,46 +948,16 @@ Toutes les autres variables présentent des VIF faibles et sont donc conservées
 &\quad + \beta_6\,\text{Quartiers_Nord_Ouest}
 + \varepsilon
 \end{aligned}
-\]
-
+$$
 
 ```{r, echo=FALSE}
-# Modèle 1: Linéaire simple avec toutes les variables
-modele1 <- lm(Loyer_TCC ~ Surface + Charges + Pièces + 
-                label_eco + kWh + kgCO2 +
-                Quartiers_Centre + Quartiers_Nord_Est + 
-                Quartiers_Nord_Ouest , 
-              data = annonces)
-#Modele 2 : apres Back/forward 
-modele2 <- lm(Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Centre,
-                   data = annonces)
-# Modèle 3
-modele3 <- lm(Loyer_TCC ~ Surface + Charges + label_eco +
-kWh + kgCO2 + Quartiers_Centre + Quartiers_Nord_Est +
-Quartiers_Nord_Ouest, data = annonces)
-
-# Modèle 4
-modele4 <- lm(Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Nord_Ouest, data =annonces)
-
-# Modèle 5
-modele5 <- lm(Loyer_TCC ~ Surface +
-                Charges + I(Charges^2) +
-                kWh + I(kWh^2) +
-                Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
-              data = annonces)
-# Modèle 6
-modele6 <- lm(Loyer_TCC ~ Surface +
-Charges + I(Charges^2) +
-Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
-data = annonces)
-
 # Liste des modèles
 models <- list(modele1 = modele1,
                modele2 = modele2,
                modele3 = modele3,
                modele4 = modele4,
                modele5 = modele5,
-               modele6 =modele6 )
+               modele6 = modele6)
 
 # Fonction pour extraire les stats utiles
 extract_stats <- function(m) {
@@ -1119,42 +973,56 @@ extract_stats <- function(m) {
 
 # Création du tableau récapitulatif
 result_models <- do.call(rbind, lapply(models, extract_stats))
-result_models
+knitr::kable(result_models, caption = "Tableau 3 : Comparaison des modèles")
 
-
-
+meilleur_aic <- rownames(result_models)[which.min(result_models$AIC)]
+meilleur_bic <- rownames(result_models)[which.min(result_models$BIC)]
+p5 <- summary(modele5)$coefficients[, 4]
 ```
+
 **Conclusion**
 
-L’objectif de la comparaison entre les différents modèles est d’identifier la spécification qui permet d’expliquer le loyer de manière à la fois **fiable**, **précise** et **interprétable**, tout en évitant la **multicolinéarité** et la **sur-paramétrisation**. Les six modèles évalués présentent des performances proches, mais leurs différences statistiques (R², AIC, BIC, erreur résiduelle) permettent de dégager une conclusion cohérente.
+L’objectif de la comparaison est d’identifier la spécification qui
+explique le loyer de manière à la fois **fiable**, **précise** et
+**interprétable**, tout en évitant la **multicolinéarité** et la
+**sur-paramétrisation**.
 
-- Le **premier modèle**, construit avec l’ensemble des variables explicatives, obtient un bon R², mais son intérêt est limité par une **multicolinéarité importante**, notamment entre **Surface** et **Pièces**. Plusieurs variables ne sont pas significatives, indiquant que le modèle est **surchargé**.
+-   Les six modèles ont des performances **très proches** : le R²
+    ajusté varie seulement entre `r min(result_models$Adj_R2)` et
+    `r max(result_models$Adj_R2)`. Environ trois quarts de la variance
+    des loyers sont expliqués, la surface portant l'essentiel de cette
+    explication.
 
-- Le **second modèle**, obtenu automatiquement via les méthodes **backward** et **forward**, converge vers la même spécification
-Ce résultat montre que seules ces variables apportent une contribution solide à l’explication du loyer. Le modèle est **plus simple**, **plus stable**, et presque aussi performant que le modèle complet.
+-   Le **premier modèle** souffre de multicolinéarité (*Surface* et
+    *Pièces*, *label_eco* et *kWh*) et contient plusieurs variables non
+    significatives : il est **surchargé**.
 
-Le **troisième modèle** retire la variable **Pièces** pour réduire la multicolinéarité. Le R² reste élevé, ce qui confirme que cette variable n’apportait **aucune information utile** une fois la surface incluse dans le modèle.
+-   Le **deuxième modèle**, issu de la sélection automatique, est plus
+    simple et presque aussi performant que le modèle complet. Le
+    **quatrième modèle**, le plus parcimonieux, obtient le plus petit
+    BIC (`r meilleur_bic`), un critère qui pénalise davantage le nombre
+    de variables.
 
-Le **quatrième modèle**, qui conserve uniquement les variables **significatives**, obtient des performances très proches du modèle initial tout en étant plus **parcimonieux**. Il capture correctement l’essentiel des variations du loyer sans inclure de variables inutiles.
+-   Le **cinquième modèle** obtient l'un des meilleurs AIC
+    (meilleur AIC : `r meilleur_aic`), mais ses termes quadratiques sont
+    peu significatifs (p-values de `r round(p5["I(Charges^2)"], 2)` pour
+    Charges² et `r round(p5["I(kWh^2)"], 2)` pour kWh²) : la
+    non-linéarité des charges et de la consommation est faible.
 
-Le **cinquième modèle** est construit en s’appuyant sur l’analyse **graphique** des relations. Les graphiques montrent une relation **linéaire forte** entre la surface et le loyer, mais des relations **non linéaires** pour les charges et le kWh. L’ajout de **termes quadratiques** permet de mieux modéliser ces courbures. Ce modèle obtient l’un des **meilleurs AIC** et une **faible erreur résiduelle**, ce qui confirme sa pertinence.
-
-Le **sixième modèle**, plus épuré, conserve la surface et les charges (avec terme quadratique) ainsi que les variables de quartier. Il est **simple** et **cohérent**, mais n’améliore pas significativement les performances par rapport au modèle 5.
-
-Dans l’ensemble, les résultats montrent que le **modèle basé sur l’interprétation graphique (modèle 5)** offre le meilleur compromis entre **simplicité**, **stabilité**, **performance prédictive** et **cohérence** avec les tendances observées dans les données. Il constitue la spécification la plus adaptée pour l’analyse finale du loyer.
-
-
+Nous retenons le **cinquième modèle** pour l'analyse de robustesse : il
+fait partie des meilleurs selon l'AIC et le R² ajusté, et il permet de
+tester l'existence d'effets non linéaires. Les différences entre modèles
+restent toutefois faibles, et la conclusion (section 5) revient sur ce
+choix.
 
 ## 4.2 Analyse de la robustesse des résultats
 
-Le modèle final retenu est une spécification non linéaire permettant de
-capturer les relations observées graphiquement entre le loyer et ses
-principales variables explicatives.
+Le modèle retenu pour l'analyse de robustesse est le suivant :
 
 $$
 \begin{aligned}
-\text{Loyer_TCC}_i &= 
-\beta_0 
+\text{Loyer_TCC}_i &=
+\beta_0
 + \beta_1\,\text{Surface}_i
 + \beta_2\,\text{Charges}_i
 + \beta_3\,\text{Charges}_i^2 \\
@@ -1175,163 +1043,58 @@ analyse détaillée des résidus.
 
 ------------------------------------------------------------------------
 
-### Analyse des résidus
-
-**QQ-plot des résidus**
-
-```{r, message=FALSE, warning=FALSE , echo=FALSE}
-library(olsrr)
-reg <- lm(Loyer_TCC ~ Surface +
-                Charges + I(Charges^2) +
-                kWh + I(kWh^2) +
-                Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
-              data = annonces)
-ols_plot_resid_qq(reg)        # QQ-plot des résidus
-```
-
-Afin de vérifier l’hypothèse de normalité des erreurs du modèle MCO,
-deux représentations graphiques sont examinées :
-
--   le **QQ-plot des résidus**,\
--   l’**histogramme des résidus avec courbe normale superposée**.
-
-Ces deux graphiques permettent de détecter des écarts à la normalité
-tels que des queues épaisses, une asymétrie ou la présence
-d'observations extrêmes.
-
-------------------------------------------------------------------------
-
-**QQ-plot des résidus**
-
-Le QQ-plot compare les quantiles théoriques d'une loi normale avec les
-quantiles observés des résidus du modèle.
-
-**Interprétation :**
-
--   Les points suivent **grossièrement la ligne rouge**, ce qui indique
-    une tendance générale à la normalité.
--   Toutefois, **des écarts importants apparaissent dans les queues**,
-    en particulier :
-    -   en bas à gauche (résidus très négatifs),
-    -   en haut à droite (résidus très positifs).
--   Ces déviations signifient :
-    -   une **absence de normalité parfaite**.
-    -   la présence probable de **valeurs extrêmes (outliers)** ayant un
-        impact sur la distribution des erreurs.
-
-**Conclusion :**
-
-La normalité des résidus est **approximative mais non totalement
-respectée**.\
-L’usage de méthodes robustes (erreurs standards robustes, bootstrap) est
-recommandé.
-
-------------------------------------------------------------------------
-
-**Histogramme des résidus**
-
-L’histogramme visualise la distribution empirique des résidus, avec en
-superposition une densité normale.
-
-**Interprétation :**
-
--   La distribution semble **centrée autour de 0**, ce qui confirme que
-    le modèle ne présente pas de biais systématique.
--   Elle est cependant **plus aplatie et plus étalée** qu’une
-    distribution normale :
-    -   présence de queues épaisses (kurtosis),
-    -   quelques valeurs extrêmes éloignées du centre.
--   La courbe bleue (densité normale théorique) ne s’ajuste pas
-    parfaitement à l’histogramme, notamment dans les queues.
-
-**Conclusion :**
-
-L’histogramme confirme que les résidus **ne suivent pas exactement une
-loi normale**.\
-L’utilisation d’estimateurs robustes ou de transformations (par ex.
-log-loyer) peut améliorer cet aspect.
-
-------------------------------------------------------------------------
-
-**Synthèse générale**
-
-Les deux graphiques indiquent :
-
--   une **bonne centralisation** des résidus autour de zéro,
--   mais une **absence de normalité stricte** avec :
-    -   valeurs extrêmes.
-    -   asymétrie légère.
-    -   queues plus épaisses que prévu.
-
-Cela ne remet pas en cause la validité du modèle en termes d'estimation,
-mais :
-
--   les tests statistiques classiques peuvent être moins fiables,
--   il peut être souhaitable d’utiliser :
-    -   des **erreurs standards robustes (White / HC1)**,
-    -   ou une **méthode bootstrap** pour obtenir des intervalles de
-        confiance plus fiables.
-
-### Identifier les points influences
+### Identifier les points influents
 
 **Distance de Cook**
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
-## Distance de Cook: mesure l'influence d'une observation, les valeurs supérieures à 1 ou parfois à 0,5 indique un point influent
+reg <- modele5
+## Distance de Cook : mesure l'influence d'une observation ; une valeur supérieure à 1 indique un point très influent
 plot(reg, which = 4)
+cook <- cooks.distance(reg)
+plus_influents <- order(cook, decreasing = TRUE)[1:3]
+influents <- which(cook > 1)
 ```
 
-Le graphique de la distance de Cook permet d’identifier les observations
-ayant une influence excessive sur les coefficients du modèle.
+Le graphique de la distance de Cook permet d’identifier les
+observations ayant une influence excessive sur les coefficients du
+modèle. La majorité des observations ont une influence faible, mais
+quelques-unes ressortent nettement.
 
-Dans notre cas :
-
--   la majorité des observations ont une influence faible ;
--   **trois observations ressortent nettement** : les points **86**,
-    **130** et **181** ;
--   l’observation **130** dépasse presque le seuil critique de 1, ce qui
-    indique une influence importante.
-
-**Vérification manuelle**
+**Vérification manuelle des trois observations les plus influentes**
 
 ```{r,echo=FALSE}
-annonces[c(86,130,181) , ]
+annonces[plus_influents, c("Loyer_TCC", "Surface", "Charges", "Pièces", "kWh", "Quartiers")] %>%
+  mutate(Distance_Cook = round(cook[plus_influents], 2))
 ```
 
-L’analyse du graphique de la **distance de Cook** met en évidence
-**trois observations fortement influentes**.\
-En examinant le tableau des données correspondant à ces points, on
-obtient :
+-   L'observation la plus influente, dont la distance de Cook
+    (`r round(cook[plus_influents[1]], 2)`) dépasse le seuil critique de
+    1, affiche **`r annonces$Charges[plus_influents[1]]` € de charges
+    pour un loyer de `r annonces$Loyer_TCC[plus_influents[1]]` €**, soit
+    `r round(100 * annonces$Charges[plus_influents[1]] / annonces$Loyer_TCC[plus_influents[1]])` %
+    du loyer. Ce montant est incohérent avec le reste de l'échantillon
+    et ressemble à une **erreur de saisie** : cette observation exerce
+    une influence disproportionnée sur l’estimation de l'effet des
+    charges.
+-   Les deux observations suivantes (distance de Cook proche de 0,5)
+    sont de **grands logements très chers**. Leurs valeurs restent
+    cohérentes avec la logique du marché (logements haut de gamme) :
+    ce sont des cas extrêmes mais plausibles, que nous conservons.
 
--   **Observation 86** : logement situé en **centre-ville**, d’une
-    surface d’environ **60 m²**, avec un **loyer nettement inférieur** à
-    celui observé pour des biens comparables.\
--   **Observation 130** : même constat que pour l’observation 86 :
-    logement **au centre** avec une surface proche de **60 m²**, mais un
-    **niveau de loyer anormalement bas** par rapport au marché.\
--   **Observation 181** : bien de grande surface et loyer élevé ; les
-    valeurs restent **cohérentes avec la logique du marché** (grand
-    logement, loyer élevé).
-
-Les observations **86** et **130** apparaissent donc **incohérentes**
-avec le reste de l’échantillon : elles ressemblent à des **erreurs de
-saisie** ou à des logements très atypiques (forte décote) et exercent
-une influence disproportionnée sur l’estimation.\
-À l’inverse, la dernière observation identifiée semble **réaliste** et
-correspond plutôt à un **cas extrême mais plausible** du marché (grand
-logement cher). Finalement , nous retirons l'observation 86 et 130.
+Nous retirons donc les observations dont la distance de Cook dépasse 1
+(`r length(influents)` observation).
 
 ```{r,echo=F}
-annonces <- annonces[-c(86,130) , ]
-
+if (length(influents) > 0) annonces <- annonces[-influents, ]
+reg <- lm(formula(modele5), data = annonces)
 ```
 
 **Le graphique des résidus standardisés selon leur levier (“Residual vs
-Leverage”**
+Leverage”)**
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
-## Un autre graphique très utile pour le diagnostic d’un éventuel point influent sur la droite de régression est le graphique des résidus standardisés selon leur levier (“Residual vs Leverage”) sur lequel on superpose les limites pour la distance de Cook. Leverage = éléments diagonaux de H = X(X'X)-1X'  Si un point sur ce graphique se situe en dehors de l’intervalle définit par les lignes en pointillées, il s’agit d’une observation influente. 
-
+## Leverage = éléments diagonaux de H = X(X'X)-1X'. Un point situé en dehors des lignes en pointillés est une observation influente.
 plot(reg, which = 5)
 ```
 
@@ -1340,103 +1103,111 @@ Ce graphique sert à détecter des points combinant :
 -   un levier élevé (observations atypiques dans les variables
     explicatives),
 -   un résidu élevé (observations mal expliquées par le modèle),
--   et un risque d’influence excessive.
+-   et donc un risque d’influence excessive.
 
-Interprétation :
+Après le retrait de l'observation aberrante, les points restants se
+situent dans la zone centrale ou près des lignes de Cook : il s'agit des
+grands logements chers identifiés précédemment, que nous conservons car
+ils correspondent à de vraies annonces.
 
--   la plupart des points se situent dans la zone centrale, ce qui est
-    normal ;
--   les observations **130** et **181** apparaissent clairement comme
-    influentes (elles se trouvent proches ou au-delà des lignes de Cook)
-    ;
--   cela confirme ce qui avait été détecté par la distance de Cook.
+### Analyse des résidus
 
-Conclusion :\
-Le modèle contient **quelques points influents** qui peuvent impacter
-l’ajustement. Il peut être utile de comparer les estimations **avec et
-sans ces points**.
+**QQ-plot des résidus**
+
+```{r, message=FALSE, warning=FALSE , echo=FALSE}
+library(olsrr)
+ols_plot_resid_qq(reg)        # QQ-plot des résidus
+```
+
+Le QQ-plot compare les quantiles théoriques d'une loi normale avec les
+quantiles observés des résidus du modèle.
+
+**Interprétation :**
+
+-   Les points suivent **grossièrement la ligne** au centre de la
+    distribution.
+-   Toutefois, **des écarts importants apparaissent dans les queues**,
+    en particulier pour les résidus très positifs (logements beaucoup
+    plus chers que prévu par le modèle).
+-   Ces déviations signifient une **absence de normalité** et la
+    présence de **valeurs extrêmes** ayant un impact sur la distribution
+    des erreurs.
+
+**Histogramme des résidus**
+
+```{r, message=FALSE, warning=FALSE , echo=FALSE}
+ols_plot_resid_hist(reg)      # histogramme des résidus avec densité normale
+```
+
+**Interprétation :**
+
+-   La distribution est **centrée autour de 0**, ce qui confirme que le
+    modèle ne présente pas de biais systématique.
+-   Elle est cependant **plus pointue au centre et plus étalée dans les
+    queues** qu’une distribution normale, avec quelques valeurs
+    extrêmes éloignées du centre.
+
+**Synthèse**
+
+Les deux graphiques indiquent une **bonne centralisation** des résidus
+autour de zéro, mais une **absence de normalité stricte** (valeurs
+extrêmes, asymétrie, queues épaisses). Cela ne remet pas en cause
+l'estimation des coefficients, mais les tests statistiques classiques
+peuvent être moins fiables. Il est souhaitable d’utiliser des **erreurs
+standards robustes (White / HC1)** ou une **transformation
+logarithmique du loyer**.
 
 ### Tests de moyenne nulle et de normalité sur les résidus
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
-reg <- lm(Loyer_TCC ~ Surface +
-                Charges + I(Charges^2) +
-                kWh + I(kWh^2) +
-                Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
-              data = annonces)
-#moyennes = 0
-# Test (H0: moyenne résidus = 0; H1: moyenne résidus <> 0)
-t.test(reg$residuals)
+# Test (H0 : moyenne des résidus = 0 ; H1 : moyenne des résidus <> 0)
+tt <- t.test(reg$residuals)
+tt
 
-
-# test de normalité des résidus = shapiro : hypothèse nulle = normalité
-shapiro.test(reg$residuals)
-
+# Test de normalité des résidus (Shapiro-Wilk) : hypothèse nulle = normalité
+sw <- shapiro.test(reg$residuals)
+sw
 ```
 
 **Test t de Student – Moyenne des résidus**
 
-Le test t appliqué aux résidus donne une **p-value = 1**, ce qui est
-extrêmement élevée.\
-Cela signifie que l’on **ne rejette pas** l’hypothèse nulle selon
-laquelle :
+Le test t appliqué aux résidus donne une **p-value =
+`r round(tt$p.value, 3)`** : on **ne rejette pas** l’hypothèse nulle
+selon laquelle
 
 $$
 \mathbb{E}[\varepsilon] = 0
 $$
 
-L’intervalle de confiance à 95 % contient clairement la valeur **0**
-([-17.93 ; 17.93]), et la moyenne observée des résidus est pratiquement
-nulle (**–4.5 × 10⁻¹⁵**), ce qui confirme la conformité à l’hypothèse
-des MCO selon laquelle les erreurs doivent avoir une moyenne nulle.
+L’intervalle de confiance à 95 % contient la valeur 0
+([`r round(tt$conf.int[1], 2)` ; `r round(tt$conf.int[2], 2)`]). Ce
+résultat est attendu : avec une constante dans le modèle, les MCO
+produisent par construction des résidus de moyenne nulle.
 
-**Conclusion : l’hypothèse “moyenne des résidus = 0” est parfaitement
-respectée.**
+**Test de Shapiro–Wilk**
 
-**Le test de Shapiro–Wilk** donne un résultat :
-
--   **W = 0.94847**\
--   **p-value = 0.4373 × 10⁻⁶**
+-   **W = `r round(sw$statistic, 4)`**
+-   **p-value = `r format(sw$p.value, digits = 3)`**
 
 La p-value étant **très largement inférieure à 5 %**, on **rejette**
-donc l’hypothèse nulle de normalité des résidus.
-
-Cela signifie que :
-
--   Les résidus **ne suivent pas une distribution normale**,\
--   Ce qui est cohérent avec l’analyse graphique (QQ-plot non linéaire)
-    et il peut affecter la validité des **tests statistiques** (t-test,
-    F-test) en petit échantillon.
+l’hypothèse nulle de normalité des résidus. Ce résultat est cohérent
+avec l’analyse graphique et peut affecter la validité des tests t et F.
 
 **Conclusion : l’hypothèse de normalité des résidus n’est pas
 vérifiée.**
 
-### Hypothèse d'homoscedasticité
+### Hypothèse d'homoscédasticité
 
 **Détection graphique – Scale–Location Plot**
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
-###############################################################
-# 1. Détection graphique – Scale–Location Plot
-###############################################################
-
-# Interprétation :
-# La courbe rouge n’est pas parfaitement horizontale :
-# la variance semble augmenter avec les valeurs ajustées,
-# ce qui suggère une hétéroscédasticité potentielle.
-
 plot(reg, which = 3)   # Scale–Location plot
 ```
 
 **Graphique personnalisé : résidus vs valeurs ajustées**
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
-###############################################################
-# Graphique personnalisé : résidus vs valeurs ajustées
-###############################################################
-
 residM  <- resid(reg)
-residM2 <- residM^2
 Yhat    <- fitted(reg)
 
 plot(residM ~ Yhat,
@@ -1445,141 +1216,81 @@ plot(residM ~ Yhat,
      ylab = "Résidus")
 ```
 
-Le graphique présente les résidus (erreurs du modèle) en fonction des
-valeurs ajustées par la régression.
+Ce graphique permet de vérifier **l’hypothèse fondamentale des MCO**
+d’homoscédasticité (variance constante des résidus).
 
-Cette représentation permet de tester **l’hypothèse fondamentale des
-MCO** : l’homoscédasticité (variance constante des résidus).
+-   Les résidus ne sont pas répartis de manière uniforme autour de
+    zéro : la **dispersion augmente nettement pour les valeurs ajustées
+    élevées**.
+-   Pour les petits loyers prédits, les résidus sont assez regroupés ;
+    à mesure que le loyer prédit augmente, leur variabilité augmente.
 
-Ce que l’on observe :
+L’erreur du modèle est donc plus importante pour les logements chers,
+ce qui viole l’hypothèse de variance constante. Les estimateurs restent
+sans biais, mais leurs variances sont mal estimées et les tests t et F
+deviennent moins fiables.
 
-**Les résidus** ne semblent pas répartis de manière uniforme autour de
-zéro lorsque les valeurs ajustées augmentent.
-
-On observe **une augmentation de la dispersion** pour les **valeurs
-ajustées plus élevées** (à partir d’environ 1200–1500 €).
-
-**Quelques points extrêmes** apparaissent, ce qui accentue un éventuel
-phénomène d’hétéroscédasticité.
-
-La forme du nuage de points n’est pas totalement aléatoire : → Dans les
-petites valeurs, les résidus sont assez regroupés. → À mesure que le
-loyer prédit augmente, la variabilité des résidus augmente nettement.
-
-**Conclusion**
-
-Le graphique suggère clairement une hétéroscédasticité :
-
-La variance des résidus augmente lorsque les valeurs ajustées
-augmentent.
-
-Cela signifie que l’erreur du modèle est plus importante pour les
-logements chers, ce qui viole l’hypothèse de variance constante des
-erreurs.
-
-**Conséquences possibles**
-
--Les estimateurs restent non biaisés mais leurs variances sont mal
-estimées.
-
--Les tests t et F deviennent moins fiables.
-
-Il est nécessaire d’utiliser des erreurs robustes (type White) ou
-d’envisager une transformation du loyer (souvent log-loyer). **Test de
-Breusch–Pagan**
+**Test de Breusch–Pagan**
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
-###############################################################
-# Test de Breusch–Pagan
-###############################################################
 library(lmtest)
-
 bp <- bptest(reg)
 bp
-
-# Commentaire :
-# Si la p-valeur est faible (< 5%), on rejette H0 et l'hypothèse d'homoscédasticité.
-# Le modèle présente alors une variance non constante des résidus.
 ```
 
 Le test de Breusch–Pagan vérifie si la variance des résidus dépend des
-variables explicatives. - La p-value est **nettement inférieure à 5%**\
-- **On rejette l’hypothèse nulle d’homoscédasticité.** - Cela signifie
-que la variance des résidus **n’est pas constante**, ce qui constitue
-une violation des hypothèses des MCO.
-
-En conclusion, le test indique une **hétéroscédasticité significative**
-dans le modèle.
+variables explicatives. La p-value
+(`r format(bp$p.value, digits = 3)`) est **nettement inférieure à 5 %** :
+**on rejette l’hypothèse d’homoscédasticité.**
 
 **Test de White (version longue)**
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
-###############################################################
-#  Test de White (version longue)
-###############################################################
-
 residM2 <- reg$residuals^2
 
 ModresWhite <- lm(residM2 ~ Surface*Charges + kWh*Charges +
                     I(Surface^2) + I(Charges^2) + I(kWh^2),
                   data = annonces)
 
-summary(ModresWhite)
-
 Whitestat <- summary(ModresWhite)$r.squared * nrow(annonces)
-Whitestat
-
-# Commentaires :
-# Si la p-valeur associée est faible, cela confirme l’hétéroscédasticité.
-#Or ici la p-value < 1%.
-# White est plus général que Breusch–Pagan → confirmation supplémentaire.
+White_df  <- length(coef(ModresWhite)) - 1
+White_p   <- 1 - pchisq(Whitestat, White_df)
+c(statistique = Whitestat, ddl = White_df, p_value = White_p)
 ```
 
-Le test de White est plus général que celui de Breusch–Pagan :\
-il inclut les effets quadratiques et les interactions entre variables
-explicatives.
-
--   La p-value est **très faible**, largement en dessous du seuil de 5
-    %.\
--   **On rejette l’hypothèse d’homoscédasticité.**
-
-Ce test confirme donc, de manière robuste, la présence
-**d’hétéroscédasticité**, et ce même dans un cadre élargi incluant des
-termes non linéaires.
+Le test de White est plus général que celui de Breusch–Pagan : il
+inclut les effets quadratiques et les interactions entre variables
+explicatives. La statistique nR² vaut `r round(Whitestat, 1)` pour
+`r White_df` degrés de liberté, soit une p-value de
+`r format(White_p, digits = 3)` : **on rejette l’hypothèse
+d’homoscédasticité.**
 
 **Test de Goldfeld–Quandt**
 
 ```{r, message=FALSE, warning=FALSE , echo=FALSE}
-###############################################################
-# 5. Test de Goldfeld–Quandt
-###############################################################
-
 gq <- gqtest(reg, order.by = ~ Surface, fraction = 6, data = annonces)
 gq
 ```
 
 Le test de Goldfeld–Quandt examine si la variance des erreurs augmente
-systématiquement lorsqu’une variable explicative croît (ici : la
-surface).
+lorsque la surface croît. La p-value
+(`r format(gq$p.value, digits = 3)`) est extrêmement faible : **nous
+rejetons l’hypothèse d’homoscédasticité.**
 
--   La p-value est **extrêmement faible** (inférieure à 1%).
--   **Par conséquent, nous rejettons l’hypothèse d’homoscédasticité.**
+**Conclusion des tests**
 
-**Conclusion retirée apres les tests dessus** Les trois tests convergent
-vers la même conclusion :
+Les trois tests convergent vers la même conclusion :
 
--   **Breusch–Pagan : hétéroscédasticité**\
--   **White : hétéroscédasticité**\
+-   **Breusch–Pagan : hétéroscédasticité**
+-   **White : hétéroscédasticité**
 -   **Goldfeld–Quandt : hétéroscédasticité**
 
-Le modèle souffre donc clairement d’un **problème
-d’hétéroscédasticité**, indiquant que :
+Le modèle souffre donc d’un **problème d’hétéroscédasticité** : la
+variance des erreurs n’est **pas constante**, et les intervalles de
+confiance ainsi que les tests de significativité standards peuvent être
+**biaisés**.
 
--   la variance des erreurs n’est **pas constante**,\
--   et les intervalles de confiance ainsi que les tests de
-    significativité standards peuvent être **biaisés**.
-
-## 4.2 Analyses complémentaires
+## 4.3 Analyses complémentaires
 
 ### Transformations de variables / effets non linéaires
 
@@ -1598,7 +1309,23 @@ mod_log <- lm(log_Loyer_TCC ~ log_Surface + log_Charges + kWh +
                 Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
               data = annonces)
 summary(mod_log)
+c_log <- coef(mod_log); p_log <- summary(mod_log)$coefficients[, 4]
 ```
+
+Dans ce modèle, les coefficients s'interprètent en pourcentages :
+
+-   une hausse de 1 % de la surface est associée à une hausse de
+    **`r round(c_log["log_Surface"], 2)` %** du loyer (élasticité) ;
+-   à caractéristiques égales, un logement du Centre est
+    **`r round(100 * (exp(c_log["Quartiers_Centre"]) - 1), 1)` %** plus
+    cher qu'un logement de l'Ouest (p-value =
+    `r fp(p_log["Quartiers_Centre"])`) ;
+-   100 kWh/m²/an de consommation en plus sont associés à un loyer
+    **`r abs(round(100 * (exp(100 * c_log["kWh"]) - 1), 1))` %** plus
+    faible (p-value = `r fp(p_log["kWh"])`).
+
+Le passage au logarithme réduit aussi le poids des loyers élevés, ce qui
+atténue le problème d'hétéroscédasticité observé précédemment.
 
 **Modèle avec effets non linéaires (termes quadratiques)**
 
@@ -1608,21 +1335,14 @@ mod_poly <- lm(Loyer_TCC ~ Surface + I(Surface^2) +
                               kWh + I(kWh^2) +
                               Quartiers_Centre + Quartiers_Nord_Est + Quartiers_Nord_Ouest,
                data = annonces)
-summary(mod_poly) 
-
+summary(mod_poly)
 ```
 
 ### Changement structurel
 
 ```{r , message=FALSE, warning=FALSE}
-
-# On teste un éventuel changement de structure selon la surface
-# Exemple : seuil à 70 m² (à adapter si besoin)
+# On teste un éventuel changement de structure selon la surface (seuil à 70 m²)
 annonces$grand_logement <- ifelse(annonces$Surface > 70, 1, 0)
-
-# Modèle sans rupture
-mod_sans_rupture <- lm(Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Centre,
-                       data = annonces)
 
 # Modèle avec rupture (interaction avec l'indicateur "grand_logement")
 mod_avec_rupture <- lm(Loyer_TCC ~ Surface*grand_logement +
@@ -1631,27 +1351,28 @@ mod_avec_rupture <- lm(Loyer_TCC ~ Surface*grand_logement +
 summary(mod_avec_rupture)
 
 # Test de rupture de type Chow avec le package strucchange
-#install.packages("strucchange")
 library(strucchange)
 
-# On ordonne les données par Surface pour définir un point de rupture
-ord <- order(annonces$Surface)
-annonces_ord <- annonces[ord, ]
-
-mod_ord <- lm(Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Centre,
-              data = annonces_ord)
-
-# Point de rupture supposé : Surface ≈ 70 m²
+# On ordonne les données par surface pour définir le point de rupture
+annonces_ord <- annonces[order(annonces$Surface), ]
 point_rupture <- which(annonces_ord$Surface > 70)[1]
 
 # Test de Chow au point choisi
-sctest(mod_ord, type = "Chow", point = point_rupture) #p-value extrêmement élévée.
-
+chow <- sctest(Loyer_TCC ~ Surface + Charges + kWh + Quartiers_Centre,
+               data = annonces_ord, type = "Chow", point = point_rupture)
+chow
 ```
+
+Le test de Chow donne une p-value de `r format(chow$p.value, digits = 3)`
+: on **rejette l'hypothèse de stabilité des coefficients**. La relation
+entre la surface et le loyer change au-delà de 70 m² : l'interaction
+*Surface × grand_logement* est positive, donc chaque m² supplémentaire
+coûte plus cher pour les grands logements
+(`r sum(annonces$grand_logement)` annonces dépassent 70 m²).
 
 ### Effets croisés de variables (interactions)
 
-**Interaction entre surface et quartier centre**
+**Interaction entre surface et quartier Centre**
 
 ```{r , message=FALSE, warning=FALSE}
 mod_inter1 <- lm(Loyer_TCC ~ Surface*Quartiers_Centre +
@@ -1682,112 +1403,190 @@ mod_inter3 <- lm(Loyer_TCC ~ Surface*Charges +
 summary(mod_inter3)
 ```
 
-# **5. Conclusion générale et perspectives**
+```{r, echo=FALSE}
+# Choix du modèle final : on part du modèle avec effets non linéaires (meilleur R² ajusté)
+# et on retire un à un les termes non significatifs à 5 % tant que le R² ajusté augmente.
+adj <- function(m) summary(m)$adj.r.squared
+r2_poly <- adj(mod_poly)
+p_poly <- summary(mod_poly)$coefficients[-1, 4]
+candidats <- names(p_poly)[p_poly > 0.05]
+essais <- sapply(candidats, function(v) adj(update(mod_poly, as.formula(paste(". ~ . -", v)))))
+retire <- if (length(essais) > 0 && max(essais) > r2_poly) names(which.max(essais)) else NULL
+mod_final <- if (is.null(retire)) mod_poly else update(mod_poly, as.formula(paste(". ~ . -", retire)))
+termes_final <- attr(terms(mod_final), "term.labels")
+```
 
-Nous pouvons donc conclure que les différents facteurs structurels
-expliquent les variations des loyers au sein de la ville de Rennes. Nous
-avons par conséquent examiner comme facteurs structurels:
+## 4.4 Évaluation sur un jeu de test
 
--L’effet de la surface.
+Les critères utilisés jusqu'ici (R² ajusté, AIC, BIC) sont calculés sur
+les données qui ont servi à estimer les modèles. Pour mesurer leur
+capacité à **prédire le loyer de nouvelles annonces**, nous séparons les
+données en un **jeu d'entraînement (75 %)**, sur lequel les modèles sont
+réestimés, et un **jeu de test (25 %)**, mis de côté et utilisé
+uniquement pour mesurer l'erreur de prédiction.
 
--Le nombre de pièces.
+```{r, echo=FALSE}
+set.seed(42)
+idx_train <- sample(seq_len(nrow(annonces)), size = round(0.75 * nrow(annonces)))
+train <- annonces[idx_train, ]
+test  <- annonces[-idx_train, ]
 
--Les charges.
+modeles_test <- list(
+  "Référence : moyenne du train"     = NULL,
+  "Modèle 2 (sélection automatique)" = formula(modele2),
+  "Modèle 4 (parcimonieux)"          = formula(modele4),
+  "Modèle 5 (quadratique)"           = formula(modele5),
+  "Modèle final (section 5)"         = formula(mod_final),
+  "Modèle log-linéaire"              = formula(mod_log)
+)
 
--La consommation énergétique.
+evaluer <- function(f) {
+  if (is.null(f)) {
+    pred <- rep(mean(train$Loyer_TCC), nrow(test))
+    m <- NULL
+  } else {
+    m <- lm(f, data = train)
+    pred <- predict(m, newdata = test)
+    if (all.vars(f)[1] == "log_Loyer_TCC") pred <- exp(pred)   # retour en euros
+  }
+  erreur <- test$Loyer_TCC - pred
+  r2_train <- if (is.null(m)) 0 else {
+    pt <- fitted(m); if (all.vars(f)[1] == "log_Loyer_TCC") pt <- exp(pt)
+    1 - sum((train$Loyer_TCC - pt)^2) / sum((train$Loyer_TCC - mean(train$Loyer_TCC))^2)
+  }
+  data.frame(
+    RMSE_test = sqrt(mean(erreur^2)),
+    MAE_test  = mean(abs(erreur)),
+    R2_test   = 1 - sum(erreur^2) / sum((test$Loyer_TCC - mean(test$Loyer_TCC))^2),
+    R2_train  = r2_train
+  )
+}
 
--La localisation géographique.
+res_test <- do.call(rbind, lapply(modeles_test, evaluer))
+rownames(res_test) <- names(modeles_test)
+knitr::kable(res_test, digits = c(1, 1, 3, 3),
+             caption = paste0("Tableau 4 : Performances sur le jeu de test (",
+                              nrow(train), " annonces d'entraînement, ", nrow(test), " de test)"))
 
-Pour cela nous avons utilisé les modèles de régression multiple avec la
-méthode des MCO. L'objectif des MCO est d’étudier comment une variable
-quantitative dépend de plusieurs caractéristiques propres au logement.
-Pour expliquer les variations des loyers au sein de la ville de Rennes
-en fonction des différents facteurs structurels, nous avons décidé de
-prendre le modèle ayant le le R² ajusté le plus élevé parce que nous
-sommes dans le cadre d'une régression multiple. Dans notre cas de
-figure, le modèle ayant le meilleur R² ajusté est le modèle avec les
-effets non linéaires (en effet le modèle a des termes quadratiques), en
-effet ce modèle possède un R² ajusté de 0.8923 et a pour équation:
+res_mod <- res_test[-1, ]
+meilleur_test <- rownames(res_mod)[which.min(res_mod$RMSE_test)]
+rmse_naif <- res_test[1, "RMSE_test"]
+```
 
-$$ \begin{aligned} \text{Loyer_TCC} &= \beta_0 + \beta_1\,\text{Surface} + \beta_2\,\text{Surface}^2 + \beta_3\,\text{Charges} + \beta_4\,\text{Charges}^2 \\ &\quad + \beta_5\,\text{kWh} + \beta_6\,\text{kWh}^2 \\ &\quad + \beta_7\,\text{Quartiers_Centre} + \beta_8\,\text{Quartiers_Nord_Est}\\ &\quad + \beta_9\,\text{Quartiers_Nord_Ouest} + \varepsilon \end{aligned} $$
+**Interprétation**
 
-Cela veut dire que 89.23% de la variance des loyers_TCC (i.e. charges
-comprises) est expliquée par ce modèle qui est représenté par les
-variables explicatives suivantes:
+-   Le modèle de référence, qui prédit le même loyer (la moyenne du
+    train) pour toutes les annonces, se trompe en moyenne de
+    **`r round(rmse_naif)` €** (RMSE). Tous les modèles font nettement
+    mieux, ce qui confirme que les caractéristiques du logement
+    expliquent une grande partie du loyer.
+-   Le modèle qui prédit le mieux sur le jeu de test est le
+    **`r meilleur_test`**, avec une RMSE de
+    **`r round(res_mod[meilleur_test, "RMSE_test"])` €**, une erreur
+    absolue moyenne de **`r round(res_mod[meilleur_test, "MAE_test"])` €**
+    et un R² de **`r round(res_mod[meilleur_test, "R2_test"], 3)`** : son
+    erreur est divisée par
+    **`r round(rmse_naif / res_mod[meilleur_test, "RMSE_test"], 1)`** par
+    rapport à la prédiction par la moyenne.
+-   Les écarts entre les modèles restent faibles au regard de la taille
+    du jeu de test (`r nrow(test)` annonces) : un autre découpage
+    aléatoire pourrait modifier leur classement.
+-   Le R² de test n'est pas inférieur au R² d'entraînement : les modèles
+    linéaires ne sur-apprennent pas. Un R² de test plus élevé que celui
+    d'entraînement s'explique par le hasard du découpage : les loyers
+    les plus extrêmes, très mal ajustés, sont tombés dans le jeu
+    d'entraînement (loyer maximum de `r max(train$Loyer_TCC)` € contre
+    `r max(test$Loyer_TCC)` € dans le jeu de test).
+-   Le modèle log-linéaire est moins bon une fois ses prédictions
+    ramenées en euros : l'exponentielle de la prédiction du logarithme
+    sous-estime en moyenne le loyer, surtout pour les logements chers.
 
--Surface.
+# 5. Conclusion générale et perspectives
 
--Surface².
+Nous avons cherché à identifier les facteurs structurels qui expliquent
+les variations des loyers à Rennes. Nous avons examiné :
 
--Charges.
+-   l’effet de la surface ;
+-   le nombre de pièces ;
+-   les charges ;
+-   la performance et la consommation énergétiques ;
+-   la localisation géographique.
 
--Consommation énergétique (kWh).
+Pour cela, nous avons utilisé des modèles de régression multiple
+estimés par les MCO. Pour choisir le modèle final, nous avons retenu le
+**R² ajusté**, adapté à la régression multiple car il pénalise l'ajout
+de variables. Le modèle avec effets non linéaires (termes quadratiques)
+obtient un R² ajusté de **`r round(r2_poly, 4)`**. Parmi les termes non
+significatifs à 5 % (`r paste(candidats, collapse = ", ")`), nous avons
+testé leur retrait un à un :
+`r if (is.null(retire)) "aucun retrait n'améliore le R² ajusté, le modèle est donc conservé tel quel" else paste0("seul le retrait de **", retire, "** améliore le R² ajusté")`.
 
--kWh².
+Le modèle finalement retenu explique **`r round(100 * adj(mod_final), 2)` %**
+de la variance des loyers (R² ajusté) avec les variables explicatives
+suivantes : **`r paste(termes_final, collapse = ", ")`**.
 
--Quartiers Centre.
+Ce R² ajusté d'environ 0,76 est nettement inférieur à celui d'une
+version antérieure de cette étude (environ 0,89) : celle-ci contenait
+des annonces en double, qui gonflaient artificiellement la qualité de
+l'ajustement.
 
--Quartiers Nord-Est.
+**Retour sur les hypothèses**
 
--Quartiers Nord-Ouest.
+```{r, echo=FALSE}
+c2 <- summary(modele2)$coefficients
+coef_ou_na <- function(v, col) if (v %in% rownames(c2)) c2[v, col] else NA
+```
 
-Nous avons testé la significativité de ces variables par l'intérmédiaire
-de leurs p-values. Parmi ces p-values nous avons 2 p-values supérieures
-à 10% avec premièrement la p-value des quartiers Nord-Est égale à
-50.7279% et deuxièmement la p-value de la surface au carré égale à
-16.4571%. Nous avons également la p-value des charges au carré qui est
-supérieure à 5% (7.6346%). Nous avons par conséquent testé des modèles
-sans ces variables et parmi tous ces modèles, il n'y a qu'un seul modèle
-qui présente un R² ajusté supérieur à 0.8923. Le modèle en question est
-le modèle où l'on a retiré uniquement la variable représentant celle des
-quartiers Nord-Est (p-value extrêmement élevée). Le nouveau modèle que
-nous avons finalement choisi possède l'équation suivante:
+-   **H1 (surface) : confirmée.** La surface est de loin le premier
+    déterminant du loyer : environ
+    **`r round(coef_ou_na("Surface", 1), 1)` €** de loyer en plus par m²
+    dans le modèle 2, et une élasticité de
+    `r round(c_log["log_Surface"], 2)` dans le modèle log-linéaire. La
+    relation s'accentue au-delà de 70 m² (test de Chow).
+-   **H2 (charges) : confirmée.** Les charges ont un effet positif et
+    significatif (environ `r round(coef_ou_na("Charges", 1), 2)` € de
+    loyer par euro de charges dans le modèle 2, p-value =
+    `r fp(coef_ou_na("Charges", 4))`).
+-   **H3 (performance énergétique) : partiellement confirmée.** Une
+    consommation plus élevée (moins bonne performance) est associée à
+    un loyer plus faible, de manière significative dans le modèle
+    log-linéaire (p-value = `r fp(p_log["kWh"])`). En revanche,
+    la classe énergétique elle-même n'est pas significative, car elle
+    fait double emploi avec la consommation.
+-   **H4 (quartier Centre) : confirmée à surface égale.** Le Nord-Ouest
+    a la médiane brute la plus élevée car ses logements sont plus
+    grands, mais à caractéristiques égales, le Centre est le secteur le
+    plus cher (environ `r round(100 * (exp(c_log["Quartiers_Centre"]) - 1), 1)` %
+    de plus que l'Ouest).
 
-$$ \begin{aligned} \text{Loyer_TCC} &= \beta_0 + \beta_1\,\text{Surface} + \beta_2\,\text{Surface}^2 + \beta_3\,\text{Charges} + \beta_4\,\text{Charges}^2 \\ &\quad + \beta_5\,\text{kWh} + \beta_6\,\text{kWh}^2 \\ &\quad + \beta_7\,\text{Quartiers_Centre} + \beta_8\,\text{Quartiers_Nord_Ouest}\\ &\quad + \varepsilon\end{aligned} $$
-
-Ce modèle présente un R² ajusté de 0.8926 ce qui veut dire que 89.26% de
-la variance des loyers_TCC (i.e. charges comprises) est expliquée par ce
-modèle qui est représenté par les variables explicatives suivantes:
-
--Surface.
-
--Surface².
-
--Charges.
-
--Consommation énergétique (kWh).
-
--kWh².
-
--Quartiers Centre.
-
--Quartiers Nord-Ouest.
-
-Contributions du mémoire, apports scientifiques et/ou applicatifs
+**Contributions du mémoire, apports scientifiques et/ou applicatifs**
 
 Au sens du document bibliographique, la hausse des prix des loyers n'est
 pas seulement due à la rareté du foncier mais à une forte valeur
 d'habitabilité. Cette valeur d'habitabilité est attribuée à un lieu en
 tant qu'espace où l'on souhaite vivre, indépendamment de la production
 ou de la spéculation. D'après la théorie néoclassique, l'approche
-hédonique définit le prix d’un bien qui est la somme implicite des prix
-de ses caractéristiques, telles qu’elles sont valorisées par les
+hédonique définit le prix d’un bien comme la somme implicite des prix de
+ses caractéristiques, telles qu’elles sont valorisées par les
 préférences des consommateurs sur un marché. Selon cette approche, la
 valeur foncière élevée s'explique par l'accessibilité aux emplois et aux
 services, la densité des équipements (transports, culture, universités),
 la classe sociale (forte présence de catégories diplômées) et les
 aménités urbaines (espaces publics, centralités). Cette approche
-s'explique pour la ville de Rennes qui est une ville particulièrement
-étudiante où il y a un fort taux de hauts diplômées. En 2020, selon
-l'INSEE, la part des diplômés d'un BAC+5 ou plus dans la pop. non
-scolarisée de 15 ans ou + était de 12% en Ille et vilaine, ce qui situe
-le département dans le premier parmi les 25% les plus diplômés.
+s'applique bien à Rennes, ville particulièrement étudiante où la part
+de diplômés est élevée. En 2020, selon l'INSEE, la part des diplômés
+d'un BAC+5 ou plus dans la population non scolarisée de 15 ans ou plus
+était de 12 % en Ille-et-Vilaine, ce qui situe le département parmi les
+25 % les plus diplômés.
 
-En guise d'ouverture, nous aimerons discuter des perspectives
+En guise d'ouverture, nous aimerions discuter des perspectives
 d'amélioration. Dans ce projet, le plus difficile a été de mettre en
-lien un document bibliographique avec notre projet. En effet notre
-document était très généraliste et ne s'appuyait pas sur les
-spécificités de la ville de Rennes.
+lien un document bibliographique avec notre projet : notre document
+était très généraliste et ne s'appuyait pas sur les spécificités de la
+ville de Rennes. Par ailleurs, une partie du loyer reste inexpliquée par
+nos variables : l'état du logement, le standing, le caractère meublé ou
+l'étage ne sont pas observés, et des erreurs standards robustes à
+l'hétéroscédasticité devraient être utilisées pour les tests.
 
 # Bibliographie - Source des données
 
@@ -1797,8 +1596,4 @@ spécificités de la ville de Rennes.
 
 <https://www.researchgate.net/profile/Claude-Napoleone-2/publication/264393700_Les_determinants_socio-economiques_des_marches_fonciers/links/53db5ba30cf2a19eee8b6960/Les-determinants-socio-economiques-des-marches-fonciers.pdf>
 
-<https://www.ouestfrance-immo.com/immobilier/vente-location/logement/rennes-35-35238/?at_medium=sl&at_campaign=SN_Marque_OFI_geo&at_platform=google&at_creation=Marque_TopVilles_Exact&at_network=search&at_term=ouest%20france%20immo%20rennes&at_variant=517647334685&gad_source=1&gad_campaignid=12874941587&gclid=Cj0KCQiAgP_JBhD-ARIsANpEMxyr19JemJx33OeClsMGOdxiPciI9ZpSIVklft3bsbmv44u28YnQA8waAhCBEALw_wcB>
-
----
-
----
+<https://www.ouestfrance-immo.com/immobilier/vente-location/logement/rennes-35-35238/>

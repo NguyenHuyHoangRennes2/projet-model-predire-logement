@@ -9,6 +9,21 @@ import re
 import pandas as pd
 from chemin_vers_liste_annonces import dict_quartier_et_liens_trouvé
 import os
+
+def creer_driver():
+    options = webdriver.ChromeOptions()
+    options.page_load_strategy = "eager"   # n'attend pas les pubs et les traceurs
+    driver = webdriver.Chrome(options=options)
+    driver.set_page_load_timeout(30)
+    driver.maximize_window()
+    return driver
+
+def ouvrir(driver, url):
+    try:
+        driver.get(url)
+    except TimeoutException:
+        print("Chargement trop long, on continue avec ce qui est affiché :", url)
+
 # ------------------------
 # URL de la page de RESULTATS (liste d'annonces)
 # ------------------------
@@ -21,9 +36,8 @@ données =[]
 for quartiers , liens in dict_quartier_et_liens_trouvé.items():
     for lien in liens :
         URL = lien
-        driver = webdriver.Chrome()
-        driver.maximize_window()
-        driver.get(URL)
+        driver = creer_driver()
+        ouvrir(driver, URL)
 
         wait = WebDriverWait(driver, 20)
 
@@ -78,9 +92,8 @@ for quartiers , liens in dict_quartier_et_liens_trouvé.items():
                     lien_complet = urljoin(base_url , a.get("href"))
                     
         # Lancer Selenium
-                    driver = webdriver.Chrome()
-                    driver.maximize_window()
-                    driver.get(lien_complet)
+                    driver = creer_driver()
+                    ouvrir(driver, lien_complet)
 
                     wait = WebDriverWait(driver, 20)
 
